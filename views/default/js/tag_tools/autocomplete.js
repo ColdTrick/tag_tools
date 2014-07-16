@@ -44,11 +44,6 @@ define(["jquery", "elgg", "jquery.tag-it"], function ($, elgg){
 					
 					return false;
 				},
-				focus: function() {
-					// prevent value inserted on focus
-					return false;
-				},
-				autoFocus: true,
 				// turn off experimental live help - no i18n support and a little buggy
 				messages: {
 					noResults: '',
