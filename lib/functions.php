@@ -63,3 +63,29 @@ function tag_tools_toggle_following_tag($tag, $user_guid = null, $track = null) 
 		}
 	}
 }
+
+function tag_tools_notify_user($user_guid, $entity_guid, $tag) {
+	static $notificiations;
+	
+	if (!isset($notifications)) {
+		$notifications = array();
+	}
+	
+	if (!array_key_exists($entity_guid, $notifications)) {
+		$notifications[$entity_guid] = array();
+	}
+	
+	if (!in_array($user_guid, $notifications[$entity_guid])) {
+		$activity_url = elgg_normalize_url("activity/tags");
+		system_message(elgg_echo("tag_tools:notification:follow:subject", array($tag)));
+		system_message($tag);
+		
+		$subject = elgg_echo("tag_tools:notification:follow:subject", array($tag));
+		$message = elgg_echo("tag_tools:notification:follow:message", array($tag, $activity_url));
+		
+		notify_user($user_guid, elgg_get_site_entity()->guid, $subject, $message, array());
+		
+		$notifications[$entity_guid][] = $user_guid;
+	}
+	
+}
