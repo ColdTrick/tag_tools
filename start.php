@@ -40,6 +40,9 @@ function tag_tools_init() {
 	elgg_register_plugin_hook_handler("route", "notifications", "tag_tools_route_notifications_hook");
 	elgg_register_plugin_hook_handler("register", "menu:follow_tag", "tag_tools_follow_tag_menu_register_hook");	
 	elgg_register_plugin_hook_handler("register", "menu:filter", "tag_tools_activity_filter_menu_hook_handler");	
+	
+	// widgets
+	elgg_register_widget_type("follow_tags", elgg_echo("tag_tools:widgets:follow_tags:title"), elgg_echo("tag_tools:widgets:follow_tags:description"), array("profile", "dashboard"));
 }
 
 function tag_tools_pagesetup() {

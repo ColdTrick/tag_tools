@@ -83,7 +83,7 @@ function tag_tools_follow_tag_menu_register_hook($hook, $type, $return_value, $p
 		"name" => "follow_tag_on",
 		"text" => elgg_view_icon("refresh"),
 		"href" => "action/tag_tools/follow_tag?tag=" . $encoded_tag,
-		"title" => elgg_echo("follow tag on"),
+		"title" => elgg_echo("tag_tools:follow_tag:menu:on"),
 		"is_action" => true,
 		"item_class" => $on_class
 	));
@@ -94,7 +94,7 @@ function tag_tools_follow_tag_menu_register_hook($hook, $type, $return_value, $p
 		"name" => "follow_tag_off",
 		"text" => elgg_view_icon("refresh-hover"),
 		"href" => "action/tag_tools/follow_tag?tag=" . $encoded_tag,
-		"title" => elgg_echo("follow tag off"),
+		"title" => elgg_echo("tag_tools:follow_tag:menu:off"),
 		"is_action" => true,
 		"item_class" => $off_class
 	));
