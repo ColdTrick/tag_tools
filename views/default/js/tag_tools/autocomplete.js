@@ -54,13 +54,6 @@ define(["jquery", "elgg", "jquery.tag-it"], function ($, elgg){
 			    }
 			}
 		});
-		/*.data("ui-autocomplete")._renderItem = function(ul, item) {
-			
-			return $("<li></li>")
-				.data("item.autocomplete", item)
-				.append("<a>" + item.value + "</a>")
-				.appendTo( ul );
-		};*/
 	}
 	
 	return function() {
