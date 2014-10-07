@@ -1,10 +1,11 @@
 <?php
 /**
  * This file was created by Translation Editor v2.0
- * On 2014-10-03 10:08
+ * On 2014-10-07 14:08
  */
 
 return array (
+  'tag_tools:js:autocomplete:required' => 'Vul alstublieft de verplichte tags in',
   'tag_tools:follow_tag:menu:on' => 'Volg nieuwe content met deze tag',
   'tag_tools:follow_tag:menu:off' => 'Stop met volgen van nieuwe content met deze tag',
   'tag_tools:notifications:menu' => 'Tag notificaties',

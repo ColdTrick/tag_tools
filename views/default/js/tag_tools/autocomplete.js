@@ -11,6 +11,11 @@ define(["jquery", "elgg", "jquery.tag-it"], function ($, elgg){
 		return elgg.tag_tools.autocomplete.split( term ).pop().trim();
 	}
 	
+	elgg.tag_tools.autocomplete.check_required = function () {
+		console.log($(this));
+		return false;
+	}
+	
 	elgg.tag_tools.autocomplete.initialize = function (elem) {
 		
 		$(elem).parent().addClass("ui-front");
@@ -54,6 +59,23 @@ define(["jquery", "elgg", "jquery.tag-it"], function ($, elgg){
 			    }
 			}
 		});
+		
+		if ($(elem).is(":required")) {
+			$(elem).removeAttr("required");
+			$form = $(elem).parents("form");
+			console.log($form);
+			
+			$form.submit(function(event) {
+				if ($(elem).val() == "") {
+					$(elem).next(".tagit").find(".ui-autocomplete-input").focus();
+					
+					alert(elgg.echo("tag_tools:js:autocomplete:required"));
+					
+					event.stopImmediatePropagation();
+					return false;
+				}
+			});
+		}
 	}
 	
 	return function() {
