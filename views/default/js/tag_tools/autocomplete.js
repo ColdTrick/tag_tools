@@ -11,11 +11,6 @@ define(["jquery", "elgg", "jquery.tag-it"], function ($, elgg){
 		return elgg.tag_tools.autocomplete.split( term ).pop().trim();
 	}
 	
-	elgg.tag_tools.autocomplete.check_required = function () {
-		console.log($(this));
-		return false;
-	}
-	
 	elgg.tag_tools.autocomplete.initialize = function (elem) {
 		
 		$(elem).parent().addClass("ui-front");
