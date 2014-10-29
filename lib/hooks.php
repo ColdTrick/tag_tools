@@ -67,43 +67,6 @@ function tag_tools_route_activity_hook($hook, $type, $return_value, $params) {
 	return $return_value;
 }
 
-function tag_tools_follow_tag_menu_register_hook($hook, $type, $return_value, $params) {
-	$return = array();
-	
-	$encoded_tag = htmlspecialchars($params["tag"], ENT_QUOTES, "UTF-8", false);
-	
-	$on_class = "";
-	$off_class = "hidden";
-	if (tag_tools_is_user_following_tag($encoded_tag)) {
-		$on_class = "hidden";
-		$off_class = "";
-	}
-	
-	$item = ElggMenuItem::factory(array(
-		"name" => "follow_tag_on",
-		"text" => elgg_view_icon("refresh"),
-		"href" => "action/tag_tools/follow_tag?tag=" . $encoded_tag,
-		"title" => elgg_echo("tag_tools:follow_tag:menu:on"),
-		"is_action" => true,
-		"item_class" => $on_class
-	));
-	
-	$return[] = $item;
-	
-	$item = ElggMenuItem::factory(array(
-		"name" => "follow_tag_off",
-		"text" => elgg_view_icon("refresh-hover"),
-		"href" => "action/tag_tools/follow_tag?tag=" . $encoded_tag,
-		"title" => elgg_echo("tag_tools:follow_tag:menu:off"),
-		"is_action" => true,
-		"item_class" => $off_class
-	));
-	
-	$return[] = $item;
-	
-	return $return;
-}
-
 function tag_tools_activity_filter_menu_hook_handler($hook, $type, $return_value, $params) {
 	if (elgg_in_context("activity") && elgg_is_logged_in()) {
 		

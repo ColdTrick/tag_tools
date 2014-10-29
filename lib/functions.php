@@ -3,7 +3,7 @@
  * All plugin functions are bundled here
  */
 
-function tag_tools_is_user_following_tag($tag, $user_guid = null) {
+function tag_tools_is_user_following_tag($tag, $user_guid = null, $reset_cache = false) {
 	static $follow_cache = array();
 	
 	$result = false;
@@ -15,9 +15,8 @@ function tag_tools_is_user_following_tag($tag, $user_guid = null) {
 	if (empty($user_guid)) {
 		$user_guid = elgg_get_logged_in_user_guid();
 	}
-	
 
-	if (array_key_exists($user_guid, $follow_cache)) {
+	if (!$reset_cache && array_key_exists($user_guid, $follow_cache)) {
 		return in_array($tag, $follow_cache[$user_guid]);
 	}
 	
@@ -27,11 +26,11 @@ function tag_tools_is_user_following_tag($tag, $user_guid = null) {
 		$ia = elgg_set_ignore_access(true);
 
 		$options = array(
-				'guid' => $user_guid,
-				'annotation_name' => "follow_tag",
-				'limit' => false
+			'guid' => $user_guid,
+			'annotation_name' => "follow_tag",
+			'limit' => false
 		);
-
+		
 		$annotations = elgg_get_annotations($options);
 		
 		$follow_cache[$user_guid] = array();

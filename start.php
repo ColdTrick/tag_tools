@@ -37,8 +37,7 @@ function tag_tools_init() {
 	// plugin hooks
 	elgg_register_plugin_hook_handler("route", "tags", "tag_tools_route_tags_hook");
 	elgg_register_plugin_hook_handler("route", "activity", "tag_tools_route_activity_hook");
-	elgg_register_plugin_hook_handler("route", "notifications", "tag_tools_route_notifications_hook");
-	elgg_register_plugin_hook_handler("register", "menu:follow_tag", "tag_tools_follow_tag_menu_register_hook");	
+	elgg_register_plugin_hook_handler("route", "notifications", "tag_tools_route_notifications_hook");	
 	elgg_register_plugin_hook_handler("register", "menu:filter", "tag_tools_activity_filter_menu_hook_handler");	
 	
 	// widgets
