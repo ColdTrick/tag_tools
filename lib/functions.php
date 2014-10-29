@@ -4,7 +4,10 @@
  */
 
 function tag_tools_is_user_following_tag($tag, $user_guid = null) {
+	static $follow_cache = array();
+	
 	$result = false;
+	
 	if (empty($tag)) {
 		return false;
 	}
@@ -12,7 +15,12 @@ function tag_tools_is_user_following_tag($tag, $user_guid = null) {
 	if (empty($user_guid)) {
 		$user_guid = elgg_get_logged_in_user_guid();
 	}
+	
 
+	if (array_key_exists($user_guid, $follow_cache)) {
+		return in_array($tag, $follow_cache[$user_guid]);
+	}
+	
 	$user = get_user($user_guid);
 
 	if ($user) {
@@ -21,14 +29,18 @@ function tag_tools_is_user_following_tag($tag, $user_guid = null) {
 		$options = array(
 				'guid' => $user_guid,
 				'annotation_name' => "follow_tag",
-				'annotation_value' => $tag,
-				'count' => true
+				'limit' => false
 		);
 
-		if (elgg_get_annotations($options)) {
-			$result = true;
+		$annotations = elgg_get_annotations($options);
+		
+		$follow_cache[$user_guid] = array();
+		foreach ($annotations as $annotation) {
+			$follow_cache[$user_guid][] = $annotation->value;
 		}
 		elgg_set_ignore_access($ia);
+		
+		return in_array($tag, $follow_cache[$user_guid]);
 	}
 
 	return $result;
