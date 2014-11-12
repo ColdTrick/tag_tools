@@ -3,8 +3,62 @@
  * All plugin functions are bundled here
  */
 
-function tag_tools_is_user_following_tag($tag, $user_guid = 0, $reset_cache = false) {
-	static $follow_cache = array();
+/**
+ * Get all the tags a user is following
+ *
+ * @param int  $user_guid   the user to get the tags for (default: current user)
+ * @param bool $reset_cache reset the internal cache
+ *
+ * @return bool|array
+ */
+function tag_tools_get_user_following_tags($user_guid = 0, $reset_cache = false) {
+	static $cache;
+	
+	if (!isset($cache)) {
+		$cache = array();
+	}
+	
+	$user_guid = sanitise_int($user_guid, false);
+	if (empty($user_guid)) {
+		$user_guid = elgg_get_logged_in_user_guid();
+	}
+	
+	if (empty($user_guid)) {
+		return false;
+	}
+	
+	if (!isset($cache[$user_guid]) || $reset_cache) {
+		$cache[$user_guid] = array();
+		
+		$options = array(
+			"guid" => $user_guid,
+			"annotation_name" => "follow_tag",
+			"limit" => false
+		);
+		
+		$ia = elgg_set_ignore_access(true);
+		$annotations = elgg_get_annotations($options);
+		elgg_set_ignore_access($ia);
+		
+		if (!empty($annotations)) {
+			foreach ($annotations as $annotation) {
+				$cache[$user_guid][] = $annotation->value;
+			}
+		}
+	}
+	
+	return $cache[$user_guid];
+}
+
+/**
+ * Check if a user is following a certain tag
+ *
+ * @param string $tag         the tag to check
+ * @param int    $user_guid   the user to check for (default: current user)
+ *
+ * @return bool
+ */
+function tag_tools_is_user_following_tag($tag, $user_guid = 0) {
 	
 	if (empty($tag)) {
 		return false;
@@ -15,34 +69,32 @@ function tag_tools_is_user_following_tag($tag, $user_guid = 0, $reset_cache = fa
 		$user_guid = elgg_get_logged_in_user_guid();
 	}
 
-	if (!$reset_cache && array_key_exists($user_guid, $follow_cache)) {
-		return in_array($tag, $follow_cache[$user_guid]);
-	}
-	
-	$user = get_user($user_guid);
-	if (empty($user)) {
+	if (empty($user_guid)) {
 		return false;
 	}
 	
-	$options = array(
-		"guid" => $user_guid,
-		"annotation_name" => "follow_tag",
-		"limit" => false
-	);
-	
-	$ia = elgg_set_ignore_access(true);
-	$annotations = elgg_get_annotations($options);
-	elgg_set_ignore_access($ia);
-	
-	$follow_cache[$user_guid] = array();
-	foreach ($annotations as $annotation) {
-		$follow_cache[$user_guid][] = $annotation->value;
+	$user_tags = tag_tools_get_user_following_tags($user_guid);
+	if (empty($user_tags)) {
+		return false;
 	}
 	
-	return in_array($tag, $follow_cache[$user_guid]);
+	return in_array($tag, $user_tags);
 }
 
+/**
+ * Add or remove a tag from the follow list of a user
+ *
+ * @param string $tag       the tag to (un)follow
+ * @param int    $user_guid the user to save the setting for
+ * @param bool   $track     add/remove the tag
+ *
+ * @return void
+ */
 function tag_tools_toggle_following_tag($tag, $user_guid = 0, $track = null) {
+	
+	if (empty($tag)) {
+		return;
+	}
 	
 	$user_guid = sanitise_int($user_guid, false);
 	if (empty($user_guid)) {
@@ -58,24 +110,37 @@ function tag_tools_toggle_following_tag($tag, $user_guid = 0, $track = null) {
 		$track = !tag_tools_is_user_following_tag($tag, $user_guid);
 	}
 
+	// remove the tag from the follow list
 	$options = array(
 		"guid" => $user_guid,
 		"limit" => false,
-		"annotation_name_value_pairs" => array(
-		 	"name" => "follow_tag",
-			"value" => $tag
-		)
+		"annotation_name" => "follow_tag",
+		"annotation_value" => $tag
 	);
-
+	
 	$ia = elgg_set_ignore_access(true);
 	elgg_delete_annotations($options);
+	tag_tools_remove_tag_from_notification_settings($tag, $user_guid);
 	elgg_set_ignore_access($ia);
 
+	// did the user want to follow the tag
 	if ($track) {
 		$user->annotate("follow_tag", $tag, ACCESS_PUBLIC);
 	}
+	
+	// reset cache
+	tag_tools_get_user_following_tags($user_guid, true);
 }
 
+/**
+ * Notify a user about a new tag
+ *
+ * @param int    $user_guid   the user to notify
+ * @param int    $entity_guid the entity to notify about
+ * @param string $tag         the tag to notify about
+ *
+ * @return void
+ */
 function tag_tools_notify_user($user_guid, $entity_guid, $tag) {
 	static $notifications;
 	
@@ -86,6 +151,10 @@ function tag_tools_notify_user($user_guid, $entity_guid, $tag) {
 	
 	$entity_guid = sanitise_int($entity_guid, false);
 	if (empty($entity_guid)) {
+		return;
+	}
+	
+	if (empty($tag)) {
 		return;
 	}
 	
@@ -102,6 +171,12 @@ function tag_tools_notify_user($user_guid, $entity_guid, $tag) {
 		return;
 	}
 	
+	$user_tag_notification_settings = tag_tools_get_user_tag_notification_settings($tag, $user_guid);
+	if (empty($user_tag_notification_settings)) {
+		// the user is following the tag, but doesn't want notifications
+		return;
+	}
+	
 	$ia = elgg_set_ignore_access(true);
 	$entity = get_entity($entity_guid);
 	elgg_set_ignore_access($ia);
@@ -114,7 +189,161 @@ function tag_tools_notify_user($user_guid, $entity_guid, $tag) {
 		"object" => $entity
 	);
 	
-	notify_user($user_guid, elgg_get_site_entity()->getGUID(), $subject, $message, $params);
+	notify_user($user_guid, elgg_get_site_entity()->getGUID(), $subject, $message, $params, $user_tag_notification_settings);
 	
 	$notifications[$entity_guid][] = $user_guid;
+}
+
+/**
+ * Remove the notification settings for a specific tag
+ *
+ * @param string $tag       the tag to remove the settings for
+ * @param int    $user_guid the user to change the settings for (default: current user)
+ *
+ * @return bool
+ */
+function tag_tools_remove_tag_from_notification_settings($tag, $user_guid = 0) {
+	
+	if (empty($tag)) {
+		return false;
+	}
+	
+	$user_guid = sanitise_int($user_guid, false);
+	if (empty($user_guid)) {
+		$user_guid = elgg_get_logged_in_user_guid();
+	}
+	
+	if (empty($user_guid)) {
+		return false;
+	}
+	
+	$settings = tag_tools_get_user_notification_settings($user_guid);
+	if (empty($settings)) {
+		// user has no notification settings, so all is good
+		return true;
+	}
+	
+	if (!isset($settings[$tag])) {
+		// the user had no notification setting for this tag
+		return true;
+	}
+	
+	// remove the tag from the settings
+	unset($settings[$tag]);
+	elgg_set_plugin_user_setting("notifications", json_encode($settings), $user_guid, "tag_tools");
+	tag_tools_get_user_notification_settings($user_guid, true);
+	
+	return true;
+}
+
+/**
+ * Get the notification settings for a user
+ *
+ * @param int  $user_guid   the user to get the settings for
+ * @param bool $reset_cache reset the internal cache
+ *
+ * @return bool|array
+ */
+function tag_tools_get_user_notification_settings($user_guid = 0, $reset_cache = false) {
+	static $cache;
+	
+	if (!isset($cache)) {
+		$cache = array();
+	}
+	
+	$user_guid = sanitise_int($user_guid, false);
+	if (empty($user_guid)) {
+		$user_guid = elgg_get_logged_in_user_guid();
+	}
+	
+	if (empty($user_guid)) {
+		return false;
+	}
+	
+	if (!isset($cache[$user_guid]) || $reset_cache) {
+		$cache[$user_guid] = array();
+		
+		$setting = elgg_get_plugin_user_setting("notifications", $user_guid, "tag_tools");
+		if (!empty($setting)) {
+			$cache[$user_guid] = json_decode($setting, true);
+		}
+	}
+	
+	return $cache[$user_guid];
+}
+
+/**
+ * Get the notification settings for a tag
+ *
+ * @param string $tag       the tag to get the settings for
+ * @param int    $user_guid the user to get the settings for (default: current user)
+ *
+ * @return bool|array
+ */
+function tag_tools_get_user_tag_notification_settings($tag, $user_guid = 0) {
+	
+	if (empty($tag)) {
+		return false;
+	}
+	
+	$user_guid = sanitise_int($user_guid, false);
+	if (empty($user_guid)) {
+		$user_guid = elgg_get_logged_in_user_guid();
+	}
+	
+	if (empty($user_guid)) {
+		return false;
+	}
+	
+	$settings = tag_tools_get_user_notification_settings($user_guid);
+	if (empty($settings) || !isset($settings[$tag])) {
+		// default notifications go the mail
+		return array("email");
+	}
+	
+	if (empty($settings[$tag])) {
+		// the user disabled notifications for this tag
+		return array();
+	}
+	
+	// return the saved settings
+	return $settings[$tag];
+}
+
+/**
+ * Check if a user has selected the notification method for a tag
+ *
+ * @param string $tag       the tag to check
+ * @param string $method    the notification method to check
+ * @param int    $user_guid the user to check for (default: current user)
+ *
+ * @return bool
+ */
+function tag_tools_check_user_tag_notification_method($tag, $method, $user_guid = 0) {
+	
+	if (empty($tag)) {
+		return false;
+	}
+	
+	if (empty($method)) {
+		return false;
+	}
+	
+	$user_guid = sanitise_int($user_guid, false);
+	if (empty($user_guid)) {
+		$user_guid = elgg_get_logged_in_user_guid();
+	}
+	
+	if (empty($user_guid)) {
+		return false;
+	}
+	
+	$tag_settings = tag_tools_get_user_tag_notification_settings($tag, $user_guid);
+	if (empty($tag_settings)) {
+		// user has disabled notifications for this tag
+		return false;
+	}
+	
+	// check if the user has selected the notification method
+	return in_array($method, $tag_settings);
 }

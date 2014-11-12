@@ -1,10 +1,12 @@
 <?php
 /**
  * This file was created by Translation Editor v2.0
- * On 2014-10-07 14:08
+ * On 2014-11-12 12:17
  */
 
 return array (
+  'tag_tools:actions:follow_tag:success:follow' => 'Je volgt nu de tag: %s',
+  'tag_tools:actions:follow_tag:success:unfollow' => 'Je volgt de tag: %s niet meer',
   'tag_tools:js:autocomplete:required' => 'Vul alstublieft de verplichte tags in',
   'tag_tools:follow_tag:menu:on' => 'Volg nieuwe content met deze tag',
   'tag_tools:follow_tag:menu:off' => 'Stop met volgen van nieuwe content met deze tag',

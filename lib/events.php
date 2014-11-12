@@ -3,6 +3,15 @@
  * All plugin events are bundled here
  */
 
+/**
+ * Listen to the creation of metadata
+ *
+ * @param string       $event    the name of the event
+ * @param string       $type     the type of the event
+ * @param ElggMetadata $metadata supplied metadata
+ *
+ * @return void
+ */
 function tag_tools_create_metadata_event_handler($event, $type, ElggMetadata $metadata) {
 	
 	// is it a tag
@@ -26,7 +35,7 @@ function tag_tools_create_metadata_event_handler($event, $type, ElggMetadata $me
 	
 	// only send notifications on creation of the entity
 	$time_created_treshold = 5;
-	if ($entity_row->time_created < (time() - 5)) {
+	if ($entity_row->time_created < (time() - $time_created_treshold)) {
 		// assume it is an update
 		return;
 	}
