@@ -67,7 +67,7 @@ function tag_tools_pagesetup() {
 	$params = array(
 		"name" => "tag_notifications",
 		"text" => elgg_echo("tag_tools:notifications:menu"),
-		"href" => "notifications/tag/". $user->username,
+		"href" => "notifications/tag/" . $user->username,
 		"section" => "notifications",
 	);
 	elgg_register_menu_item("page", $params);

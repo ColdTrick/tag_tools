@@ -7,7 +7,7 @@ if (empty($encoded_tag)) {
 	register_error(elgg_echo("error:missing_data"));
 	forward(REFERER);
 }
- 
+
 tag_tools_toggle_following_tag($encoded_tag);
 if (tag_tools_is_user_following_tag($encoded_tag)) {
 	system_message(elgg_echo("tag_tools:actions:follow_tag:success:follow", array($encoded_tag)));

@@ -1,15 +1,15 @@
 
-define(["jquery", "elgg", "jquery.tag-it"], function ($, elgg){
+define(["jquery", "elgg", "jquery.tag-it"], function ($, elgg) {
 	
 	elgg.provide("elgg.tag_tools.autocomplete");
 	
 	elgg.tag_tools.autocomplete.split = function (val) {
 		return val.split( /,/ );
-	}
+	};
 
 	elgg.tag_tools.autocomplete.extract_last = function (term) {
 		return elgg.tag_tools.autocomplete.split( term ).pop().trim();
-	}
+	};
 	
 	elgg.tag_tools.autocomplete.initialize = function (elem) {
 		
@@ -50,8 +50,8 @@ define(["jquery", "elgg", "jquery.tag-it"], function ($, elgg){
 					results: function() {}
 				},
 				create: function (e) {
-			        $(this).prev('.ui-helper-hidden-accessible').remove();
-			    }
+					$(this).prev('.ui-helper-hidden-accessible').remove();
+				}
 			}
 		});
 		
@@ -70,7 +70,7 @@ define(["jquery", "elgg", "jquery.tag-it"], function ($, elgg){
 				}
 			});
 		}
-	}
+	};
 	
 	return function() {
 		$(".elgg-input-tags").each(function() {
@@ -80,5 +80,5 @@ define(["jquery", "elgg", "jquery.tag-it"], function ($, elgg){
 				elgg.tag_tools.autocomplete.initialize(this);
 			}
 		});
-	}
+	};
 });

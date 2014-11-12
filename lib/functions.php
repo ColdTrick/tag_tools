@@ -53,8 +53,8 @@ function tag_tools_get_user_following_tags($user_guid = 0, $reset_cache = false)
 /**
  * Check if a user is following a certain tag
  *
- * @param string $tag         the tag to check
- * @param int    $user_guid   the user to check for (default: current user)
+ * @param string $tag       the tag to check
+ * @param int    $user_guid the user to check for (default: current user)
  *
  * @return bool
  */
