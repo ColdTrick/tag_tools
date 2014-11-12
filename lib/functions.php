@@ -189,7 +189,7 @@ function tag_tools_notify_user($user_guid, $entity_guid, $tag) {
 		"object" => $entity
 	);
 	
-	notify_user($user_guid, elgg_get_site_entity()->getGUID(), $subject, $message, $params, $user_tag_notification_settings);
+	notify_user($user_guid, $entity->getOwnerGUID(), $subject, $message, $params, $user_tag_notification_settings);
 	
 	$notifications[$entity_guid][] = $user_guid;
 }
