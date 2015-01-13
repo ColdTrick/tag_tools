@@ -1,6 +1,10 @@
 Version history
 ===============
 
+x.x:
+
+- fixed: php warning for create metadata event handler
+
 1.0 (2014-11-17):
 
 - initial version
