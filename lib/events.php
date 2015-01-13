@@ -12,7 +12,11 @@
  *
  * @return void
  */
-function tag_tools_create_metadata_event_handler($event, $type, ElggMetadata $metadata) {
+function tag_tools_create_metadata_event_handler($event, $type, $metadata) {
+	
+	if (empty($metadata) || !($metadata instanceof ElggMetadata)) {
+		return;
+	}
 	
 	// is it a tag
 	if ($metadata->name != "tags") {
