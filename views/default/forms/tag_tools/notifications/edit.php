@@ -67,5 +67,5 @@ echo "</table>";
 
 echo "<div class='elgg-foot'>";
 echo elgg_view("input/hidden", array("name" => "user_guid", "value" => $user->getGUID()));
-echo elgg_view("input/submit", array("value" => elgg_echo("save"), "class" => "mtl"));
+echo elgg_view("input/submit", array("value" => elgg_echo("save"), "class" => "elgg-button-submit mtl"));
 echo "</div>";
