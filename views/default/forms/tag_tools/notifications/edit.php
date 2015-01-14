@@ -13,6 +13,8 @@ if (empty($tags)) {
 	return;
 }
 
+elgg_require_js("tag_tools/notifications");
+
 echo "<table class='elgg-table-alt'>";
 // header with notification methods and delete
 echo "<thead>";
