@@ -4,6 +4,7 @@ Version history
 x.x:
 
 - fixed: php warning for create metadata event handler
+- fixed: sending notifications to users without access to the content
 
 1.0 (2014-11-17):
 

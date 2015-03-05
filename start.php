@@ -32,7 +32,7 @@ function tag_tools_init() {
 	elgg_extend_view("input/tags", "tag_tools/extend_tags");
 	
 	// register events
-	elgg_register_event_handler("create", "metadata", "tag_tools_create_metadata_event_handler");;
+	elgg_register_event_handler("create", "metadata", "tag_tools_create_metadata_event_handler");
 	
 	// plugin hooks
 	elgg_register_plugin_hook_handler("route", "tags", "tag_tools_route_tags_hook");

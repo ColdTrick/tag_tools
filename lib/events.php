@@ -66,10 +66,17 @@ function tag_tools_create_metadata_event_handler($event, $type, $metadata) {
 			continue;
 		}
 		
+		// force a correct access bit
+		elgg_set_ignore_access(false);
+		
 		// check access for the user, can't use has_access_to_entity
 		// because that requires a full entity
 		$access_bit = _elgg_get_access_where_sql(array("user_guid" => $user->getGUID()));
 		
+		// ignore access to get the correct next user
+		elgg_set_ignore_access(true);
+		
+		// build correct query to check access
 		$query = "SELECT guid FROM {$dbprefix}entities e
 			 WHERE e.guid = {$entity_guid}
 			 AND {$access_bit}";
