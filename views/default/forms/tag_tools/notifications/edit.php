@@ -29,18 +29,20 @@ echo "</thead>";
 echo "<tbody>";
 // all tags
 foreach ($tags as $tag) {
+	$encoded_tag = htmlspecialchars($tag, ENT_QUOTES, "UTF-8", false);
+	
 	echo "<tr>";
 	echo "<td>";
-	echo $tag;
-	echo elgg_view("input/hidden", array("name" => "tags[" . $tag . "]", "value" => "0"));
+	echo $encoded_tag;
+	echo elgg_view("input/hidden", array("name" => "tags[" . $encoded_tag . "]", "value" => "0"));
 	echo "</td>";
 	
 	foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
-		$checked = tag_tools_check_user_tag_notification_method($tag, $method, $user->getGUID());
+		$checked = tag_tools_check_user_tag_notification_method($encoded_tag, $method, $user->getGUID());
 		
 		echo "<td class='center'>";
 		echo elgg_view("input/checkbox", array(
-			"name" => "tags[" . $tag . "][]",
+			"name" => "tags[" . $encoded_tag . "][]",
 			"checked" => $checked,
 			"value" => $method,
 			"default" => false
@@ -52,7 +54,7 @@ foreach ($tags as $tag) {
 
 	echo elgg_view("output/url", array(
 		"text" => elgg_view_icon("delete"),
-		"href" => "action/tag_tools/follow_tag?tag=" . $tag,
+		"href" => "action/tag_tools/follow_tag?tag=" . urlencode($encoded_tag),
 		"class" => "tag-tools-unfollow-tag",
 		"is_action" => true
 	));
