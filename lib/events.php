@@ -44,6 +44,11 @@ function tag_tools_create_metadata_event_handler($event, $type, $metadata) {
 		return;
 	}
 	
+	// check of the entity is allowed for notifications
+	if (!tag_tools_is_notification_entity($entity_row->guid)) {
+		return;
+	}
+	
 	$tag = $metadata->value;
 	
 	$options = array(

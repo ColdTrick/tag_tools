@@ -347,3 +347,55 @@ function tag_tools_check_user_tag_notification_method($tag, $method, $user_guid 
 	// check if the user has selected the notification method
 	return in_array($method, $tag_settings);
 }
+
+/**
+ * Check is notifications for this entity are allowed
+ *
+ * @param int $entity_guid the entity guid
+ *
+ * @return bool
+ */
+function tag_tools_is_notification_entity($entity_guid) {
+	
+	$entity_guid = sanitise_int($entity_guid);
+	$entity = get_entity($entity_guid);
+	if (empty($entity)) {
+		return false;
+	}
+	
+	$type_subtypes = tag_tools_get_notification_type_subtypes();
+	if (empty($type_subtypes) || !is_array($type_subtypes)) {
+		return false;
+	}
+	
+	$type = $entity->getType();
+	if (empty($type) || !isset($type_subtypes[$type])) {
+		return false;
+	}
+	
+	$subtypes = elgg_extract($type, $type_subtypes);
+	$subtype = $entity->getSubtype();
+	if (empty($subtype)) {
+		// user, group, site
+		return true;
+	}
+	
+	return in_array($subtype, $subtypes);
+}
+
+/**
+ * Get the type/subtypes for which tag_tools notifications are allowed
+ *
+ * @return false|array
+ */
+function tag_tools_get_notification_type_subtypes() {
+	static $result;
+	
+	if (!isset($result)) {
+		$result = get_registered_entity_types();
+		
+		$result = trigger_plugin_hook('notification_type_subtype', 'tag_tools', $result, $result);
+	}
+	
+	return $result;
+}
