@@ -21,14 +21,12 @@ if (elgg_is_active_plugin("notifications")) {
 elgg_push_breadcrumb($title);
 
 // build page elements
-$description = elgg_view_module("info", "", elgg_echo("tag_tools:notifications:description"));
-
 $form = elgg_view_form("tag_tools/notifications/edit", array(), array("entity" => $user));
 
 // build page
 $params = array(
 	"title" => $title,
-	"content" => $description . $form,
+	"content" => $form,
 );
 $body = elgg_view_layout("one_sidebar", $params);
 

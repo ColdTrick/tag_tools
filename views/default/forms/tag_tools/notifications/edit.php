@@ -5,11 +5,13 @@ if (empty($user) || !elgg_instanceof($user, "user")) {
 	return;
 }
 
+echo elgg_view_module("info", "", elgg_echo("tag_tools:notifications:description"));
+
 $NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
 
 $tags = tag_tools_get_user_following_tags($user->getGUID());
 if (empty($tags)) {
-	echo elgg_echo("tag_tools:notifications:empty");
+	echo elgg_view('output/longtext', array('value' => elgg_echo("tag_tools:notifications:empty")));
 	return;
 }
 
