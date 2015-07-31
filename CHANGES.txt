@@ -1,8 +1,14 @@
 Version history
 ===============
 
-x.x:
+1.1 (2015-07-31):
 
+- added: composer support
+- added: plugin hook to limit outgoing type/subtype notifications
+- changed: AMD load most of the js
+- changed: form buildup to include tag tools description
+- fixed: set correct submit button class
+- fixed: issue when removing or saving tags on notification settings form where the tag has strange characters
 - fixed: php warning for create metadata event handler
 - fixed: sending notifications to users without access to the content
 
