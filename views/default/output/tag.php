@@ -46,24 +46,25 @@ echo elgg_view('output/url', array(
 
 if (elgg_is_logged_in()) {
 	$encoded_tag = htmlspecialchars($vars["value"], ENT_QUOTES, "UTF-8", false);
-	
+
 	$on_class = "";
 	$off_class = "hidden";
 	if (tag_tools_is_user_following_tag($encoded_tag)) {
 		$on_class = "hidden";
 		$off_class = "";
 	}
+	$urlencoded_tag = urlencode($encoded_tag);
 	echo "<ul class='elgg-menu elgg-menu-hz elgg-menu-follow-tag'><li class='elgg-menu-item-follow-tag-on $on_class'>";
 	echo elgg_view("output/url", array(
 		"text" => elgg_view_icon("refresh"),
-		"href" => "action/tag_tools/follow_tag?tag=" . $encoded_tag,
+		"href" => "action/tag_tools/follow_tag?tag=" . $urlencoded_tag,
 		"title" => elgg_echo("tag_tools:follow_tag:menu:on"),
 		"is_action" => true
 	));
 	echo "</li><li class='elgg-menu-item-follow-tag-off $off_class'>";
 	echo elgg_view("output/url", array(
 		"text" => elgg_view_icon("refresh-hover"),
-		"href" => "action/tag_tools/follow_tag?tag=" . $encoded_tag,
+		"href" => "action/tag_tools/follow_tag?tag=" . $urlencoded_tag,
 		"title" => elgg_echo("tag_tools:follow_tag:menu:off"),
 		"is_action" => true
 	));
