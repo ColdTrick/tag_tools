@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'tag_tools:follow_tag:menu:on' => "Track new content with this tag",
 	'tag_tools:follow_tag:menu:off' => "Stop tracking new content with this tag",
 	'tag_tools:js:autocomplete:required' => "Please fill in the required tags",
@@ -19,5 +19,4 @@ You can see it here: %s",
 	
 	'tag_tools:actions:follow_tag:success:follow' => "You are now following the tag: %s",
 	'tag_tools:actions:follow_tag:success:unfollow' => "You are no longer following the tag: %s",
-	'' => "",
-);
+];

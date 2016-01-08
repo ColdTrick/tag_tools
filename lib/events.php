@@ -19,7 +19,7 @@ function tag_tools_create_metadata_event_handler($event, $type, $metadata) {
 	}
 	
 	// is it a tag
-	if ($metadata->name != "tags") {
+	if ($metadata->name != 'tags') {
 		return;
 	}
 	
@@ -51,19 +51,19 @@ function tag_tools_create_metadata_event_handler($event, $type, $metadata) {
 	
 	$tag = $metadata->value;
 	
-	$options = array(
-		"type" => "user",
-		"annotation_name_value_pairs" => array(
-			"name" => "follow_tag",
-			"value" => $tag
-		),
-		"limit" => false
-	);
+	$options = [
+		'type' => 'user',
+		'annotation_name_value_pairs' => [
+			'name' => 'follow_tag',
+			'value' => $tag
+		],
+		'limit' => false,
+	];
 
 	$ia = elgg_set_ignore_access(true);
 	
-	$dbprefix = elgg_get_config("dbprefix");
-	$entities = new ElggBatch("elgg_get_entities_from_annotations", $options);
+	$dbprefix = elgg_get_config('dbprefix');
+	$entities = new ElggBatch('elgg_get_entities_from_annotations', $options);
 	foreach ($entities as $user) {
 		
 		// check if not trying to notify the owner
@@ -76,7 +76,7 @@ function tag_tools_create_metadata_event_handler($event, $type, $metadata) {
 		
 		// check access for the user, can't use has_access_to_entity
 		// because that requires a full entity
-		$access_bit = _elgg_get_access_where_sql(array("user_guid" => $user->getGUID()));
+		$access_bit = _elgg_get_access_where_sql(['user_guid' => $user->getGUID()]);
 		
 		// ignore access to get the correct next user
 		elgg_set_ignore_access(true);
@@ -89,7 +89,7 @@ function tag_tools_create_metadata_event_handler($event, $type, $metadata) {
 		if (get_data($query)) {
 			// regsiter shutdown function because we need the full entity
 			// this is a workaround and should be reviewed in the near future
-			register_shutdown_function("tag_tools_notify_user", $user->getGUID(), $entity_row->guid, $tag);
+			register_shutdown_function('tag_tools_notify_user', $user->getGUID(), $entity_row->guid, $tag);
 		}
 	}
 	
