@@ -3,7 +3,7 @@ language: php
 
 # which versions of PHP to build with
 php:
-- 5.5
+- 5.6
 
 # set global environment variables
 env:
@@ -29,12 +29,8 @@ notifications:
 
 # before deployment make the zipfile to upload
 before_deploy:
- # go down one directory
- - cd ..
- # exclude all .git directories
- - zip -r $PROJECTNAME/${PROJECTNAME}_$TRAVIS_TAG.zip $PROJECTNAME -x $PROJECTNAME/.git/**\* $PROJECTNAME/.git/ $PROJECTNAME/**/.git/**\* $PROJECTNAME/**/.git/
- # return to the main directory for the next step
- - cd $PROJECTNAME
+ # execute release prepare script
+ - sh ./vendor/coldtrick/releases/scripts/travis/before_deploy.sh
 
 # deployment settings
 deploy:
@@ -48,3 +44,7 @@ deploy:
     # only when a tag is created in GitHub
     tags: true
     all_branches: true
+
+after_deploy:
+ # execute release after script
+ - sh ./vendor/coldtrick/releases/scripts/travis/after_deploy.sh
