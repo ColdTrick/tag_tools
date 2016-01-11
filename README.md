@@ -1,5 +1,9 @@
 # Tag Tools
 
+[![Build Status](https://scrutinizer-ci.com/g/ColdTrick/tag_tools/badges/build.png?b=master)](https://scrutinizer-ci.com/g/ColdTrick/tag_tools/build-status/master)
+[![Latest Stable Version](https://poser.pugx.org/coldtrick/tag_tools/v/stable.svg)](https://packagist.org/packages/coldtrick/tag_tools)
+[![License](https://poser.pugx.org/coldtrick/tag_tools/license.svg)](https://packagist.org/packages/coldtrick/tag_tools)
+
 Offers enhancements/tools for tags
 
 ## Features
