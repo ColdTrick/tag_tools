@@ -1,6 +1,11 @@
 Version history
 ===============
 
+1.1.1 (2016-01-11):
+
+- added: travis deployment support
+- fixed: tag should be url encoded when used in follow_tag links
+
 1.1 (2015-07-31):
 
 - added: composer support
