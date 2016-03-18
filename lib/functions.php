@@ -395,7 +395,7 @@ function tag_tools_get_notification_type_subtypes() {
 	if (!isset($result)) {
 		$result = get_registered_entity_types();
 		
-		$result = trigger_plugin_hook('notification_type_subtype', 'tag_tools', $result, $result);
+		$result = elgg_trigger_plugin_hook('notification_type_subtype', 'tag_tools', $result, $result);
 	}
 	
 	return $result;
