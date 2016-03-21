@@ -16,7 +16,11 @@ You can see it here: %s",
 	'tag_tools:widgets:follow_tags:title' => "Following tags",
 	'tag_tools:widgets:follow_tags:description' => "Shows the tags that are being followed",
 	'tag_tools:widgets:follow_tags:empty' => "This user is currently not following a tag",
+	'tag_tools:widgets:tagcloud:description' => "Shows a tagcloud based on all the content on the site, in the group or from the user",
+	'tag_tools:widgets:tagcloud:no_data' => "No data available to display a tagcloud",
 	
 	'tag_tools:actions:follow_tag:success:follow' => "You are now following the tag: %s",
 	'tag_tools:actions:follow_tag:success:unfollow' => "You are no longer following the tag: %s",
+	
+	
 ];

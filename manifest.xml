@@ -15,6 +15,12 @@
 		<type>elgg_release</type>
 		<version>1.9</version>
 	</requires>
+	
+	<requires>
+ 		<type>priority</type>
+		<plugin>tagcloud</plugin>
+		<priority>after</priority>
+	</requires>
 
 	<category>ColdTrick</category>
 </plugin_manifest>

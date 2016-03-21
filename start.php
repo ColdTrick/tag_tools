@@ -42,6 +42,9 @@ function tag_tools_init() {
 	
 	// widgets
 	elgg_register_widget_type('follow_tags', elgg_echo('tag_tools:widgets:follow_tags:title'), elgg_echo('tag_tools:widgets:follow_tags:description'), ['profile', 'dashboard']);
+	if (elgg_is_active_plugin('tagcloud')) {
+		elgg_register_widget_type('tagcloud', elgg_echo('tagcloud'), elgg_echo('tag_tools:widgets:tagcloud:description'), ['profile', 'dashboard', 'index', 'groups'], false);
+	}
 	
 	// actions
 	elgg_register_action('tag_tools/follow_tag', dirname(__FILE__) . '/actions/follow_tag.php');
