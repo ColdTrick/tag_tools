@@ -56,7 +56,7 @@ define(["jquery", "elgg", "jquery.tag-it"], function ($, elgg) {
 		});
 		
 		if ($(elem).is(":required")) {
-			$(elem).removeAttr("required");
+			$(elem).prop("required", false);
 			$form = $(elem).parents("form");
 			
 			$form.submit(function(event) {
