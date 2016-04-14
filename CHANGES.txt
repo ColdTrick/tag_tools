@@ -1,6 +1,13 @@
 Version history
 ===============
 
+1.2 (2016-04-14):
+
+- added: now provides improved version of the tagcloud widget
+- added: spanish translation
+- fixed: correctly remove required state for autocomplete
+- fixed: use correct function to trigger a plugin hook
+
 1.1.1 (2016-01-11):
 
 - added: travis deployment support
