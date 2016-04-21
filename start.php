@@ -35,7 +35,7 @@ function tag_tools_init() {
 	// plugin hooks
 	elgg_register_plugin_hook_handler('route', 'tags', '\ColdTrick\TagTools\Router::tags');
 	elgg_register_plugin_hook_handler('route', 'activity', '\ColdTrick\TagTools\Router::activity');
-	elgg_register_plugin_hook_handler('route', 'notifications', 'tag_tools_route_notifications_hook');
+	elgg_register_plugin_hook_handler('route', 'notifications', '\ColdTrick\TagTools\Router::notifications');
 	elgg_register_plugin_hook_handler('register', 'menu:filter', 'tag_tools_activity_filter_menu_hook_handler');
 	elgg_register_plugin_hook_handler('register', 'menu:page', '\ColdTrick\TagTools\MenuItems::registerSettingsMenuItem');
 	

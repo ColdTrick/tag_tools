@@ -4,43 +4,6 @@
  */
 
 /**
- * Listen to the 'notifications' page handler
- *
- * @param string $hook         the name of the hook
- * @param string $type         the type of the hook
- * @param array  $return_value the current return value
- * @param array  $params       supplied params
- *
- * @return array|bool
- */
-function tag_tools_route_notifications_hook($hook, $type, $return_value, $params) {
-	
-	if (empty($return_value) || !is_array($return_value)) {
-		return $return_value;
-	}
-	
-	$page = elgg_extract('segments', $return_value);
-	
-	switch ($page[0]) {
-		case 'tag':
-			
-			$user = get_user_by_username($page[1]);
-			if (empty($user)) {
-				forward();
-			} else {
-				elgg_set_page_owner_guid($user->getgUID());
-			}
-			
-			$return_value = false;
-			
-			include(dirname(dirname(__FILE__)) . '/pages/notifications.php');
-			break;
-	}
-	
-	return $return_value;
-}
-
-/**
  * Add a filter tab on the activity page
  *
  * @param string         $hook         the name of the hook
