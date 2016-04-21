@@ -41,35 +41,6 @@ function tag_tools_route_notifications_hook($hook, $type, $return_value, $params
 }
 
 /**
- * Listen to the 'activity' page handler
- *
- * @param string $hook         the name of the hook
- * @param string $type         the type of the hook
- * @param array  $return_value the current return value
- * @param array  $params       supplied params
- *
- * @return array|bool
- */
-function tag_tools_route_activity_hook($hook, $type, $return_value, $params) {
-	
-	if (empty($return_value) || !is_array($return_value)) {
-		return $return_value;
-	}
-	
-	$page = elgg_extract('segments', $return_value);
-	
-	switch ($page[0]) {
-		case 'tags':
-			$return_value = false;
-			
-			include(dirname(dirname(__FILE__)) . '/pages/activity.php');
-			break;
-	}
-	
-	return $return_value;
-}
-
-/**
  * Add a filter tab on the activity page
  *
  * @param string         $hook         the name of the hook
