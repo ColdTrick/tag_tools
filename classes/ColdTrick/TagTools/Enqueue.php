@@ -31,7 +31,7 @@ class Enqueue {
 			return;
 		}
 		
-		self::enqueue($metadata->entity_guid);
+		self::enqueueEntity($metadata->entity_guid);
 	}
 	
 	/**
@@ -59,7 +59,7 @@ class Enqueue {
 			return;
 		}
 		
-		self::enqueue($entity->getGUID());
+		self::enqueueEntity($entity->getGUID());
 	}
 	
 	/**
@@ -111,7 +111,7 @@ class Enqueue {
 	 *
 	 * @return void
 	 */
-	protected static function enqueue($entity_guid) {
+	protected static function enqueueEntity($entity_guid) {
 		
 		$entity_guid = sanitise_int($entity_guid, false);
 		if (empty($entity_guid)) {
