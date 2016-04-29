@@ -279,7 +279,7 @@ function tag_tools_get_user_notification_settings($user_guid = 0, $reset_cache =
  * @param string $tag       the tag to get the settings for
  * @param int    $user_guid the user to get the settings for (default: current user)
  *
- * @return bool|array
+ * @return false|array
  */
 function tag_tools_get_user_tag_notification_settings($tag, $user_guid = 0) {
 	
@@ -359,8 +359,8 @@ function tag_tools_check_user_tag_notification_method($tag, $method, $user_guid 
 function tag_tools_is_notification_entity($entity_guid) {
 	
 	$entity_guid = sanitise_int($entity_guid);
-	$entity = get_entity($entity_guid);
-	if (empty($entity)) {
+	$entity_row = get_entity_as_row($entity_guid);
+	if (empty($entity_row)) {
 		return false;
 	}
 	
@@ -369,19 +369,18 @@ function tag_tools_is_notification_entity($entity_guid) {
 		return false;
 	}
 	
-	$type = $entity->getType();
+	$type = $entity_row->type;
 	if (empty($type) || !isset($type_subtypes[$type])) {
 		return false;
 	}
 	
-	$subtypes = elgg_extract($type, $type_subtypes);
-	$subtype = $entity->getSubtype();
+	$subtype = get_subtype_from_id($entity_row->subtype);
 	if (empty($subtype)) {
 		// user, group, site
 		return true;
 	}
 	
-	return in_array($subtype, $subtypes);
+	return in_array($subtype, elgg_extract($type, $type_subtypes));
 }
 
 /**

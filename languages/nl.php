@@ -1,10 +1,13 @@
 <?php
 /**
- * This file was created by Translation Editor v2.0
- * On 2014-11-12 12:17
+ * This file was created by Translation Editor v5.1
+ * On 2016-04-29 12:06
  */
 
 return array (
+  'tag_tools:notification:follow:summary' => 'Nieuwe content met de tag %s',
+  'tag_tools:widgets:tagcloud:description' => 'Toon een tagcloud gebaseerd op alle content op de site, in de groep of van een gebruiker',
+  'tag_tools:widgets:tagcloud:no_data' => 'Er konden geen tags worden gevonden om weer te geven',
   'tag_tools:actions:follow_tag:success:follow' => 'Je volgt nu de tag: %s',
   'tag_tools:actions:follow_tag:success:unfollow' => 'Je volgt de tag: %s niet meer',
   'tag_tools:js:autocomplete:required' => 'Vul alstublieft de verplichte tags in',
