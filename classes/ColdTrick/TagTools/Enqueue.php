@@ -91,7 +91,8 @@ class Enqueue {
 			return false;
 		}
 		
-		if ($entity_row->access_id === ACCESS_PRIVATE) {
+		$entity_access = sanitise_int($entity_row->access_id);
+		if ($entity_access === ACCESS_PRIVATE) {
 			// private entity
 			return false;
 		}
