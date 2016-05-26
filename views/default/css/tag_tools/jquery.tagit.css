@@ -112,9 +112,6 @@ ul.tagit input[type="text"] {
     color: #333333;
     background: none;
 }
-.ui-widget {
-    font-size: 1.1em;
-}
 
 /* Forked from a jQuery UI theme, so that we don't require the jQuery UI CSS as a dependency. */
 .tagit-autocomplete.ui-autocomplete { position: absolute; cursor: default; }
