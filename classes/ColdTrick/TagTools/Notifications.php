@@ -55,15 +55,25 @@ class Notifications {
 			
 			// get the notification settings of the user for one of the sending tags
 			// this will prevent duplicate notifications,
-			// but also maybe less control over the method
 			foreach ($sending_tags as $tag) {
-				$notifiction_settings = tag_tools_get_user_tag_notification_settings($tag, $user->getGUID());
-				if (empty($notifiction_settings)) {
+				
+				if (!tag_tools_is_user_following_tag($tag, $user->getGUID())) {
+					// user is not following this tag, check the next
 					continue;
 				}
 				
-				$tag_subscribers[$user->getGUID()] = $notifiction_settings;
-				continue(2);
+				$notifiction_settings = tag_tools_get_user_tag_notification_settings($tag, $user->getGUID());
+				if (empty($notifiction_settings)) {
+					// no notification settings for this tag
+					continue;
+				}
+				
+				if (isset($tag_subscribers[$user->getGUID()])) {
+					$tag_subscribers[$user->getGUID()] = array_merge($tag_subscribers[$user->getGUID()], $notifiction_settings);
+					$tag_subscribers[$user->getGUID()] = array_unique($tag_subscribers[$user->getGUID()]);
+				} else {
+					$tag_subscribers[$user->getGUID()] = $notifiction_settings;
+				}
 			}
 		}
 		
@@ -98,16 +108,21 @@ class Notifications {
 		$entity = get_entity($relationship->guid_two);
 		
 		$sending_tags = tag_tools_get_unsent_tags($entity);
-		$tag = false;
+		$tag = [];
 		foreach ($sending_tags as $sending_tag) {
+			
+			if (!tag_tools_is_user_following_tag($sending_tag, $recipient->getGUID())) {
+				// user is not following this tag
+				continue;
+			}
 			
 			if (!tag_tools_check_user_tag_notification_method($sending_tag, $method, $recipient->getGUID())) {
 				continue;
 			}
 			
-			$tag = $sending_tag;
-			break;
+			$tag[] = $sending_tag;
 		}
+		$tag = implode(', ', $tag);
 		
 		// is this a new entity of an update on an existing
 		$time_diff = (int) $entity->time_updated - (int) $entity->time_created;
