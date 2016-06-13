@@ -109,9 +109,19 @@ class Notifications {
 			break;
 		}
 		
-		$return_value->subject = elgg_echo('tag_tools:notification:follow:subject', [$tag], $language);
-		$return_value->summary = elgg_echo('tag_tools:notification:follow:summary', [$tag], $language);
-		$return_value->body = elgg_echo('tag_tools:notification:follow:message', [$tag, $entity->getURL()], $language);
+		// is this a new entity of an update on an existing
+		$time_diff = (int) $entity->time_updated - (int) $entity->time_created;
+		if ($time_diff < 60) {
+			// new entity
+			$return_value->subject = elgg_echo('tag_tools:notification:follow:subject', [$tag], $language);
+			$return_value->summary = elgg_echo('tag_tools:notification:follow:summary', [$tag], $language);
+			$return_value->body = elgg_echo('tag_tools:notification:follow:message', [$tag, $entity->getURL()], $language);
+		} else {
+			// updated entity
+			$return_value->subject = elgg_echo('tag_tools:notification:follow:update:subject', [$tag], $language);
+			$return_value->summary = elgg_echo('tag_tools:notification:follow:update:summary', [$tag], $language);
+			$return_value->body = elgg_echo('tag_tools:notification:follow:update:message', [$tag, $entity->getURL()], $language);
+		}
 		
 		return $return_value;
 	}

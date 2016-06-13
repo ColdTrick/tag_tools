@@ -17,6 +17,13 @@ return [
 there is new content with the tag %s.
 
 You can see it here: %s",
+	'tag_tools:notification:follow:update:subject' => "Updated content with the tag %s",
+	'tag_tools:notification:follow:update:summary' => "Updated content with the tag %s",
+	'tag_tools:notification:follow:update:message' => "Hi,
+
+a content item was updated with the tag %s.
+
+You can see it here: %s",
 	'tag_tools:activity:tags' => "Activity based on your tags",
 	'tag_tools:widgets:follow_tags:title' => "Following tags",
 	'tag_tools:widgets:follow_tags:description' => "Shows the tags that are being followed",

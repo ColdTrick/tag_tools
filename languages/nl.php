@@ -1,10 +1,17 @@
 <?php
 /**
  * This file was created by Translation Editor v5.1
- * On 2016-06-13 16:00
+ * On 2016-06-13 16:11
  */
 
 return array (
+  'tag_tools:notification:follow:update:subject' => 'Content met de tag %s is bijgewerkt',
+  'tag_tools:notification:follow:update:summary' => 'Content met de tag %s is bijgewerkt',
+  'tag_tools:notification:follow:update:message' => 'Hallo,
+
+een content item met de tag %s is bijgewerkt.
+
+Bekijk het hier: %s',
   'admin:upgrades:set_tag_notifications_sent' => 'Tag tools - markeer alle tags als verzonden',
   'admin:upgrades:set_tag_notifications_sent:description' => 'Markeer alle tags als verzonden. Dit is van toepassing indien de plugin is bijgewerkt vanaf een oudere versie of indien dit een nieuwe plugin is.',
   'tag_tools:notification:follow:summary' => 'Nieuwe content met de tag %s',
