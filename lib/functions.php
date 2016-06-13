@@ -399,3 +399,76 @@ function tag_tools_get_notification_type_subtypes() {
 	
 	return $result;
 }
+
+/**
+ * Get the unsent tags
+ *
+ * @param \ElggEntity $entity the entity to get for
+ *
+ * @return false|string[]
+ */
+function tag_tools_get_unsent_tags(ElggEntity $entity) {
+	
+	if (!($entity instanceof \ElggEntity)) {
+		return false;
+	}
+	
+	$entity_tags = $entity->tags;
+	if (empty($entity_tags)) {
+		// shouldn't happen
+		return false;
+	} elseif (!is_array($entity_tags)) {
+		$entity_tags = [$entity_tags];
+	}
+	
+	$sent_tags = $entity->getPrivateSetting('tag_tools:sent_tags');
+	if (!empty($sent_tags)) {
+		$sent_tags = json_decode($sent_tags, true);
+	} else {
+		$sent_tags = [];
+	}
+	
+	$sending_tags = array_diff($entity_tags, $sent_tags);
+	if (empty($sending_tags)) {
+		return false;
+	}
+	
+	return $sending_tags;
+}
+
+/**
+ * Add tags to the sent tags of an entity
+ *
+ * @param ElggEntity $entity       the entity to add to
+ * @param string[]   $sending_tags the newly sent tags
+ *
+ * @return bool
+ */
+function tag_tools_add_sent_tags(ElggEntity $entity, $sending_tags = []) {
+	
+	if (!($entity instanceof \ElggEntity)) {
+		return false;
+	}
+	
+	if (empty($sending_tags)) {
+		// nothing to add
+		return true;
+	}
+	
+	if (!is_array($sending_tags)) {
+		$sending_tags = [$sending_tags];
+	}
+	
+	$sent_tags = $entity->getPrivateSetting('tag_tools:sent_tags');
+	if (!empty($sent_tags)) {
+		$sent_tags = json_decode($sent_tags, true);
+	} else {
+		$sent_tags = [];
+	}
+	
+	// store all processed tags
+	$processed_tags = array_merge($sent_tags, $sending_tags);
+	$processed_tags = array_unique($processed_tags);
+	
+	return $entity->setPrivateSetting('tag_tools:sent_tags', json_encode($processed_tags));
+}

@@ -31,6 +31,7 @@ function tag_tools_init() {
 	// register events
 	elgg_register_event_handler('create', 'metadata', '\ColdTrick\TagTools\Enqueue::createMetadata');
 	elgg_register_event_handler('update:after', 'all', '\ColdTrick\TagTools\Enqueue::afterEntityUpdate');
+	elgg_register_event_handler('upgrade', 'system', '\ColdTrick\TagTools\Upgrade::markOldTagsAsSent');
 	
 	// plugin hooks
 	elgg_register_plugin_hook_handler('route', 'tags', '\ColdTrick\TagTools\Router::tags');
@@ -54,4 +55,6 @@ function tag_tools_init() {
 	// actions
 	elgg_register_action('tag_tools/follow_tag', dirname(__FILE__) . '/actions/follow_tag.php');
 	elgg_register_action('tag_tools/notifications/edit', dirname(__FILE__) . '/actions/notifications/edit.php');
+	
+	elgg_register_action('tag_tools/upgrades/set_tag_notifications_sent', dirname(__FILE__) . '/actions/upgrades/set_tag_notifications_sent.php', 'admin');
 }

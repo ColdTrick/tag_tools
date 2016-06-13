@@ -29,7 +29,7 @@ class Notifications {
 		
 		$entity = get_entity($relationship->guid_two);
 		
-		$sending_tags = self::getUnsendTags($entity);
+		$sending_tags = tag_tools_get_unsent_tags($entity);
 		if (empty($sending_tags)) {
 			return [];
 		}
@@ -97,7 +97,7 @@ class Notifications {
 		
 		$entity = get_entity($relationship->guid_two);
 		
-		$sending_tags = self::getUnsendTags($entity);
+		$sending_tags = tag_tools_get_unsent_tags($entity);
 		$tag = false;
 		foreach ($sending_tags as $sending_tag) {
 			
@@ -145,21 +145,12 @@ class Notifications {
 		remove_entity_relationships($entity->getGUID(), 'tag_tools:notification', true);
 		
 		// save the newly sent tags
-		$sending_tags = self::getUnsendTags($entity);
+		$sending_tags = tag_tools_get_unsent_tags($entity);
 		if (empty($sending_tags)) {
 			return;
 		}
 		
-		$sent_tags = $entity->getPrivateSetting('tag_tools:sent_tags');
-		if (!empty($sent_tags)) {
-			$sent_tags = json_decode($sent_tags, true);
-		} else {
-			$sent_tags = [];
-		}
-		
-		// store all processed tags
-		$processed_tags = array_merge($sent_tags, $sending_tags);
-		$entity->setPrivateSetting('tag_tools:sent_tags', json_encode($processed_tags));
+		tag_tools_add_sent_tags($entity, $sending_tags);
 	}
 	
 	/**
@@ -190,41 +181,5 @@ class Notifications {
 		}
 		
 		return true;
-	}
-	
-	/**
-	 * Get the unsend tags
-	 *
-	 * @param \ElggEntity $entity the entity to get for
-	 *
-	 * @return false|string[]
-	 */
-	protected static function getUnsendTags(\ElggEntity $entity) {
-		
-		if (!($entity instanceof \ElggEntity)) {
-			return false;
-		}
-		
-		$entity_tags = $entity->tags;
-		if (empty($entity_tags)) {
-			// shouldn't happen
-			return false;
-		} elseif (!is_array($entity_tags)) {
-			$entity_tags = [$entity_tags];
-		}
-		
-		$sent_tags = $entity->getPrivateSetting('tag_tools:sent_tags');
-		if (!empty($sent_tags)) {
-			$sent_tags = json_decode($sent_tags, true);
-		} else {
-			$sent_tags = [];
-		}
-		
-		$sending_tags = array_diff($entity_tags, $sent_tags);
-		if (empty($sending_tags)) {
-			return false;
-		}
-		
-		return $sending_tags;
 	}
 }
