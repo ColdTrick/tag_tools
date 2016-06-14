@@ -5,11 +5,16 @@ $error_count = 0;
 $dbprefix = elgg_get_config('dbprefix');
 
 $offset = (int) get_input('offset', 0);
+$upgrade_complete = (bool) get_input('upgrade_completed', false);
 
 // prepare options
 $options = [
 	'type_subtype_pairs' => $type_subtypes,
-	'metadata_names' => ['tags'],
+	'metadata_name_value_pairs' => [
+		'name' => 'tags',
+		'value' => '',
+		'operand' => '!=',
+	],
 	'limit' => 25,
 	'offset' => $offset,
 	'wheres' => ["NOT EXISTS (
@@ -23,6 +28,10 @@ $batch = new ElggBatch('elgg_get_entities_from_metadata', $options);
 foreach ($batch as $entity) {
 	/* @var $entity \ElggEntity */
 	$unsent_tags = tag_tools_get_unsent_tags($entity);
+	if (empty($unsent_tags)) {
+		$error_count++;
+		continue;
+	}
 	
 	// mark the tags as sent
 	if (tag_tools_add_sent_tags($entity, $unsent_tags)) {
@@ -35,7 +44,7 @@ foreach ($batch as $entity) {
 }
 
 // are we done?
-if (($success_count + $error_count) === 0) {
+if ((($success_count + $error_count) === 0) || $upgrade_complete) {
 	$path = 'admin/upgrades/set_tag_notifications_sent';
 	
 	$factory = new ElggUpgrade();

@@ -14,7 +14,11 @@ if (!empty($type_subtypes)) {
 	$count = elgg_get_entities_from_metadata([
 		'type_subtype_pairs' => $type_subtypes,
 		'count' => true,
-		'metadata_names' => ['tags'],
+		'metadata_name_value_pairs' => [
+			'name' => 'tags',
+			'value' => '',
+			'operand' => '!=',
+		],
 		'wheres' => ["NOT EXISTS (
 			SELECT 1 FROM {$dbprefix}private_settings ps
 			WHERE ps.entity_guid = e.guid
