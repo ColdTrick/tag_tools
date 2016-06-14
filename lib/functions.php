@@ -392,8 +392,13 @@ function tag_tools_get_notification_type_subtypes() {
 	static $result;
 	
 	if (!isset($result)) {
+		// default to registered (searchable) entities
 		$result = get_registered_entity_types();
 		
+		// remove users from tag notifications
+		unset($result['user']);
+		
+		// allow others to change the type/subtypes
 		$result = elgg_trigger_plugin_hook('notification_type_subtype', 'tag_tools', $result, $result);
 	}
 	
