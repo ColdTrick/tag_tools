@@ -21,25 +21,32 @@ $query_params['search_type'] = 'tags';
 
 if (!empty($vars['type'])) {
 	$query_params['type'] = $vars['type'];
+	unset($vars['type']);
 }
 
 if (!empty($vars['subtype'])) {
 	$query_params['subtype'] = $vars['subtype'];
+	unset($vars['subtype']);
 }
 
 $url = elgg_extract('base_url', $vars, elgg_get_site_url() . 'search');
+unset($vars['base_url']);
 
 $http_query = http_build_query($query_params);
 if ($http_query) {
 	$url .= '?' . $http_query;
 }
 
-echo elgg_view('output/url', [
+$params = [
 	'href' => $url,
 	'text' => $value,
 	'encode_text' => true,
 	'rel' => 'tag',
-]);
+];
+
+$params = $params + $vars;
+
+echo elgg_view('output/url', $params);
 
 if (elgg_is_logged_in()) {
 	$encoded_tag = htmlspecialchars($value, ENT_QUOTES, 'UTF-8', false);
