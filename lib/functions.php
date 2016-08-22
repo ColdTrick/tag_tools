@@ -419,7 +419,10 @@ function tag_tools_get_unsent_tags(ElggEntity $entity) {
 	}
 	
 	$entity_tags = $entity->tags;
-	if (empty($entity_tags)) {
+	
+	// Cannot use empty() because it would evaluate
+	// the string "0" as an empty value.
+	if (is_null($entity_tags)) {
 		// shouldn't happen
 		return false;
 	} elseif (!is_array($entity_tags)) {
