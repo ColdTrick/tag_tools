@@ -27,6 +27,7 @@ function tag_tools_init() {
 	
 	// extend views
 	elgg_extend_view('input/tags', 'tag_tools/extend_tags');
+	elgg_extend_view('output/tag', 'tag_tools/output/tag');
 	
 	// register events
 	elgg_register_event_handler('create', 'metadata', '\ColdTrick\TagTools\Enqueue::createMetadata');
@@ -39,6 +40,7 @@ function tag_tools_init() {
 	elgg_register_plugin_hook_handler('route', 'notifications', '\ColdTrick\TagTools\Router::notifications');
 	elgg_register_plugin_hook_handler('register', 'menu:filter', '\ColdTrick\TagTools\MenuItems::registerActivityTab');
 	elgg_register_plugin_hook_handler('register', 'menu:page', '\ColdTrick\TagTools\MenuItems::registerSettingsMenuItem');
+	elgg_register_plugin_hook_handler('register', 'menu:follow_tag', '\ColdTrick\TagTools\MenuItems::registerFollowTag');
 	
 	// notifications
 	elgg_register_notification_event('relationship', 'tag_tools:notification');
