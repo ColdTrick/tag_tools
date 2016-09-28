@@ -22,7 +22,7 @@ class Router {
 		
 		$page = elgg_extract('segments', $return_value);
 		
-		switch ($page[0]) {
+		switch (elgg_extract(0, $page)) {
 			case 'autocomplete':
 				$return_value = false;
 				
@@ -53,7 +53,7 @@ class Router {
 		
 		$page = elgg_extract('segments', $return_value);
 		
-		switch ($page[0]) {
+		switch (elgg_extract(0, $page)) {
 			case 'tags':
 				$return_value = false;
 				
@@ -84,7 +84,7 @@ class Router {
 		
 		$page = elgg_extract('segments', $return_value);
 		
-		switch ($page[0]) {
+		switch (elgg_extract(0, $page)) {
 			case 'tag':
 				
 				$user = get_user_by_username($page[1]);
