@@ -207,4 +207,33 @@ class Notifications {
 		
 		return true;
 	}
+	
+	/**
+	 * Set the correct URL for the notification relationship
+	 *
+	 * @param string $hook         the name of the hook
+	 * @param string $type         the type of the hook
+	 * @param string $return_value current return value
+	 * @param array  $params       supplied params
+	 *
+	 * @return void|string
+	 */
+	public static function getNotificationURL($hook, $type, $return_value, $params) {
+		
+		$relationship = elgg_extract('relationship', $params);
+		if (!($relationship instanceof \ElggRelationship)) {
+			return;
+		}
+		
+		if ($relationship->relationship !== 'tag_tools:notification') {
+			return;
+		}
+		
+		$entity = get_entity($relationship->guid_two);
+		if (!($entity instanceof \ElggEntity)) {
+			return;
+		}
+		
+		return $entity->getURL();
+	}
 }
