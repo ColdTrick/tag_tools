@@ -1,6 +1,12 @@
 Version history
 ===============
 
+1.5 (2016-10-06):
+
+- changed: moved (un)follow tag menu items to actual menu
+- fixed: set correct url on site notification about tags
+- fixed: zero strings being accidentally evaluated as non-existing values
+
 1.4 (2016-06-16):
 
 - added: different notification content for updated content items
