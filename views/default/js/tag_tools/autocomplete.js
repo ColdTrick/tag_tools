@@ -63,7 +63,7 @@ define(["jquery", "elgg", "jquery.tag-it"], function ($, elgg) {
 				if ($(elem).val() == "") {
 					$(elem).next(".tagit").find(".ui-autocomplete-input").focus();
 					
-					alert(elgg.echo("tag_tools:js:autocomplete:required"));
+					elgg.register_error(elgg.echo("tag_tools:js:autocomplete:required"));
 					
 					event.stopImmediatePropagation();
 					return false;
