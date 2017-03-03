@@ -8,6 +8,8 @@ ul.tagit {
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 	border: 1px solid #ccc;
+	background: white;
+	cursor: text;
 }
 ul.tagit li {
     display: block;
