@@ -1,4 +1,3 @@
-
 define(["jquery", "elgg", "jquery.tag-it"], function ($, elgg) {
 	
 	elgg.provide("elgg.tag_tools.autocomplete");
@@ -16,7 +15,6 @@ define(["jquery", "elgg", "jquery.tag-it"], function ($, elgg) {
 		$(elem).parent().addClass("ui-front");
 		
 		$(elem)
-		.data("tagToolsAutocompleteInitialized", true)
 		// don't navigate away from the field on tab when selecting an item
 		.bind("keydown", function(event) {
 			if ((event.keyCode === $.ui.keyCode.TAB) && $(this).data("autocomplete").menu.active) {
@@ -55,30 +53,20 @@ define(["jquery", "elgg", "jquery.tag-it"], function ($, elgg) {
 			}
 		});
 		
-		if ($(elem).is(":required")) {
-			$(elem).prop("required", false);
-			$form = $(elem).parents("form");
-			
-			$form.submit(function(event) {
-				if ($(elem).val() == "") {
-					$(elem).next(".tagit").find(".ui-autocomplete-input").focus();
-					
-					elgg.register_error(elgg.echo("tag_tools:js:autocomplete:required"));
-					
-					event.stopImmediatePropagation();
-					return false;
-				}
-			});
-		}
+		$(elem).insertAfter($(elem).next('.tagit')).on('invalid', function() {
+			$(this).prev('.tagit').addClass('elgg-input-required');
+		}).on('change', function() {
+			$(this).prev('.tagit').removeClass('elgg-input-required');
+		});
+
 	};
 	
 	return function() {
 		$(".elgg-input-tags").each(function() {
-			var data = $(this).data();
-			
-			if (!data.tagToolsAutocompleteInitialized) {
+			if (!$(this).data().tagToolsInitialized) {
 				elgg.tag_tools.autocomplete.initialize(this);
 			}
+			$(this).data("tagToolsInitialized", true);
 		});
 	};
 });

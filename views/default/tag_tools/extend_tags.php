@@ -1,7 +1,7 @@
 <?php
 ?>
 <script type="text/javascript">
-	require(["tag_tools/autocomplete"], function(tagToolsAutocomplete) {
+	require(["input/tags"], function(tagToolsAutocomplete) {
 		tagToolsAutocomplete();
 	});
 </script>

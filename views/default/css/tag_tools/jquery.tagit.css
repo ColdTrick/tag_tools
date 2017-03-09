@@ -155,3 +155,18 @@ ul.tagit input[type="text"] {
 
 .tagit-autocomplete .ui-widget-content { border: 1px solid #aaaaaa; }
 .tagit .ui-helper-hidden-accessible { position: absolute !important; clip: rect(1px,1px,1px,1px); }
+
+.tagit.elgg-input-required {
+	box-shadow: 0 0px 2px red;
+}
+input.elgg-input-tags.tagit-hidden-field,
+input.elgg-input-tags.tagit-hidden-field:required {
+	display: block;
+	border: 0;
+	height: 0;
+	width: 0;
+	padding: 0;
+	margin: 0;
+	box-shadow: none;
+	position: absolute;
+}
