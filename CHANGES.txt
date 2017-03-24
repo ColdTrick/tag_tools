@@ -1,6 +1,11 @@
 Version history
 ===============
 
+1.5.2 (2017-03-24):
+
+- changed: input validation is now html5 compatible
+- fixed: tag input field now has a background color instead of transparent
+
 1.5.1 (2016-12-16):
 
 - several small chores/fixes
