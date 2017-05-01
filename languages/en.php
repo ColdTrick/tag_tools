@@ -4,11 +4,16 @@ return [
 	'admin:upgrades:set_tag_notifications_sent' => "Tag tools - set all tags as sent",
 	'admin:upgrades:set_tag_notifications_sent:description' => "Mark all tags on supported content as sent. This is usefull when coming for an older version of the plugin or is this is a new plugin.",
 
+	'admin:tags' => "Tags",
+	'admin:tags:search' => "Search",
+	'admin:tags:suggest' => "Suggest",
+	'admin:tags:rules' => "Rules",
+	
 	'item:object:tag_tools_rule' => "Tag Tools rule",
 	
 	'tag_tools:rule:title:delete' => "Delete tag: %s",
 	'tag_tools:rule:title:replace' => "Replace tag '%s' with '%s'",
-	
+
 	'tag_tools:follow_tag:menu:on' => "Track new content with this tag",
 	'tag_tools:follow_tag:menu:off' => "Stop tracking new content with this tag",
 	'tag_tools:js:autocomplete:required' => "Please fill in the required tags",

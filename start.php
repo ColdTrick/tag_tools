@@ -23,6 +23,11 @@ function tag_tools_init() {
 	elgg_extend_view('css/elgg', 'css/tag_tools/follow.css');
 	
 	elgg_extend_view('js/elgg', 'js/tag_tools/follow.js');
+
+	// menu items
+	elgg_register_admin_menu_item('administer', 'search', 'tags');
+	elgg_register_admin_menu_item('administer', 'suggest', 'tags');
+	elgg_register_admin_menu_item('administer', 'rules', 'tags');
 	
 	// extend views
 	elgg_extend_view('input/tags', 'tag_tools/extend_tags');
