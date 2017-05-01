@@ -6,7 +6,6 @@
  */
 
 require_once(dirname(__FILE__) . '/lib/functions.php');
-require_once(dirname(__FILE__) . '/lib/events.php');
 
 // register default Elgg events
 elgg_register_event_handler('init', 'system', 'tag_tools_init');
