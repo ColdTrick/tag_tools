@@ -32,6 +32,7 @@ function tag_tools_init() {
 	elgg_register_event_handler('create', 'metadata', '\ColdTrick\TagTools\Enqueue::createMetadata');
 	elgg_register_event_handler('update:after', 'all', '\ColdTrick\TagTools\Enqueue::afterEntityUpdate');
 	elgg_register_event_handler('upgrade', 'system', '\ColdTrick\TagTools\Upgrade::markOldTagsAsSent');
+	elgg_register_event_handler('upgrade', 'system', '\ColdTrick\TagTools\Upgrade::checkClassHandlers');
 	
 	// plugin hooks
 	elgg_register_plugin_hook_handler('route', 'tags', '\ColdTrick\TagTools\Router::tags');

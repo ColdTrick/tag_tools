@@ -35,4 +35,23 @@ class Upgrade {
 		// restore access
 		elgg_set_ignore_access($ia);
 	}
+	
+	/**
+	 * Listen to the upgrade event to check if the correct class is registered to handle the subtype
+	 *
+	 * @param string $event  the name of the event
+	 * @param string $type   the type of the event
+	 * @param mixed  $entity supplied entity/params
+	 *
+	 * @return void
+	 */
+	public static function checkClassHandlers($event, $type, $entity) {
+		
+		// set the correct class handler for the rules
+		if (get_subtype_id('object', \TagToolsRule::SUBTYPE)) {
+			update_subtype('object', \TagToolsRule::SUBTYPE, \TagToolsRule::class);
+		} else {
+			add_subtype('object', \TagToolsRule::SUBTYPE, \TagToolsRule::class);
+		}
+	}
 }
