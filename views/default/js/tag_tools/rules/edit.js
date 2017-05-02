@@ -1,6 +1,5 @@
 define(function() {
 	var $ = require('jquery');
-	var elgg = require('elgg');
 	
 	$(document).on('change', '#tag-tools-rules-edit-action', function() {
 		

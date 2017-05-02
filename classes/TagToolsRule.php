@@ -73,7 +73,7 @@ class TagToolsRule extends ElggObject {
 		}
 		
 		// ignore access/disabled entities
-		$ia = elgg_set_ignore_access($ia);
+		$ia = elgg_set_ignore_access(true);
 		$hidden = access_get_show_hidden_status();
 		access_show_hidden_entities(true);
 		
