@@ -491,9 +491,9 @@ function tag_tools_add_sent_tags(ElggEntity $entity, $sending_tags = []) {
 function tag_tools_rules_prepare_form_vars($entity = null) {
 	
 	$defaults = [
-		'from_tag' => '',
-		'to_tag' => '',
-		'tag_action' => 'replace',
+		'from_tag' => get_input('from_tag'),
+		'to_tag' => null,
+		'tag_action' => get_input('tag_action', 'replace'),
 	];
 	
 	// load data from existing entity
@@ -563,4 +563,34 @@ function tag_tools_rules_get_type_subtypes() {
 	
 	$result = elgg_trigger_plugin_hook('rules_type_subtypes', 'tag_tools', $result, $result);
 	return $result;
+}
+
+/**
+ * Get the tag rule for the from string
+ *
+ * @param string $from_tag the string to fetch the rule for
+ *
+ * @return false|TagToolsRule
+ */
+function tag_tools_rules_get_rule($from_tag) {
+	
+	if(trim($from_tag) === '') {
+		return false;
+	}
+	
+	// base options
+	$rules = elgg_get_entities_from_metadata([
+		'type' => 'object',
+		'subtype' => TagToolsRule::SUBTYPE,
+		'limit' => 1,
+		'metadata_name_value_pairs' => [
+			'name' => 'from_tag',
+			'value' => $from_tag,
+		],
+	]);
+	if (empty($rules)) {
+		return false;
+	}
+	
+	return elgg_extract(0, $rules);
 }

@@ -48,24 +48,11 @@ class Rules {
 			return;
 		}
 		
-		// get rules
-		$rules = elgg_get_entities_from_metadata([
-			'type' => 'object',
-			'subtype' => \TagToolsRule::SUBTYPE,
-			'limit' => 1,
-			'metadata_name_value_pairs' => [
-				'name' => 'from_tag',
-				'value' => $object->value,
-				'case_sensitive' => false,
-			],
-		]);
-		if (empty($rules)) {
-			// nothing to apply
+		// get rule
+		$rule = tag_tools_rules_get_rule($object->value);
+		if (empty($rule)) {
 			return;
 		}
-		
-		/* @var $rule \TagToolsRule */
-		$rule = $rules[0];
 		
 		switch ($rule->tag_action) {
 			case 'delete':
