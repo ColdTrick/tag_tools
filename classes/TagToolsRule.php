@@ -14,7 +14,7 @@ class TagToolsRule extends ElggObject {
 	/**
 	 * @var string[] registered tag names
 	 */
-	private $tag_names;
+	private $tag_names = ['tags'];
 	
 	/**
 	 * @var array the registered entity types in Elgg
@@ -184,6 +184,8 @@ class TagToolsRule extends ElggObject {
 	/**
 	 * Get the registered tag names in Elgg
 	 *
+	 * @todo support multiple tag names
+	 *
 	 * @return string[]
 	 */
 	protected function getTagNames() {
@@ -192,6 +194,7 @@ class TagToolsRule extends ElggObject {
 			return $this->tag_names;
 		}
 		
+		// make this work in the future
 		$this->tag_names = elgg_get_registered_tag_metadata_names();
 		return $this->tag_names;
 	}
