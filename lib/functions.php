@@ -514,3 +514,21 @@ function tag_tools_rules_prepare_form_vars($entity = null) {
 	
 	return $defaults;
 }
+
+/**
+ * Get the metadata names for which to apply tag rules
+ *
+ * @todo support mulitple names
+ *
+ * @return string[]
+ */
+function tag_tools_rules_get_tag_names() {
+	
+	return [
+		'tags',
+	];
+	
+	// make this work
+	$tag_names = elgg_get_registered_tag_metadata_names();
+	return $tag_names;
+}
