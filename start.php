@@ -21,6 +21,7 @@ function tag_tools_init() {
 	elgg_define_js('jquery.tag-it', ['src' => 'mod/tag_tools/vendors/jquery/tag_it/js/tag-it.min.js']);
 	elgg_extend_view('css/elgg', 'css/tag_tools/jquery.tagit.css');
 	elgg_extend_view('css/elgg', 'css/tag_tools/follow.css');
+	elgg_extend_view('css/admin', 'css/tag_tools/admin.css');
 	
 	elgg_extend_view('js/elgg', 'js/tag_tools/follow.js');
 
@@ -70,4 +71,5 @@ function tag_tools_init() {
 	elgg_register_action('tag_tools/upgrades/set_tag_notifications_sent', dirname(__FILE__) . '/actions/upgrades/set_tag_notifications_sent.php', 'admin');
 	elgg_register_action('tag_tools/rules/edit', dirname(__FILE__) . '/actions/rules/edit.php', 'admin');
 	elgg_register_action('tag_tools/rules/delete', dirname(__FILE__) . '/actions/rules/delete.php', 'admin');
+	elgg_register_action('tag_tools/suggestions/ignore', dirname(__FILE__) . '/actions/suggestions/ignore.php', 'admin');
 }

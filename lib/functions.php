@@ -492,7 +492,7 @@ function tag_tools_rules_prepare_form_vars($entity = null) {
 	
 	$defaults = [
 		'from_tag' => '',
-		'to_tag' => '',
+		'to_tag' => get_input('to_tag'),
 		'tag_action' => 'replace',
 	];
 	
