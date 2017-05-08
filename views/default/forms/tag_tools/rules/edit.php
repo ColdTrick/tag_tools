@@ -23,7 +23,7 @@ echo elgg_view_field([
 	'#type' => 'text',
 	'#label' => elgg_echo('tag_tools:rules:from_tag'),
 	'name' => 'from_tag',
-	'value' => elgg_extract('from_tag', $vars, get_input('from_tag'), false),
+	'value' => elgg_extract('from_tag', $vars),
 	'required' => true,
 	'readonly' => $edit,
 ]);
@@ -50,10 +50,12 @@ if (!$edit || $entity->tag_action !== 'delete') {
 	echo elgg_view_field([
 		'#type' => 'text',
 		'#label' => elgg_echo('tag_tools:rules:to_tag'),
+		'#class' => (elgg_extract('tag_action', $vars) === 'delete') ? 'hidden' : null,
 		'id' => 'tag-tools-rules-edit-to',
 		'name' => 'to_tag',
 		'value' => elgg_extract('to_tag', $vars),
 		'required' => true,
+		'disabled' => (elgg_extract('tag_action', $vars) === 'delete'),
 	]);
 }
 

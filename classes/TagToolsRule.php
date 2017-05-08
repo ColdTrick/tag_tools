@@ -22,6 +22,16 @@ class TagToolsRule extends ElggObject {
 	private $entity_types;
 	
 	/**
+	 * @var bool state of access bit
+	 */
+	private $ignore_access;
+	
+	/**
+	 * @var bool state of disabled entities
+	 */
+	private $show_hidden_entities;
+	
+	/**
 	 * {@inheritDoc}
 	 * @see ElggObject::initializeAttributes()
 	 */
@@ -72,13 +82,8 @@ class TagToolsRule extends ElggObject {
 			return;
 		}
 		
-		// ignore access/disabled entities
-		$ia = elgg_set_ignore_access(true);
-		$hidden = access_get_show_hidden_status();
-		access_show_hidden_entities(true);
-		
-		// this could take a bit
-		set_time_limit(0);
+		// prepare
+		$this->preApply();
 		
 		try {
 			switch ($this->tag_action) {
@@ -93,9 +98,44 @@ class TagToolsRule extends ElggObject {
 			elgg_log($e->getMessage(), 'ERROR');
 		}
 		
+		// restore
+		$this->postApply();
+	}
+	
+	/**
+	 * Prepare some settings before applying the rule
+	 *
+	 * @return void
+	 */
+	protected function preApply() {
+		
+		// this could take a bit
+		set_time_limit(0);
+		
+		// ignore access/disabled entities
+		$this->ignore_access = elgg_set_ignore_access(true);
+		$this->show_hidden_entities = access_get_show_hidden_status();
+		access_show_hidden_entities(true);
+		
+		// unregister some events
+		elgg_unregister_event_handler('create', 'metadata', '\ColdTrick\TagTools\Rules::applyRules');
+		elgg_unregister_event_handler('create', 'metadata', '\ColdTrick\TagTools\Enqueue::createMetadata');
+	}
+	
+	/**
+	 * Restore settings after apply is done
+	 *
+	 * @return void
+	 */
+	protected function postApply() {
+		
 		// restore access/disabled entities
-		elgg_set_ignore_access($ia);
-		access_show_hidden_entities($hidden);
+		elgg_set_ignore_access($this->ignore_access);
+		access_show_hidden_entities($this->show_hidden_entities);
+		
+		// reregsiter events
+		elgg_register_event_handler('create', 'metadata', '\ColdTrick\TagTools\Rules::applyRules', 1);
+		elgg_register_event_handler('create', 'metadata', '\ColdTrick\TagTools\Enqueue::createMetadata');
 	}
 	
 	/**
@@ -207,18 +247,7 @@ class TagToolsRule extends ElggObject {
 			return $this->entity_types;
 		}
 		
-		$this->entity_types = [];
-		
-		$entity_types = get_registered_entity_types();
-		foreach ($entity_types as $type => $subtypes) {
-			if (empty($subtypes) || !is_array($subtypes)) {
-				$this->entity_types[$type] = ELGG_ENTITIES_ANY_VALUE;
-				continue;
-			}
-			
-			$this->entity_types[$type] = $subtypes;
-		}
-		
+		$this->entity_types = tag_tools_rules_get_type_subtypes();
 		return $this->entity_types;
 	}
 }

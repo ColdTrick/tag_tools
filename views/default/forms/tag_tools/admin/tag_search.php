@@ -1,11 +1,12 @@
 <?php
 
-$type_subtypes = get_registered_entity_types();
+$type_subtypes = tag_tools_rules_get_type_subtypes();
 
 $option_values = ['' => ''];
 foreach ($type_subtypes as $type => $subtypes) {
-	if ($type !== 'object') {
+	if (empty($subtypes)) {
 		$option_values[$type] = elgg_echo("item:{$type}");
+		continue;
 	}
 	
 	foreach ($subtypes as $subtype) {

@@ -53,9 +53,9 @@ $query = "SELECT * FROM (
 		{$likes_string}
 		{$type_subtype_where}
 		GROUP BY md.value_id
-		) tags
-		{$min_count_string}
-		ORDER BY count DESC
+	) tags
+	{$min_count_string}
+	ORDER BY count DESC
 ";
 
 $results = get_data($query);
@@ -65,10 +65,80 @@ if (empty($results)) {
 	return;
 }
 
-$rows = '<tr><th>' . elgg_echo('tags') . '</th><th>' . elgg_echo('count') . '</th></tr>';
-foreach ($results as $row) {
-	$rows .= "<tr><td>{$row->string}</td><td>{$row->count}</td></tr>";
+$rows = [];
+
+// header
+$row = [
+	elgg_format_element('th', [], elgg_echo('tags')),
+	elgg_format_element('th', ['style' => 'width: 1%;', 'class' => 'center'], elgg_echo('tag_tools:search:count')),
+	elgg_format_element('th', ['colspan' => 2, 'class' => 'center'], elgg_echo('tag_tools:search:rules')),
+];
+$rows[] = elgg_format_element('tr', [], implode('', $row));
+
+// list tags
+foreach ($results as $result) {
+	$row = [
+		elgg_format_element('td', [], $result->string),
+		elgg_format_element('td', ['style' => 'width: 1%;', 'class' => 'center'], $result->count),
+	];
+	
+	$rule = tag_tools_rules_get_rule($result->string);
+	if (empty($rule)) {
+		// create a rule (replace)
+		$row[] = elgg_format_element('td', [
+			'style' => 'width: 1%;',
+			'class' => 'center',
+		], elgg_view('output/url', [
+			'text' => elgg_view_icon('random'),
+			'href' => elgg_http_add_url_query_elements('tag_tools/rules/add', [
+				'from_tag' => $result->string,
+			]),
+			'title' => elgg_echo('tag_tools:search:replace'),
+			'class' => 'elgg-lightbox',
+			'data-colorbox-opts' => json_encode([
+				'width' => '600px',
+			]),
+		]));
+		
+		// create a rule (delete)
+		$row[] = elgg_format_element('td', [
+			'style' => 'width: 1%;',
+			'class' => 'center',
+		], elgg_view('output/url', [
+			'text' => elgg_view_icon('delete'),
+			'href' => elgg_http_add_url_query_elements('tag_tools/rules/add', [
+				'from_tag' => $result->string,
+				'tag_action' => 'delete',
+			]),
+			'title' => elgg_echo('delete'),
+			'class' => 'elgg-lightbox',
+			'data-colorbox-opts' => json_encode([
+				'width' => '600px',
+			]),
+		]));
+	} else {
+		// edit rule, should not happen
+		$row[0] = elgg_format_element('td', [], "{$result->string} - {$rule->getDisplayName()}");
+		
+		// edit/delete links
+		$row[] = elgg_format_element('td', [
+			'style' => 'width: 1%;',
+			'class' => 'center',
+		], elgg_view('page/components/column/tag_tools/rules/edit', [
+			'item' => $rule,
+		]));
+		$row[] = elgg_format_element('td', [
+			'style' => 'width: 1%;',
+			'class' => 'center',
+		], elgg_view('page/components/column/tag_tools/rules/delete', [
+			'item' => $rule,
+		]));
+	}
+	
+	$rows[] = elgg_format_element('tr', [], implode('', $row));
 }
+
+// show result
 echo elgg_format_element('table', [
 	'class' => 'elgg-table',
-], $rows);
+], implode('', $rows));

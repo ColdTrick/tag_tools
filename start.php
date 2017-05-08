@@ -38,6 +38,7 @@ function tag_tools_init() {
 	elgg_extend_view('output/tag', 'tag_tools/output/tag');
 	
 	// register events
+	elgg_register_event_handler('create', 'metadata', '\ColdTrick\TagTools\Rules::applyRules', 1);
 	elgg_register_event_handler('create', 'metadata', '\ColdTrick\TagTools\Enqueue::createMetadata');
 	elgg_register_event_handler('update:after', 'all', '\ColdTrick\TagTools\Enqueue::afterEntityUpdate');
 	elgg_register_event_handler('upgrade', 'system', '\ColdTrick\TagTools\Upgrade::markOldTagsAsSent');

@@ -17,6 +17,10 @@ return [
 	'tag_tools:rule:title:delete' => "Delete tag: %s",
 	'tag_tools:rule:title:replace' => "Replace tag '%s' with '%s'",
 	
+	'tag_tools:search:count' => "Count",
+	'tag_tools:search:rules' => "Rules",
+	'tag_tools:search:replace' => "Replace",
+	
 	'tag_tools:rules:add' => "Create a new tag rule",
 	'tag_tools:rules:edit' => "Edit tag rule: %s",
 	'tag_tools:rules:from_tag' => "From tag",
