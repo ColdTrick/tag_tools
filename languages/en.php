@@ -13,7 +13,17 @@ return [
 	
 	'tag_tools:rule:title:delete' => "Delete tag: %s",
 	'tag_tools:rule:title:replace' => "Replace tag '%s' with '%s'",
-
+	
+	'tag_tools:rules:add' => "Create a new tag rule",
+	'tag_tools:rules:edit' => "Edit tag rule: %s",
+	'tag_tools:rules:from_tag' => "From tag",
+	'tag_tools:rules:to_tag' => "To tag",
+	'tag_tools:rules:tag_action' => "Tag action",
+	'tag_tools:rules:tag_action:replace' => "Replace",
+	'tag_tools:rules:tag_action:delete' => "Delete",
+	'tag_tools:rules:save_execute' => "Save & execute",
+	'tag_tools:rules:execute' => "Execute",
+	
 	'tag_tools:follow_tag:menu:on' => "Track new content with this tag",
 	'tag_tools:follow_tag:menu:off' => "Stop tracking new content with this tag",
 	'tag_tools:js:autocomplete:required' => "Please fill in the required tags",

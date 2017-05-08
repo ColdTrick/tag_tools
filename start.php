@@ -24,6 +24,9 @@ function tag_tools_init() {
 	
 	elgg_extend_view('js/elgg', 'js/tag_tools/follow.js');
 
+	// page handlers
+	elgg_register_page_handler('tag_tools', '\ColdTrick\TagTools\Router::tagTools');
+	
 	// menu items
 	elgg_register_admin_menu_item('administer', 'search', 'tags');
 	elgg_register_admin_menu_item('administer', 'suggest', 'tags');
@@ -65,4 +68,6 @@ function tag_tools_init() {
 	elgg_register_action('tag_tools/notifications/edit', dirname(__FILE__) . '/actions/notifications/edit.php');
 	
 	elgg_register_action('tag_tools/upgrades/set_tag_notifications_sent', dirname(__FILE__) . '/actions/upgrades/set_tag_notifications_sent.php', 'admin');
+	elgg_register_action('tag_tools/rules/edit', dirname(__FILE__) . '/actions/rules/edit.php', 'admin');
+	elgg_register_action('tag_tools/rules/delete', dirname(__FILE__) . '/actions/rules/delete.php', 'admin');
 }

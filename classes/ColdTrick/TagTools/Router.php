@@ -104,4 +104,53 @@ class Router {
 			return false;
 		}
 	}
+	
+	/**
+	 * handle /tag_tools
+	 *
+	 * @param array $page url segments
+	 *
+	 * @return bool
+	 */
+	public static function tagTools($page) {
+		
+		switch (elgg_extract(0, $page)) {
+			case 'rules':
+				array_shift($page);
+				return self::rules($page);
+				break;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * handle /tag_tools/rules
+	 *
+	 * @param array $page url segments
+	 *
+	 * @return bool
+	 */
+	protected static function rules($page) {
+		
+		elgg_admin_gatekeeper();
+		
+		switch (elgg_extract(0, $page)) {
+			case 'add':
+				echo elgg_view_resource('tag_tools/rules/add');
+				return true;
+				break;
+			case 'edit':
+				
+				$vars = [
+					'guid' => elgg_extract(1, $page),
+				];
+				
+				echo elgg_view_resource('tag_tools/rules/edit', $vars);
+				return true;
+				break;
+		}
+		
+		return false;
+	}
 }

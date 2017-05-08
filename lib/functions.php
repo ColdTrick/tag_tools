@@ -480,3 +480,37 @@ function tag_tools_add_sent_tags(ElggEntity $entity, $sending_tags = []) {
 	
 	return $entity->setPrivateSetting('tag_tools:sent_tags', json_encode($processed_tags));
 }
+
+/**
+ * Prepare the form for edit/create of a tag rule
+ *
+ * @param TagToolsRule $entity the entity to edit
+ *
+ * @return array
+ */
+function tag_tools_rules_prepare_form_vars($entity = null) {
+	
+	$defaults = [
+		'from_tag' => '',
+		'to_tag' => '',
+		'tag_action' => 'replace',
+	];
+	
+	// load data from existing entity
+	if ($entity instanceof TagToolsRule) {
+		
+		foreach ($defaults as $name => $value) {
+			$defaults[$name] = $entity->$name;
+		}
+		
+		$defaults['entity'] = $entity;
+	}
+	
+	// load sticky form
+	$sticky = elgg_get_sticky_values('tag_tools/rules/edit');
+	if (!empty($sticky)) {
+		return array_merge($defaults, $sticky);
+	}
+	
+	return $defaults;
+}
