@@ -532,3 +532,35 @@ function tag_tools_rules_get_tag_names() {
 	$tag_names = elgg_get_registered_tag_metadata_names();
 	return $tag_names;
 }
+
+/**
+ * Get the type/subtype pairs which are supported for tag rules
+ *
+ * Result can be used in elgg_get_entities* functions
+ *
+ * @return array
+ */
+function tag_tools_rules_get_type_subtypes() {
+	static $result;
+	
+	if (isset($result)) {
+		return $result;
+	}
+	
+	$result = [];
+	
+	$entity_types = get_registered_entity_types();
+	if (!empty($entity_types)) {
+		foreach ($entity_types as $type => $subtypes) {
+			if (empty($subtypes) || !is_array($subtypes)) {
+				$result[$type] = ELGG_ENTITIES_ANY_VALUE;
+				continue;
+			}
+			
+			$result[$type] = $subtypes;
+		}
+	}
+	
+	$result = elgg_trigger_plugin_hook('rules_type_subtypes', 'tag_tools', $result, $result);
+	return $result;
+}
