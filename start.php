@@ -27,6 +27,9 @@ function tag_tools_init() {
 	// page handlers
 	elgg_register_page_handler('tag_tools', '\ColdTrick\TagTools\Router::tagTools');
 	
+	// ajax views
+	elgg_register_ajax_view('tag_tools/tag/view');
+	
 	// menu items
 	elgg_register_admin_menu_item('administer', 'search', 'tags');
 	elgg_register_admin_menu_item('administer', 'suggest', 'tags');

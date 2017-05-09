@@ -65,6 +65,10 @@ if (empty($results)) {
 	return;
 }
 
+// load js
+elgg_require_js('tag_tools/admin/search');
+
+// build results
 $rows = [];
 
 // header
@@ -77,8 +81,16 @@ $rows[] = elgg_format_element('tr', [], implode('', $row));
 
 // list tags
 foreach ($results as $result) {
+	$tag_link_params = [
+		'text' => $result->string,
+		'href' => "#",
+		'class' => 'tag-tools-search-result-tag',
+		'data-tag' => $result->string,
+		'is_trusted' => true,
+	];
+	
 	$row = [
-		elgg_format_element('td', [], $result->string),
+		elgg_format_element('td', [], elgg_view('output/url', $tag_link_params)),
 		elgg_format_element('td', ['style' => 'width: 1%;', 'class' => 'center'], $result->count),
 	];
 	
@@ -118,7 +130,8 @@ foreach ($results as $result) {
 		]));
 	} else {
 		// edit rule, should not happen
-		$row[0] = elgg_format_element('td', [], "{$result->string} - {$rule->getDisplayName()}");
+		$tag_link_params['text'] = "{$result->string} - {$rule->getDisplayName()}";
+		$row[0] = elgg_format_element('td', [], elgg_view('output/url', $tag_link_params));
 		
 		// edit/delete links
 		$row[] = elgg_format_element('td', [
@@ -141,4 +154,5 @@ foreach ($results as $result) {
 // show result
 echo elgg_format_element('table', [
 	'class' => 'elgg-table',
+	'id' => 'tag-tools-search-results',
 ], implode('', $rows));

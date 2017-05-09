@@ -594,3 +594,63 @@ function tag_tools_rules_get_rule($from_tag) {
 	
 	return elgg_extract(0, $rules);
 }
+
+/**
+ * Get stats about a tag
+ *
+ * @param string $tag the tag
+ *
+ * @return false|array
+ */
+function tag_tools_get_tag_stats($tag) {
+	
+	if (is_null($tag) || ($tag === '')) {
+		return false;
+	}
+	
+	$dbprefix = elgg_get_config('dbprefix');
+	$type_subtypes = tag_tools_rules_get_type_subtypes();
+	$tag_names = tag_tools_rules_get_tag_names();
+	
+	if (empty($type_subtypes) || empty($tag_names)) {
+		return false;
+	}
+	
+	$name_ids = [];
+	foreach ($tag_names as $name) {
+		$name_ids[] = elgg_get_metastring_id($name);
+	}
+	$value_id = elgg_get_metastring_id($tag);
+	
+	$type_subtype_clause = _elgg_services()->entityTable->getEntityTypeSubtypeWhereSql('e', [], [], $type_subtypes);
+	
+	$query = "SELECT e.type, es.subtype, count(*) as count
+		FROM {$dbprefix}metadata md
+		JOIN {$dbprefix}entities e ON md.entity_guid = e.guid
+		LEFT OUTER JOIN {$dbprefix}entity_subtypes es ON es.id = e.subtype
+		WHERE md.name_id IN (" . implode(',', $name_ids) . ")
+		AND md.value_id = {$value_id}
+		AND {$type_subtype_clause}
+		AND e.enabled = 'yes'
+		AND md.enabled = 'yes'
+		GROUP BY e.type, es.subtype
+		ORDER BY count DESC
+	";
+	
+	$data = get_data($query);
+	if (empty($data)) {
+		return false;
+	}
+	
+	$result = [];
+	foreach ($data as $row) {
+		$type_subtype = [
+			$row->type,
+			$row->subtype,
+		];
+		$type_subtype = implode(':', $type_subtype);
+		$result[$type_subtype] = (int) $row->count;
+	}
+	
+	return $result;
+}
