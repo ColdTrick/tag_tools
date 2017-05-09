@@ -1,10 +1,32 @@
 <?php
 /**
- * This file was created by Translation Editor v5.1
- * On 2016-06-13 16:11
+ * This file was created by Translation Editor v5.2
+ * On 2017-05-09 09:54
  */
 
 return array (
+  'admin:tags' => 'Tags',
+  'admin:tags:search' => 'Zoeken',
+  'admin:tags:suggest' => 'Suggesties',
+  'admin:tags:rules' => 'Regels',
+  'item:object:tag_tools_rule' => 'Tag Tools regel',
+  'tag_tools:admin:tags:suggest:info' => 'De lijst hieronder toont suggesties voor autocorrectie regels.',
+  'tag_tools:admin:tags:suggest:results:title' => 'Suggesties',
+  'tag_tools:admin:tags:suggest:item' => 'Tag <b>%s</b> kan worden gecorrigeerd in:',
+  'tag_tools:rule:title:delete' => 'Verwijder tag: %s',
+  'tag_tools:rule:title:replace' => 'Vervang tag \'%s\' met \'%s\'',
+  'tag_tools:search:count' => 'Aantal',
+  'tag_tools:search:rules' => 'Regels',
+  'tag_tools:search:replace' => 'Vervang',
+  'tag_tools:rules:add' => 'Maak een nieuwe tag regel',
+  'tag_tools:rules:edit' => 'Verwijder tag regel: %s',
+  'tag_tools:rules:from_tag' => 'Van tag',
+  'tag_tools:rules:to_tag' => 'Naar tag',
+  'tag_tools:rules:tag_action' => 'Tag actie',
+  'tag_tools:rules:tag_action:replace' => 'Vervang',
+  'tag_tools:rules:tag_action:delete' => 'Verwijder',
+  'tag_tools:rules:save_execute' => 'Opslaan & uitvoeren',
+  'tag_tools:rules:execute' => 'Uitvoeren',
   'tag_tools:notification:follow:update:subject' => 'Content met de tag(s): %s, is bijgewerkt',
   'tag_tools:notification:follow:update:summary' => 'Content met de tag(s): %s, is bijgewerkt',
   'tag_tools:notification:follow:update:message' => 'Hallo,

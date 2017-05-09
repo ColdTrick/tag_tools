@@ -43,7 +43,14 @@ if (!empty($type_subtype)) {
 	}
 }
 
-$query = "SELECT * FROM (
+$order = get_input('order', 'count');
+$order_string = 'count DESC';
+if ($order !== 'count') {
+	$order_string = 'string ASC';
+}
+
+$query = "
+	SELECT * FROM (
 		SELECT msv.string, COUNT(md.id) AS count
 		FROM {$dbprefix}metadata md
 		JOIN {$dbprefix}metastrings msv ON md.value_id = msv.id
@@ -55,7 +62,7 @@ $query = "SELECT * FROM (
 		GROUP BY md.value_id
 	) tags
 	{$min_count_string}
-	ORDER BY count DESC
+	ORDER BY {$order_string}
 ";
 
 $results = get_data($query);
