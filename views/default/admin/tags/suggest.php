@@ -81,8 +81,6 @@ if (empty($suggestions)) {
 $suggestion_items = '';
 foreach ($suggestions as $from_tag => $to_tags) {
 	
-	$suggestion_item = 'Tag <b>' . $from_tag . '</b> could be autocorrect to:<br />';
-	
 	$to_items = '';
 	foreach ($to_tags as $to_tag) {
 		$to_items .= elgg_view('output/url', [
@@ -109,6 +107,7 @@ foreach ($suggestions as $from_tag => $to_tags) {
 		'class' => 'elgg-button elgg-button-cancel hidden',
 	]);
 
+	$suggestion_item = '<div>' . elgg_echo('tag_tools:admin:tags:suggest:item', [$from_tag]) . '</div>';
 	$suggestion_item .= elgg_format_element('div', ['class' => ['mll', 'mts']], $to_items);
 
 	$suggestion_items .= elgg_format_element('li', ['class' => 'mbm'], $suggestion_item);

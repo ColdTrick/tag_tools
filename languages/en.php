@@ -13,6 +13,7 @@ return [
 	
 	'tag_tools:admin:tags:suggest:info' => "The list below shows suggestions for autocorrection rules.",
 	'tag_tools:admin:tags:suggest:results:title' => "Suggestions",
+	'tag_tools:admin:tags:suggest:item' => "Tag <b>%s</b> could be autocorrected to:",
 	
 	'tag_tools:rule:title:delete' => "Delete tag: %s",
 	'tag_tools:rule:title:replace' => "Replace tag '%s' with '%s'",
