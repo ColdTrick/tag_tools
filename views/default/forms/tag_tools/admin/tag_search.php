@@ -34,6 +34,15 @@ $fields = [
 		'options_values' => $option_values,
 	],
 	[
+		'#type' => 'select',
+		'name' => 'order',
+		'value' => get_input('order'),
+		'options_values' => [
+			'count' => elgg_echo('sort:popular'),
+			'alpha' => elgg_echo('sort:alpha'),
+		],
+	],
+	[
 		'#type' => 'submit',
 		'value' => elgg_echo('search'),
 	],
