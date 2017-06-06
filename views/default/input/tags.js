@@ -24,6 +24,7 @@ define(["jquery", "elgg", "jquery.tag-it"], function ($, elgg) {
 		.tagit({
 			caseSensitive: false,
 			allowSpaces: true,
+			placeholderText: $(elem).data('tagitPlaceholder'),
 			autocomplete: {
 				source: function(request, response) {
 					elgg.getJSON("tags/autocomplete", {
