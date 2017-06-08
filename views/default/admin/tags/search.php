@@ -4,6 +4,8 @@ $tag_names = tag_tools_rules_get_tag_names();
 
 echo elgg_view_form('tag_tools/admin/tag_search', [
 	'action' => 'admin/tags/search',
+	'method' => 'GET',
+	'disable_security' => true,
 ]);
 
 $dbprefix = elgg_get_config('dbprefix');
