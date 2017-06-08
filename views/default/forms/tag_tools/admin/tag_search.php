@@ -20,18 +20,23 @@ $fields = [
 		'name' => 'q',
 		'value' => get_input('q'),
 		'placeholder' => elgg_echo('search'),
+		'title' => elgg_echo('search'),
 	],
 	[
-		'#type' => 'text',
+		'#type' => 'number',
 		'name' => 'min_count',
 		'value' => sanitize_int(get_input('min_count', 10), false),
+		'placeholder' => elgg_echo('tag_tools:search:min_count'),
+		'title' => elgg_echo('tag_tools:search:min_count'),
 		'style' => 'width: 3em',
+		'min' => 0,
 	],
 	[
 		'#type' => 'select',
 		'name' => 'type_subtype',
 		'value' => get_input('type_subtype'),
 		'options_values' => $option_values,
+		'title' => elgg_echo('tag_tools:search:content_type'),
 	],
 	[
 		'#type' => 'select',
@@ -41,6 +46,7 @@ $fields = [
 			'count' => elgg_echo('sort:popular'),
 			'alpha' => elgg_echo('sort:alpha'),
 		],
+		'title' => elgg_echo('tag_tools:search:order'),
 	],
 	[
 		'#type' => 'submit',

@@ -21,6 +21,9 @@ return [
 	'tag_tools:search:count' => "Count",
 	'tag_tools:search:rules' => "Rules",
 	'tag_tools:search:replace' => "Replace",
+	'tag_tools:search:min_count' => "Minimal occurance",
+	'tag_tools:search:content_type' => "Filter on content type",
+	'tag_tools:search:order' => "Sorting order",
 	
 	'tag_tools:rules:add' => "Create a new tag rule",
 	'tag_tools:rules:edit' => "Edit tag rule: %s",
