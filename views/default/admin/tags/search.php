@@ -46,33 +46,51 @@ if (!empty($type_subtype)) {
 }
 
 $order = get_input('order', 'count');
-$order_string = 'count DESC';
+$order_string = 'count DESC, string ASC';
 if ($order !== 'count') {
 	$order_string = 'string ASC';
 }
 
-$query = "
-	SELECT * FROM (
-		SELECT msv.string, COUNT(md.id) AS count
-		FROM {$dbprefix}metadata md
-		JOIN {$dbprefix}metastrings msv ON md.value_id = msv.id
-		{$type_subtype_join}
-		WHERE md.name_id IN ({$name_ids})
-		AND msv.string != ''
-		{$likes_string}
-		{$type_subtype_where}
-		GROUP BY md.value_id
+$limit = sanitize_int(get_input('limit'), false);
+$limit = max((int) elgg_get_config('default_limit'), $limit, 50);
+$offset = sanitize_int(get_input('offset', 0), false);
+
+$sub_query = "SELECT msv.string, COUNT(md.id) AS count
+	FROM {$dbprefix}metadata md
+	JOIN {$dbprefix}metastrings msv ON md.value_id = msv.id
+	{$type_subtype_join}
+	WHERE md.name_id IN ({$name_ids})
+	AND msv.string != ''
+	{$likes_string}
+	{$type_subtype_where}
+	GROUP BY md.value_id
+";
+
+$count_query = "
+	SELECT count(*) as total FROM (
+		$sub_query
 	) tags
 	{$min_count_string}
 	ORDER BY {$order_string}
 ";
 
-$results = get_data($query);
-
-if (empty($results)) {
+$count_row = get_data_row($count_query);
+$count = (int) $count_row->total;
+if (empty($count)) {
 	echo elgg_echo('notfound');
 	return;
 }
+
+$query = "
+	SELECT * FROM (
+		$sub_query
+	) tags
+	{$min_count_string}
+	ORDER BY {$order_string}
+	LIMIT {$offset}, {$limit}
+";
+
+$results = get_data($query);
 
 // load js
 elgg_require_js('tag_tools/admin/search');
@@ -165,3 +183,10 @@ echo elgg_format_element('table', [
 	'class' => 'elgg-table',
 	'id' => 'tag-tools-search-results',
 ], implode('', $rows));
+
+// show pagination
+echo elgg_view('navigation/pagination', [
+	'count' => $count,
+	'limit' => $limit,
+	'offset' => $offset,
+]);
