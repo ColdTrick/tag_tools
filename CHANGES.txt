@@ -1,6 +1,22 @@
 Version history
 ===============
 
+2.0 (2017-06-14):
+
+- added: admin pages to manage tags
+- added: admin searchable tags
+- added: apply tag rules on metadata create
+- added: apply type/subtype filter to search results
+- added: custom class for tag rules
+- added: links to create rules from search listing
+- added: pagination on search page
+- added: sorting of tags search results
+- added: suggestions for autocorrections
+- added: support for placeholder on tagit input
+- added: tag details view
+- added: tag rule create/edit/delete
+- changed: increased Elgg version requirement to 2.3
+
 1.5.2 (2017-03-24):
 
 - changed: input validation is now html5 compatible
