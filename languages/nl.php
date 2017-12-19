@@ -1,10 +1,16 @@
 <?php
 /**
- * This file was created by Translation Editor v5.2
- * On 2017-05-09 09:54
+ * This file was created by Translation Editor v6.0
+ * On 2017-12-19 16:22
  */
 
 return array (
+  'tag_tools:search:min_count' => 'Minimaal voorkomen',
+  'tag_tools:search:content_type' => 'Filter op content type',
+  'tag_tools:search:order' => 'Sorteer volgorde',
+  'tag_tools:rules:notify_user' => 'Toon een systeem melding naar de gebruiker indien deze regel is toegepast',
+  'tag_tools:rule:notify:replace' => 'De tag \'%s\' is vervangen door \'%s\'',
+  'tag_tools:rule:notify:delete' => 'De tag \'%s\' is verwijderd',
   'admin:tags' => 'Tags',
   'admin:tags:search' => 'Zoeken',
   'admin:tags:suggest' => 'Suggesties',

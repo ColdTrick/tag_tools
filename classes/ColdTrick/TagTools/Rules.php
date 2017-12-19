@@ -56,11 +56,15 @@ class Rules {
 		
 		switch ($rule->tag_action) {
 			case 'delete':
+				$rule->notify('delete');
 				return false;
 				break;
 			case 'replace':
 				
 				$new_value = $rule->to_tag;
+				
+				$rule->notify('replace');
+				
 				// check if the new value doesn't already exist with the entity
 				$exists = (int) elgg_get_metadata([
 					'guid' => $object->entity_guid,
@@ -76,6 +80,7 @@ class Rules {
 				
 				$object->value = $new_value;
 				$object->save();
+								
 				break;
 		}
 	}

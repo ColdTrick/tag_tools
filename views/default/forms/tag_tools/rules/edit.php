@@ -59,30 +59,34 @@ if (!$edit || $entity->tag_action !== 'delete') {
 	]);
 }
 
+echo elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('tag_tools:rules:notify_user'),
+	'name' => 'notify_user',
+	'checked' => (bool) elgg_extract('notify_user', $vars),
+]);
+
 // footer
-if ($edit) {
-	$footer = elgg_view_field([
+$footer_fields = [
+	[
 		'#type' => 'submit',
 		'name' => 'save',
 		'value' => elgg_echo('tag_tools:rules:save_execute'),
-	]);
-} else {
-	$footer = elgg_view_field([
-		'#type' => 'fieldset',
-		'align' => 'horizontal',
-		'fields' => [
-			[
-				'#type' => 'submit',
-				'name' => 'save',
-				'value' => elgg_echo('tag_tools:rules:save_execute'),
-			],
-			[
-				'#type' => 'submit',
-				'name' => 'save',
-				'value' => elgg_echo('tag_tools:rules:execute'),
-			],
-		]
-	]);
+	],
+];
+
+if (!$edit) {
+	$footer_fields[] = [
+		'#type' => 'submit',
+		'name' => 'save',
+		'value' => elgg_echo('tag_tools:rules:execute'),
+	];
 }
+
+$footer = elgg_view_field([
+	'#type' => 'fieldset',
+	'align' => 'horizontal',
+	'fields' => $footer_fields,
+]);
 
 elgg_set_form_footer($footer);

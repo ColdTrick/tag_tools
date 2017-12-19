@@ -18,6 +18,9 @@ return [
 	'tag_tools:rule:title:delete' => "Delete tag: %s",
 	'tag_tools:rule:title:replace' => "Replace tag '%s' with '%s'",
 	
+	'tag_tools:rule:notify:replace' => "The tag '%s' has been replaced with '%s'",
+	'tag_tools:rule:notify:delete' => "The tag '%s' has been removed",
+	
 	'tag_tools:search:count' => "Count",
 	'tag_tools:search:rules' => "Rules",
 	'tag_tools:search:replace' => "Replace",
@@ -30,6 +33,7 @@ return [
 	'tag_tools:rules:from_tag' => "From tag",
 	'tag_tools:rules:to_tag' => "To tag",
 	'tag_tools:rules:tag_action' => "Tag action",
+	'tag_tools:rules:notify_user' => "Show system message to user when rule is applied",
 	'tag_tools:rules:tag_action:replace' => "Replace",
 	'tag_tools:rules:tag_action:delete' => "Delete",
 	'tag_tools:rules:save_execute' => "Save & execute",

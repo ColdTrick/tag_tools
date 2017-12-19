@@ -37,6 +37,8 @@ if ($entity->tag_action === 'replace') {
 	$entity->to_tag = get_input('to_tag');
 }
 
+$entity->notify_user = (bool) get_input('notify_user');
+
 $entity->apply();
 
 // clear sticky form

@@ -103,6 +103,28 @@ class TagToolsRule extends ElggObject {
 	}
 	
 	/**
+	 * Creates a system message if needed for the type of rule that is applied
+	 *
+	 * @param string $type Type of rule applied
+	 *
+	 * @return void
+	 */
+	public function notify($type) {
+		if (!$this->notify_user) {
+			return;
+		}
+		
+		switch ($type) {
+			case 'replace':
+				system_message(elgg_echo('tag_tools:rule:notify:replace', [$this->from_tag, $this->to_tag]));
+				break;
+			case 'delete':
+				system_message(elgg_echo('tag_tools:rule:notify:delete', [$this->from_tag]));
+				break;
+		}
+	}
+	
+	/**
 	 * Prepare some settings before applying the rule
 	 *
 	 * @return void
@@ -133,7 +155,7 @@ class TagToolsRule extends ElggObject {
 		elgg_set_ignore_access($this->ignore_access);
 		access_show_hidden_entities($this->show_hidden_entities);
 		
-		// reregsiter events
+		// reregister events
 		elgg_register_event_handler('create', 'metadata', '\ColdTrick\TagTools\Rules::applyRules', 1);
 		elgg_register_event_handler('create', 'metadata', '\ColdTrick\TagTools\Enqueue::createMetadata');
 	}

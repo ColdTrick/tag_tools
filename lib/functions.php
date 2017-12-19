@@ -494,6 +494,7 @@ function tag_tools_rules_prepare_form_vars($entity = null) {
 		'from_tag' => get_input('from_tag'),
 		'to_tag' => get_input('to_tag'),
 		'tag_action' => get_input('tag_action', 'replace'),
+		'notify_user' => (bool) get_input('notify_user'),
 	];
 	
 	// load data from existing entity
