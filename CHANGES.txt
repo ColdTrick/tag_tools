@@ -1,6 +1,10 @@
 Version history
 ===============
 
+2.1 (2018-01-11):
+
+- added: option to notify users of applied tag rules
+
 2.0 (2017-06-14):
 
 - added: admin pages to manage tags
