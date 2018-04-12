@@ -1,10 +1,11 @@
 <?php
 /**
  * This file was created by Translation Editor v6.0
- * On 2017-12-19 16:22
+ * On 2018-04-12 14:37
  */
 
 return array (
+  'tag_tools:rules:from_tag:help' => 'Deze tag zal hoofdletter ongevoelig worden vergeleken',
   'tag_tools:search:min_count' => 'Minimaal voorkomen',
   'tag_tools:search:content_type' => 'Filter op content type',
   'tag_tools:search:order' => 'Sorteer volgorde',

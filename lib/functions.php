@@ -588,6 +588,7 @@ function tag_tools_rules_get_rule($from_tag) {
 			'name' => 'from_tag',
 			'value' => $from_tag,
 		],
+		'metadata_case_sensitive' => false,
 	]);
 	if (empty($rules)) {
 		return false;

@@ -49,6 +49,21 @@ class TagToolsRule extends ElggObject {
 	
 	/**
 	 * {@inheritDoc}
+	 * @see ElggEntity::__get()
+	 */
+	public function __get($name) {
+		
+		$result = parent::__get($name);
+		
+		if ($name == 'from_tag') {
+			return strtolower($result);
+		}
+		
+		return $result;
+	}
+	
+	/**
+	 * {@inheritDoc}
 	 * @see ElggObject::getDisplayName()
 	 */
 	public function getDisplayName() {
@@ -178,6 +193,7 @@ class TagToolsRule extends ElggObject {
 			'type_subtype_pairs' => $entity_types,
 			'metadata_names' => $tag_names,
 			'metadata_value' => $this->from_tag,
+			'metadata_case_sensitive' => false,
 			'limit' => false,
 		]);
 	}
@@ -201,6 +217,7 @@ class TagToolsRule extends ElggObject {
 			'type_subtype_pairs' => $entity_types,
 			'metadata_names' => $tag_names,
 			'metadata_value' => $this->from_tag,
+			'metadata_case_sensitive' => false,
 			'limit' => false,
 			'batch' => true,
 			'batch_inc_offset' => false,

@@ -22,6 +22,7 @@ if ($entity instanceof TagToolsRule) {
 echo elgg_view_field([
 	'#type' => 'text',
 	'#label' => elgg_echo('tag_tools:rules:from_tag'),
+	'#help' => elgg_echo('tag_tools:rules:from_tag:help'),
 	'name' => 'from_tag',
 	'value' => elgg_extract('from_tag', $vars),
 	'required' => true,

@@ -31,6 +31,7 @@ return [
 	'tag_tools:rules:add' => "Create a new tag rule",
 	'tag_tools:rules:edit' => "Edit tag rule: %s",
 	'tag_tools:rules:from_tag' => "From tag",
+	'tag_tools:rules:from_tag:help' => "This tag will be matched case insensitive",
 	'tag_tools:rules:to_tag' => "To tag",
 	'tag_tools:rules:tag_action' => "Tag action",
 	'tag_tools:rules:notify_user' => "Show system message to user when rule is applied",
