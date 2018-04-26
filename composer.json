@@ -9,7 +9,8 @@
 		"issues": "https://github.com/ColdTrick/tag_tools/issues"
 	},
 	"require": {
-		"composer/installers": "^1.0.8"
+		"composer/installers": "^1.0.8",
+		"bower-asset/tag-it": "^2.0.0"
 	},
 	"require-dev": {
 		"coldtrick/sniffs": "dev-master",

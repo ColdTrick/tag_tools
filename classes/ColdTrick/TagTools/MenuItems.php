@@ -119,4 +119,51 @@ class MenuItems {
 		
 		return $return_value;
 	}
+	
+	/**
+	 * Adds admin menu items
+	 *
+	 * @param \Elgg\Hook $hook 'register', 'menu:admin'
+	 *
+	 * @return void|\ElggMenuItem[]
+	 */
+	public static function registerAdminItems(\Elgg\Hook $hook) {
+		
+		if (!elgg_is_admin_logged_in() || !elgg_in_context('admin')) {
+			return;
+		}
+		
+		$result = $hook->getValue();
+		
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'tags',
+			'text' => elgg_echo('admin:tags'),
+			'section' => 'configure',
+		]);
+		
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'tags:search',
+			'href' => 'admin/tags/search',
+			'text' => elgg_echo('admin:tags:search'),
+			'parent_name' => 'tags',
+			'section' => 'configure',
+		]);
+		
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'tags:suggest',
+			'href' => 'admin/tags/sugges',
+			'text' => elgg_echo('admin:tags:suggest'),
+			'parent_name' => 'tags',
+			'section' => 'configure',
+		]);
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'tags:rules',
+			'href' => 'admin/tags/rules',
+			'text' => elgg_echo('admin:tags:rules'),
+			'parent_name' => 'tags',
+			'section' => 'configure',
+		]);
+		
+		return $result;
+	}
 }

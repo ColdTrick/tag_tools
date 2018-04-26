@@ -19,7 +19,7 @@ elgg_register_menu_item('title', [
 echo elgg_list_entities([
 	'type' => 'object',
 	'subtype' => \TagToolsRule::SUBTYPE,
-	'no_results' => elgg_echo('notfound'),
+	'no_results' => true,
 	'list_type' => 'table',
 	'columns' => [
 		$tb->getDisplayName(),

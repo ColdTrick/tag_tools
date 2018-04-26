@@ -134,68 +134,6 @@ function tag_tools_toggle_following_tag($tag, $user_guid = 0, $track = null) {
 }
 
 /**
- * Notify a user about a new tag
- *
- * @param int    $user_guid   the user to notify
- * @param int    $entity_guid the entity to notify about
- * @param string $tag         the tag to notify about
- *
- * @return void
- */
-function tag_tools_notify_user($user_guid, $entity_guid, $tag) {
-	static $notifications;
-	
-	$user_guid = sanitise_int($user_guid, false);
-	if (empty($user_guid)) {
-		return;
-	}
-	
-	$entity_guid = sanitise_int($entity_guid, false);
-	if (empty($entity_guid)) {
-		return;
-	}
-	
-	if (empty($tag)) {
-		return;
-	}
-	
-	if (!isset($notifications)) {
-		$notifications = [];
-	}
-	
-	if (!isset($notifications[$entity_guid])) {
-		$notifications[$entity_guid] = [];
-	}
-	
-	if (in_array($user_guid, $notifications[$entity_guid])) {
-		// the user already received a notification about this entity, don't do it double
-		return;
-	}
-	
-	$user_tag_notification_settings = tag_tools_get_user_tag_notification_settings($tag, $user_guid);
-	if (empty($user_tag_notification_settings)) {
-		// the user is following the tag, but doesn't want notifications
-		return;
-	}
-	
-	$ia = elgg_set_ignore_access(true);
-	$entity = get_entity($entity_guid);
-	elgg_set_ignore_access($ia);
-	
-	$subject = elgg_echo('tag_tools:notification:follow:subject', [$tag]);
-	$message = elgg_echo('tag_tools:notification:follow:message', [$tag, $entity->getURL()]);
-	
-	$params = [
-		'action' => 'tag_tools',
-		'object' => $entity,
-	];
-	
-	notify_user($user_guid, $entity->getOwnerGUID(), $subject, $message, $params, $user_tag_notification_settings);
-	
-	$notifications[$entity_guid][] = $user_guid;
-}
-
-/**
  * Remove the notification settings for a specific tag
  *
  * @param string $tag       the tag to remove the settings for
@@ -374,13 +312,12 @@ function tag_tools_is_notification_entity($entity_guid) {
 		return false;
 	}
 	
-	$subtype = get_subtype_from_id($entity_row->subtype);
-	if (empty($subtype)) {
+	if ($type !== 'object') {
 		// user, group, site
 		return true;
 	}
 	
-	return in_array($subtype, elgg_extract($type, $type_subtypes));
+	return in_array($entity_row->subtype, elgg_extract($type, $type_subtypes));
 }
 
 /**
@@ -403,45 +340,6 @@ function tag_tools_get_notification_type_subtypes() {
 	}
 	
 	return $result;
-}
-
-/**
- * Get the unsent tags
- *
- * @param \ElggEntity $entity the entity to get for
- *
- * @return false|string[]
- */
-function tag_tools_get_unsent_tags(ElggEntity $entity) {
-	
-	if (!($entity instanceof \ElggEntity)) {
-		return false;
-	}
-	
-	$entity_tags = $entity->tags;
-	
-	// Cannot use empty() because it would evaluate
-	// the string "0" as an empty value.
-	if (is_null($entity_tags)) {
-		// shouldn't happen
-		return false;
-	} elseif (!is_array($entity_tags)) {
-		$entity_tags = [$entity_tags];
-	}
-	
-	$sent_tags = $entity->getPrivateSetting('tag_tools:sent_tags');
-	if (!empty($sent_tags)) {
-		$sent_tags = json_decode($sent_tags, true);
-	} else {
-		$sent_tags = [];
-	}
-	
-	$sending_tags = array_diff($entity_tags, $sent_tags);
-	if (empty($sending_tags)) {
-		return false;
-	}
-	
-	return $sending_tags;
 }
 
 /**

@@ -29,7 +29,7 @@ class Notifications {
 		
 		$entity = get_entity($relationship->guid_two);
 		
-		$sending_tags = tag_tools_get_unsent_tags($entity);
+		$sending_tags = self::getUnsetTagsForEntity($entity);
 		if (empty($sending_tags)) {
 			return [];
 		}
@@ -107,7 +107,7 @@ class Notifications {
 		
 		$entity = get_entity($relationship->guid_two);
 		
-		$sending_tags = tag_tools_get_unsent_tags($entity);
+		$sending_tags = self::getUnsetTagsForEntity($entity);
 		$tag = [];
 		foreach ($sending_tags as $sending_tag) {
 			
@@ -170,12 +170,41 @@ class Notifications {
 		remove_entity_relationships($entity->getGUID(), 'tag_tools:notification', true);
 		
 		// save the newly sent tags
-		$sending_tags = tag_tools_get_unsent_tags($entity);
+		$sending_tags = self::getUnsetTagsForEntity($entity);
 		if (empty($sending_tags)) {
 			return;
 		}
 		
 		tag_tools_add_sent_tags($entity, $sending_tags);
+	}
+
+	/**
+	 * Set the correct URL for the notification relationship
+	 *
+	 * @param string $hook         the name of the hook
+	 * @param string $type         the type of the hook
+	 * @param string $return_value current return value
+	 * @param array  $params       supplied params
+	 *
+	 * @return void|string
+	 */
+	public static function getNotificationURL($hook, $type, $return_value, $params) {
+		
+		$relationship = elgg_extract('relationship', $params);
+		if (!($relationship instanceof \ElggRelationship)) {
+			return;
+		}
+		
+		if ($relationship->relationship !== 'tag_tools:notification') {
+			return;
+		}
+		
+		$entity = get_entity($relationship->guid_two);
+		if (!($entity instanceof \ElggEntity)) {
+			return;
+		}
+		
+		return $entity->getURL();
 	}
 	
 	/**
@@ -207,33 +236,34 @@ class Notifications {
 		
 		return true;
 	}
-	
+
 	/**
-	 * Set the correct URL for the notification relationship
+	 * Get the unsent tags
 	 *
-	 * @param string $hook         the name of the hook
-	 * @param string $type         the type of the hook
-	 * @param string $return_value current return value
-	 * @param array  $params       supplied params
+	 * @param \ElggEntity $entity the entity to get for
 	 *
-	 * @return void|string
+	 * @return string[]
 	 */
-	public static function getNotificationURL($hook, $type, $return_value, $params) {
+	protected static function getUnsetTagsForEntity(\ElggEntity $entity) {
 		
-		$relationship = elgg_extract('relationship', $params);
-		if (!($relationship instanceof \ElggRelationship)) {
-			return;
+		$entity_tags = $entity->tags;
+		
+		// Cannot use empty() because it would evaluate
+		// the string "0" as an empty value.
+		if (is_null($entity_tags)) {
+			// shouldn't happen
+			return [];
+		} elseif (!is_array($entity_tags)) {
+			$entity_tags = [$entity_tags];
 		}
 		
-		if ($relationship->relationship !== 'tag_tools:notification') {
-			return;
+		$sent_tags = $entity->getPrivateSetting('tag_tools:sent_tags');
+		if (!empty($sent_tags)) {
+			$sent_tags = json_decode($sent_tags, true);
+		} else {
+			$sent_tags = [];
 		}
 		
-		$entity = get_entity($relationship->guid_two);
-		if (!($entity instanceof \ElggEntity)) {
-			return;
-		}
-		
-		return $entity->getURL();
+		return array_diff($entity_tags, $sent_tags);
 	}
 }

@@ -19,3 +19,5 @@ $ignore_config[$from_tag] = array_unique($current_ignores);
 $setting_value = json_encode($ignore_config);
 
 elgg_set_plugin_setting('ignored_suggestions', $setting_value, 'tag_tools');
+
+return elgg_ok_response();

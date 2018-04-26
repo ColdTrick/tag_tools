@@ -1,4 +1,4 @@
-define(["jquery", "elgg", "jquery.tag-it"], function ($, elgg) {
+define(["jquery", "elgg", "jquery/tag-it"], function ($, elgg) {
 	
 	elgg.provide("elgg.tag_tools.autocomplete");
 	

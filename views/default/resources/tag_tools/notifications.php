@@ -1,6 +1,12 @@
 <?php
 
-elgg_gatekeeper();
+// $user = get_user_by_username($page[1]);
+// 				if (empty($user)) {
+// 					forward();
+// 				} else {
+// 					elgg_set_page_owner_guid($user->getGUID());
+// 				}
+
 
 $user = elgg_get_page_owner_entity();
 

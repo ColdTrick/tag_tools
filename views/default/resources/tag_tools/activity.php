@@ -3,8 +3,6 @@
  * activity stream based on tags
  */
 
-elgg_gatekeeper();
-
 elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 
 $tags = tag_tools_get_user_following_tags();

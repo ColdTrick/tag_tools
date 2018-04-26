@@ -1,9 +1,6 @@
 <?php
 return [
 
-	'admin:upgrades:set_tag_notifications_sent' => "Tag tools - set all tags as sent",
-	'admin:upgrades:set_tag_notifications_sent:description' => "Mark all tags on supported content as sent. This is usefull when coming for an older version of the plugin or is this is a new plugin.",
-
 	'admin:tags' => "Tags",
 	'admin:tags:search' => "Search",
 	'admin:tags:suggest' => "Suggest",
@@ -61,11 +58,11 @@ a content item was updated with the tag(s): %s.
 
 You can see it here: %s",
 	'tag_tools:activity:tags' => "Activity based on your tags",
-	'tag_tools:widgets:follow_tags:title' => "Following tags",
-	'tag_tools:widgets:follow_tags:description' => "Shows the tags that are being followed",
-	'tag_tools:widgets:follow_tags:empty' => "This user is currently not following a tag",
-	'tag_tools:widgets:tagcloud:description' => "Shows a tagcloud based on all the content on the site, in the group or from the user",
-	'tag_tools:widgets:tagcloud:no_data' => "No data available to display a tagcloud",
+	'widgets:follow_tags:name' => "Following tags",
+	'widgets:follow_tags:description' => "Shows the tags that are being followed",
+	'widgets:follow_tags:empty' => "This user is currently not following a tag",
+	'widgets:tagcloud:description' => "Shows a tagcloud based on all the content on the site, in the group or from the user",
+	'widgets:tagcloud:no_data' => "No data available to display a tagcloud",
 	
 	'tag_tools:actions:follow_tag:success:follow' => "You are now following the tag: %s",
 	'tag_tools:actions:follow_tag:success:unfollow' => "You are no longer following the tag: %s",
