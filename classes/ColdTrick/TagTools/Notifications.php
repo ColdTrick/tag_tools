@@ -2,6 +2,8 @@
 
 namespace ColdTrick\TagTools;
 
+use Elgg\Notifications\NotificationEvent;
+
 class Notifications {
 	
 	/**
@@ -21,18 +23,54 @@ class Notifications {
 			return;
 		}
 		
-		/* @var $event \Elgg\Notifications\Event */
 		$event = elgg_extract('event', $params);
+		if (!$event instanceof NotificationEvent) {
+			return;
+		}
 		
-		/* @var $relationship \ElggRelationship */
 		$relationship = $event->getObject();
+		if (!$relationship instanceof \ElggRelationship) {
+			return;
+		}
 		
 		$entity = get_entity($relationship->guid_two);
+		if (!$entity instanceof \ElggEntity) {
+			return;
+		}
 		
 		$sending_tags = tag_tools_get_unsent_tags($entity);
 		if (empty($sending_tags)) {
 			return [];
 		}
+		
+		
+		$validate_access = function(\ElggUser $user) use ($entity) {
+			static $acl_members;
+			
+			if ($entity->access_id === ACCESS_PRIVATE) {
+				return false;
+			}
+			
+			if (!has_access_to_entity($entity, $user)) {
+				return false;
+			}
+			
+			if (!isset($acl_members)) {
+				$acl_members = false;
+				
+				if (get_access_collection($entity->access_id) !== false) {
+					// this is an acl
+					$acl_members = get_members_of_access_collection($entity->access_id, true);
+				}
+			}
+			
+			if ($acl_members === false) {
+				// not an acl
+				return true;
+			}
+			
+			return in_array($user->guid, $acl_members);
+		};
 		
 		$tag_subscribers = [];
 		// get interested users
@@ -49,7 +87,7 @@ class Notifications {
 		foreach ($users_batch as $user) {
 			
 			// check user access
-			if (!has_access_to_entity($entity, $user)) {
+			if (!$validate_access($user)) {
 				continue;
 			}
 			
