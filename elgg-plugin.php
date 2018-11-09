@@ -26,14 +26,14 @@ return [
 		],
 	],
 	'routes' => [
-		'edit:object:tag_tools_rule' => [
+		'add:object:tag_tools_rule' => [
 			'path' => '/tag_tools/rules/add',
 			'resource' => 'tag_tools/rules/add',
 			'middleware' => [
 				AdminGatekeeper::class,
 			],
 		],
-		'add:object:tag_tools_rule' => [
+		'edit:object:tag_tools_rule' => [
 			'path' => '/tag_tools/rules/edit/{guid}',
 			'resource' => 'tag_tools/rules/edit',
 			'middleware' => [
