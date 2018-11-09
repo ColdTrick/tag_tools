@@ -1,5 +1,6 @@
 # Tag Tools
 
+![Elgg 3.0](https://img.shields.io/badge/Elgg-3.0-green.svg)
 [![Build Status](https://scrutinizer-ci.com/g/ColdTrick/tag_tools/badges/build.png?b=master)](https://scrutinizer-ci.com/g/ColdTrick/tag_tools/build-status/master)
 [![Latest Stable Version](https://poser.pugx.org/coldtrick/tag_tools/v/stable.svg)](https://packagist.org/packages/coldtrick/tag_tools)
 [![License](https://poser.pugx.org/coldtrick/tag_tools/license.svg)](https://packagist.org/packages/coldtrick/tag_tools)
