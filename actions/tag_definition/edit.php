@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Project\Paths;
+
 elgg_make_sticky_form('tag_definition/edit');
 
 $guid = (int) get_input('guid');
@@ -33,6 +35,8 @@ $entity->textcolor = get_input('textcolor');
 if (!$entity->save()) {
 	return elgg_error_response(elgg_echo('save:fail'));
 }
+
+elgg_invalidate_simplecache();
 
 elgg_clear_sticky_form('tag_definition/edit');
 
