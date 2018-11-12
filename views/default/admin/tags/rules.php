@@ -4,6 +4,7 @@ $tb = elgg()->table_columns;
 
 elgg_register_menu_item('title', [
 	'name' => 'add',
+	'icon' => 'plus',
 	'text' => elgg_echo('add'),
 	'href' => elgg_generate_url('add:object:tag_tools_rule'),
 	'class' => [
