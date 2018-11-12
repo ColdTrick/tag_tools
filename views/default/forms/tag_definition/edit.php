@@ -15,7 +15,7 @@ echo elgg_view_field([
 	'name' => 'title',
 	'value' => elgg_extract('title', $vars),
 	'required' => true,
-	'readonly' => ($entity instanceof TagDefinition),
+	'readonly' => true,
 ]);
 
 echo elgg_view_field([
@@ -23,6 +23,28 @@ echo elgg_view_field([
 	'#label' => elgg_echo('description'),
 	'name' => 'description',
 	'value' => elgg_extract('description', $vars),
+]);
+
+echo elgg_view_field([
+	'#type' => 'fieldset',
+	'#help' => elgg_echo('tag_tools:tag_definition:edit:colors:help'),
+	'align' => 'horizontal',
+	'fields' => [
+		[
+			'#type' => 'text',
+			'#label' => elgg_echo('tag_tools:tag_definition:edit:field:bgcolor'),
+			'type' => 'color',
+			'name' => 'bgcolor',
+			'value' => elgg_extract('bgcolor', $vars),
+		],
+		[
+			'#type' => 'text',
+			'#label' => elgg_echo('tag_tools:tag_definition:edit:field:textcolor'),
+			'type' => 'color',
+			'name' => 'textcolor',
+			'value' => elgg_extract('textcolor', $vars),
+		],
+	],
 ]);
 
 // footer

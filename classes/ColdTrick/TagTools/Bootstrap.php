@@ -17,6 +17,9 @@ class Bootstrap extends DefaultPluginBootstrap {
 		// notifications
 		elgg_register_notification_event('relationship', 'tag_tools:notification');
 		
+		elgg_register_css('tagcolors', elgg_get_simplecache_url('tag_tools/tagcolors.css'));
+		elgg_load_css('tagcolors');
+		
 		$this->extendViews();
 		$this->registerEvents();
 		$this->registerHooks();
@@ -50,7 +53,8 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('register', 'menu:page', __NAMESPACE__ . '\MenuItems::registerSettingsMenuItem');
 		$hooks->registerHandler('relationship:url', 'relationship', __NAMESPACE__ . '\Notifications::getNotificationURL');
 		$hooks->registerHandler('send:after', 'notifications', __NAMESPACE__ . '\Notifications::afterCleanup');
-		$hooks->registerHandler('view_vars', 'output/tag', __NAMESPACE__ . '\Views::setTagHref');
+		$hooks->registerHandler('view_vars', 'output/tag', __NAMESPACE__ . '\Views::setOutputTagVars');
+		$hooks->registerHandler('view_vars', 'output/tags', __NAMESPACE__ . '\Views::setOutputTagsVars');
 	}
 	
 	/**

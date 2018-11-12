@@ -85,5 +85,8 @@ You can see it here: %s",
 	// edit
 	'tag_tools:tag_definition:edit:title' => "Edit a Tag page",
 	'tag_tools:tag_definition:edit:field:title' => "Tag",
+	'tag_tools:tag_definition:edit:colors:help' => "Setting a custom color will show when displaying the tag. Setting it to black will use the default colors.",
+	'tag_tools:tag_definition:edit:field:bgcolor' => "Background color",
+	'tag_tools:tag_definition:edit:field:textcolor' => "Text color",
 	
 ];

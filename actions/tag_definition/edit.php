@@ -27,6 +27,8 @@ if (!$entity instanceof TagDefinition) {
 }
 
 $entity->description = get_input('description');
+$entity->bgcolor = get_input('bgcolor');
+$entity->textcolor = get_input('textcolor');
 
 if (!$entity->save()) {
 	return elgg_error_response(elgg_echo('save:fail'));
