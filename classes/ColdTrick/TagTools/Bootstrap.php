@@ -45,6 +45,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('register', 'menu:page', __NAMESPACE__ . '\MenuItems::registerSettingsMenuItem');
 		$hooks->registerHandler('relationship:url', 'relationship', __NAMESPACE__ . '\Notifications::getNotificationURL');
 		$hooks->registerHandler('send:after', 'notifications', __NAMESPACE__ . '\Notifications::afterCleanup');
+		$hooks->registerHandler('view_vars', 'output/tag', __NAMESPACE__ . '\Views::setTagHref');
 	}
 	
 	/**
