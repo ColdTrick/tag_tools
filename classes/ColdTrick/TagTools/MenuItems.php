@@ -103,20 +103,22 @@ class MenuItems {
 		
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'follow_tag_on',
-			'text' => elgg_view_icon('refresh'),
+			'icon' => 'refresh',
+			'text' => elgg_echo('tag_tools:follow_tag:menu:on:text'),
 			'title' => elgg_echo('tag_tools:follow_tag:menu:on'),
 			'href' => $action_url,
-			'is_action' => true,
 			'item_class' => $following ? 'hidden' : '',
+			'data-toggle' => 'follow-tag-off',
 		]);
 		
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'follow_tag_off',
-			'text' => elgg_view_icon('refresh-hover'),
+			'icon' => 'refresh', // @todo make icon highlighted
+			'text' => elgg_echo('tag_tools:follow_tag:menu:off:text'),
 			'title' => elgg_echo('tag_tools:follow_tag:menu:off'),
 			'href' => $action_url,
-			'is_action' => true,
 			'item_class' => $following ? '' : 'hidden',
+			'data-toggle' => 'follow-tag-on',
 		]);
 		
 		return $return_value;

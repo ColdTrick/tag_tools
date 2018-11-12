@@ -40,7 +40,9 @@ return [
 	'tag_tools:rules:execute' => "Execute",
 	
 	'tag_tools:follow_tag:menu:on' => "Track new content with this tag",
+	'tag_tools:follow_tag:menu:on:text' => "Follow tag",
 	'tag_tools:follow_tag:menu:off' => "Stop tracking new content with this tag",
+	'tag_tools:follow_tag:menu:off:text' => "Unfollow tag",
 	'tag_tools:js:autocomplete:required' => "Please fill in the required tags",
 	'tag_tools:notifications:menu' => "Tag notifications",
 	'tag_tools:notifications:description' => "Configure the tags you wish to monitor and if and how you will be notified when new content is created with one of these tags.",

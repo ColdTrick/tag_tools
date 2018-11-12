@@ -1,0 +1,6 @@
+.elgg-menu-follow-tag {
+	
+	a > .elgg-anchor-label {
+		display: none;
+	}
+}

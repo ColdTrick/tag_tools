@@ -24,8 +24,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 	
 	protected function extendViews() {
 		elgg_extend_view('elgg.css', 'css/tag_tools/jquery.tagit.css');
-		elgg_extend_view('elgg.css', 'css/tag_tools/follow.css');
-		elgg_extend_view('elgg.js', 'js/tag_tools/follow.js');
+		elgg_extend_view('elgg.css', 'tag_tools/site.css');
 		elgg_extend_view('input/tags', 'tag_tools/extend_tags.js');
 		elgg_extend_view('output/tag', 'tag_tools/output/tag');
 	}
