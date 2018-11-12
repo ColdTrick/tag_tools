@@ -26,6 +26,11 @@ class Bootstrap extends DefaultPluginBootstrap {
 		elgg_extend_view('elgg.css', 'css/tag_tools/jquery.tagit.css');
 		elgg_extend_view('elgg.css', 'tag_tools/site.css');
 		elgg_extend_view('input/tags', 'tag_tools/extend_tags.js');
+		
+		elgg_extend_view('tag_tools/tag/content', 'tag_tools/tag/content/groups');
+		elgg_extend_view('tag_tools/tag/content', 'tag_tools/tag/content/recent_content');
+		elgg_extend_view('tag_tools/tag/content', 'tag_tools/tag/content/related_tags');
+		elgg_extend_view('tag_tools/tag/content', 'tag_tools/tag/content/users');
 	}
 	
 	/**
