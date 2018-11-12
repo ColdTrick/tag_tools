@@ -18,7 +18,7 @@ class Enqueue {
 	 */
 	public static function createMetadata($event, $type, $metadata) {
 		
-		if (!($metadata instanceof \ElggMetadata)) {
+		if (!$metadata instanceof \ElggMetadata) {
 			return;
 		}
 		
@@ -45,7 +45,7 @@ class Enqueue {
 	 */
 	public static function afterEntityUpdate($event, $type, $entity) {
 		
-		if (!($entity instanceof \ElggEntity)) {
+		if (!$entity instanceof \ElggEntity) {
 			// not an entity, since we listen to 'all'
 			return;
 		}
@@ -55,11 +55,11 @@ class Enqueue {
 			return;
 		}
 		
-		if (!self::validateEntity($entity->getGUID())) {
+		if (!self::validateEntity($entity->guid)) {
 			return;
 		}
 		
-		self::enqueueEntity($entity->getGUID());
+		self::enqueueEntity($entity->guid);
 	}
 	
 	/**
@@ -71,15 +71,15 @@ class Enqueue {
 	 */
 	protected static function validateEntity($entity_guid) {
 		
-		$entity_guid = sanitize_int($entity_guid, false);
-		if (empty($entity_guid)) {
+		$entity_guid = (int) $entity_guid;
+		if ($entity_guid < 1) {
 			return false;
 		}
 		
 		// cache plugin
 		self::cachePlugin();
 		
-		if (check_entity_relationship(self::$plugin->getGUID(), 'tag_tools:notification', $entity_guid)) {
+		if (check_entity_relationship(self::$plugin->guid, 'tag_tools:notification', $entity_guid)) {
 			// already enqueued
 			return false;
 		}
@@ -91,7 +91,7 @@ class Enqueue {
 			return false;
 		}
 		
-		$entity_access = sanitise_int($entity_row->access_id);
+		$entity_access = (int) $entity_row->access_id;
 		if ($entity_access === ACCESS_PRIVATE) {
 			// private entity
 			return false;
@@ -114,20 +114,20 @@ class Enqueue {
 	 */
 	protected static function enqueueEntity($entity_guid) {
 		
-		$entity_guid = sanitise_int($entity_guid, false);
-		if (empty($entity_guid)) {
+		$entity_guid = (int) $entity_guid;
+		if ($entity_guid < 1) {
 			return;
 		}
 		
 		// cache plugin
 		self::cachePlugin();
 		
-		if (check_entity_relationship(self::$plugin->getGUID(), 'tag_tools:notification', $entity_guid)) {
+		if (check_entity_relationship(self::$plugin->guid, 'tag_tools:notification', $entity_guid)) {
 			// already queued
 			return;
 		}
 		
-		add_entity_relationship(self::$plugin->getGUID(), 'tag_tools:notification', $entity_guid);
+		add_entity_relationship(self::$plugin->guid, 'tag_tools:notification', $entity_guid);
 	}
 	
 	/**

@@ -41,7 +41,7 @@ return [
 			],
 		],
 		'collection:activity:tags' => [
-			'path' => '/activity/all',
+			'path' => '/activity/tags',
 			'resource' => 'tag_tools/activity',
 			'middleware' => [
 				Gatekeeper::class,

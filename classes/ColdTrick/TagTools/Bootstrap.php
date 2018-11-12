@@ -11,35 +11,53 @@ class Bootstrap extends DefaultPluginBootstrap {
 	 */
 	public function init() {
 		
-		// register js/ss lib
-		elgg_extend_view('elgg.css', 'css/tag_tools/jquery.tagit.css');
-		elgg_extend_view('elgg.css', 'css/tag_tools/follow.css');
-		
-		elgg_extend_view('elgg.js', 'js/tag_tools/follow.js');
-	
 		// ajax views
 		elgg_register_ajax_view('tag_tools/tag/view');
 				
-		// extend views
-		elgg_extend_view('input/tags', 'tag_tools/extend_tags.js');
-		elgg_extend_view('output/tag', 'tag_tools/output/tag');
-		
-		// register events
-		elgg_register_event_handler('create', 'metadata', '\ColdTrick\TagTools\Rules::applyRules', 1);
-		elgg_register_event_handler('create', 'metadata', '\ColdTrick\TagTools\Enqueue::createMetadata');
-		elgg_register_event_handler('update:after', 'all', '\ColdTrick\TagTools\Enqueue::afterEntityUpdate');
-		
-		// plugin hooks
-		elgg_register_plugin_hook_handler('register', 'menu:page', '\ColdTrick\TagTools\MenuItems::registerAdminItems');
-		elgg_register_plugin_hook_handler('register', 'menu:filter', '\ColdTrick\TagTools\MenuItems::registerActivityTab');
-		elgg_register_plugin_hook_handler('register', 'menu:page', '\ColdTrick\TagTools\MenuItems::registerSettingsMenuItem');
-		elgg_register_plugin_hook_handler('register', 'menu:follow_tag', '\ColdTrick\TagTools\MenuItems::registerFollowTag');
-		
 		// notifications
 		elgg_register_notification_event('relationship', 'tag_tools:notification');
-		elgg_register_plugin_hook_handler('get', 'subscriptions', '\ColdTrick\TagTools\Notifications::getSubscribers', 9999);
-		elgg_register_plugin_hook_handler('prepare', 'notification:create:relationship:tag_tools:notification', '\ColdTrick\TagTools\Notifications::prepareMessage');
-		elgg_register_plugin_hook_handler('send:after', 'notifications', '\ColdTrick\TagTools\Notifications::afterCleanup');
-		elgg_register_plugin_hook_handler('relationship:url', 'relationship', '\ColdTrick\TagTools\Notifications::getNotificationURL');
+		
+		$this->extendViews();
+		$this->registerEvents();
+		$this->registerHooks();
+	}
+	
+	protected function extendViews() {
+		elgg_extend_view('elgg.css', 'css/tag_tools/jquery.tagit.css');
+		elgg_extend_view('elgg.css', 'css/tag_tools/follow.css');
+		elgg_extend_view('elgg.js', 'js/tag_tools/follow.js');
+		elgg_extend_view('input/tags', 'tag_tools/extend_tags.js');
+		elgg_extend_view('output/tag', 'tag_tools/output/tag');
+	}
+	
+	/**
+	 * Register plugin hook handlers
+	 *
+	 * @return void
+	 */
+	protected function registerHooks() {
+		$hooks = $this->elgg()->hooks;
+		
+		$hooks->registerHandler('get', 'subscriptions', __NAMESPACE__ . '\Notifications::getSubscribers', 9999);
+		$hooks->registerHandler('prepare', 'notification:create:relationship:tag_tools:notification', __NAMESPACE__ . '\Notifications::prepareMessage');
+		$hooks->registerHandler('register', 'menu:filter', __NAMESPACE__ . '\MenuItems::registerActivityTab');
+		$hooks->registerHandler('register', 'menu:follow_tag', __NAMESPACE__ . '\MenuItems::registerFollowTag');
+		$hooks->registerHandler('register', 'menu:page', __NAMESPACE__ . '\MenuItems::registerAdminItems');
+		$hooks->registerHandler('register', 'menu:page', __NAMESPACE__ . '\MenuItems::registerSettingsMenuItem');
+		$hooks->registerHandler('relationship:url', 'relationship', __NAMESPACE__ . '\Notifications::getNotificationURL');
+		$hooks->registerHandler('send:after', 'notifications', __NAMESPACE__ . '\Notifications::afterCleanup');
+	}
+	
+	/**
+	 * Register event handlers
+	 *
+	 * @return void
+	 */
+	protected function registerEvents() {
+		$events = $this->elgg()->events;
+		
+		$events->registerHandler('create', 'metadata', __NAMESPACE__ . '\Rules::applyRules', 1);
+		$events->registerHandler('create', 'metadata', __NAMESPACE__ . '\Enqueue::createMetadata');
+		$events->registerHandler('update:after', 'all', __NAMESPACE__ . '\Enqueue::afterEntityUpdate');
 	}
 }

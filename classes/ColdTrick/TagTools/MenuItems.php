@@ -21,14 +21,16 @@ class MenuItems {
 		}
 		
 		$user = elgg_get_page_owner_entity();
-		if (!($user instanceof \ElggUser)) {
+		if (!$user instanceof \ElggUser) {
 			$user = elgg_get_logged_in_user_entity();
 		}
 		
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'tag_notifications',
 			'text' => elgg_echo('tag_tools:notifications:menu'),
-			'href' => "notifications/tag/{$user->username}",
+			'href' => elgg_generate_url('settings:notification:tags', [
+				'username' => $user->username,
+			]),
 			'section' => 'notifications',
 		]);
 		
@@ -57,14 +59,14 @@ class MenuItems {
 		}
 		
 		$selected = false;
-		if (strpos(current_page_url(), elgg_normalize_url('activity/tags')) === 0) {
+		if (strpos(current_page_url(), elgg_generate_url('collection:activity:tags')) === 0) {
 			$selected = true;
 		}
 		
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'tags',
 			'text' => elgg_echo('tags'),
-			'href' => 'activity/tags',
+			'href' => elgg_generate_url('collection:activity:tags'),
 			'selected' => $selected,
 			'priority' => 9999,
 		]);
@@ -89,13 +91,13 @@ class MenuItems {
 		}
 		
 		$tag = elgg_extract('tag', $params);
-		if (is_null($tag) || ($tag === '')) {
+		if (elgg_is_empty($tag)) {
 			return;
 		}
 		$encoded_tag = htmlspecialchars($tag, ENT_QUOTES, 'UTF-8', false);
 		
 		$following = tag_tools_is_user_following_tag($tag);
-		$action_url = elgg_http_add_url_query_elements('action/tag_tools/follow_tag', [
+		$action_url = elgg_generate_action_url('tag_tools/follow_tag', [
 			'tag' => $encoded_tag,
 		]);
 		

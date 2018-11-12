@@ -32,10 +32,14 @@ class Rules {
 		
 		$self_exists = (int) elgg_get_metadata([
 			'guid' => $object->entity_guid,
-			'metadata_name' => $object->name,
-			'metadata_value' => $object->value,
+			'metadata_name_value_pairs' => [
+				[
+					'name' => $object->name,
+					'value' => $object->value,
+					'case_sensitive' => false,
+				]
+			],
 			'count' => true,
-			'metadata_case_sensitive' => false,
 		]);
 		if ($self_exists > 1) {
 			// a previous replace already added this tag
@@ -68,10 +72,14 @@ class Rules {
 				// check if the new value doesn't already exist with the entity
 				$exists = (int) elgg_get_metadata([
 					'guid' => $object->entity_guid,
-					'metadata_name' => $object->name,
-					'metadata_value' => $new_value,
+					'metadata_name_value_pairs' => [
+						[
+							'name' => $object->name,
+							'value' => $new_value,
+							'case_sensitive' => false,
+						]
+					],
 					'count' => true,
-					'metadata_case_sensitive' => false,
 				]);
 				if (!empty($exists)) {
 					// new value already exists,
@@ -94,7 +102,7 @@ class Rules {
 	 */
 	protected static function validateEntity($entity) {
 		
-		if (!($entity instanceof \ElggEntity)) {
+		if (!$entity instanceof \ElggEntity) {
 			// not a valid entity
 			return false;
 		}

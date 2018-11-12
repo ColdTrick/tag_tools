@@ -21,7 +21,7 @@ class Notifications {
 			return;
 		}
 		
-		/* @var $event \Elgg\Notifications\Event */
+		/* @var $event \Elgg\Notifications\NotificationEvent */
 		$event = elgg_extract('event', $params);
 		
 		/* @var $relationship \ElggRelationship */
@@ -43,8 +43,9 @@ class Notifications {
 				'value' => $sending_tags,
 			],
 			'limit' => false,
+			'batch' => true,
 		];
-		$users_batch = new \ElggBatch('elgg_get_entities_from_annotations', $user_options);
+		$users_batch = elgg_get_entities($user_options);
 		/* @var $user \ElggUser */
 		foreach ($users_batch as $user) {
 			
@@ -57,22 +58,22 @@ class Notifications {
 			// this will prevent duplicate notifications,
 			foreach ($sending_tags as $tag) {
 				
-				if (!tag_tools_is_user_following_tag($tag, $user->getGUID())) {
+				if (!tag_tools_is_user_following_tag($tag, $user->guid)) {
 					// user is not following this tag, check the next
 					continue;
 				}
 				
-				$notifiction_settings = tag_tools_get_user_tag_notification_settings($tag, $user->getGUID());
+				$notifiction_settings = tag_tools_get_user_tag_notification_settings($tag, $user->guid);
 				if (empty($notifiction_settings)) {
 					// no notification settings for this tag
 					continue;
 				}
 				
-				if (isset($tag_subscribers[$user->getGUID()])) {
-					$tag_subscribers[$user->getGUID()] = array_merge($tag_subscribers[$user->getGUID()], $notifiction_settings);
-					$tag_subscribers[$user->getGUID()] = array_unique($tag_subscribers[$user->getGUID()]);
+				if (isset($tag_subscribers[$user->guid])) {
+					$tag_subscribers[$user->guid] = array_merge($tag_subscribers[$user->guid], $notifiction_settings);
+					$tag_subscribers[$user->guid] = array_unique($tag_subscribers[$user->guid]);
 				} else {
-					$tag_subscribers[$user->getGUID()] = $notifiction_settings;
+					$tag_subscribers[$user->guid] = $notifiction_settings;
 				}
 			}
 		}
@@ -111,12 +112,12 @@ class Notifications {
 		$tag = [];
 		foreach ($sending_tags as $sending_tag) {
 			
-			if (!tag_tools_is_user_following_tag($sending_tag, $recipient->getGUID())) {
+			if (!tag_tools_is_user_following_tag($sending_tag, $recipient->guid)) {
 				// user is not following this tag
 				continue;
 			}
 			
-			if (!tag_tools_check_user_tag_notification_method($sending_tag, $method, $recipient->getGUID())) {
+			if (!tag_tools_check_user_tag_notification_method($sending_tag, $method, $recipient->guid)) {
 				continue;
 			}
 			
@@ -158,7 +159,7 @@ class Notifications {
 			return;
 		}
 		
-		/* @var $event \Elgg\Notifications\Event */
+		/* @var $event \Elgg\Notifications\NotificationEvent */
 		$event = elgg_extract('event', $params);
 		
 		/* @var $relationship \ElggRelationship */
@@ -191,7 +192,7 @@ class Notifications {
 	public static function getNotificationURL($hook, $type, $return_value, $params) {
 		
 		$relationship = elgg_extract('relationship', $params);
-		if (!($relationship instanceof \ElggRelationship)) {
+		if (!$relationship instanceof \ElggRelationship) {
 			return;
 		}
 		
@@ -200,7 +201,7 @@ class Notifications {
 		}
 		
 		$entity = get_entity($relationship->guid_two);
-		if (!($entity instanceof \ElggEntity)) {
+		if (!$entity instanceof \ElggEntity) {
 			return;
 		}
 		
@@ -221,12 +222,12 @@ class Notifications {
 		}
 		
 		$event = elgg_extract('event', $params);
-		if (!($event instanceof \Elgg\Notifications\Event)) {
+		if (!$event instanceof \Elgg\Notifications\NotificationEvent) {
 			return false;
 		}
 		
 		$relationship = $event->getObject();
-		if (!($relationship instanceof \ElggRelationship)) {
+		if (!$relationship instanceof \ElggRelationship) {
 			return false;
 		}
 		
