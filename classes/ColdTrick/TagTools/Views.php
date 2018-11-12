@@ -20,7 +20,9 @@ class Views {
 			return;
 		}
 		
-		$url = elgg_generate_url('collection:tag', ['tag' => $value]);
+		$url = elgg_generate_url('collection:tag', [
+			'tag' => strtolower($value),
+		]);
 		if (!$url) {
 			return;
 		}
