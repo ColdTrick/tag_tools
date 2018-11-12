@@ -26,7 +26,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 		elgg_extend_view('elgg.css', 'css/tag_tools/jquery.tagit.css');
 		elgg_extend_view('elgg.css', 'tag_tools/site.css');
 		elgg_extend_view('input/tags', 'tag_tools/extend_tags.js');
-		elgg_extend_view('output/tag', 'tag_tools/output/tag');
 	}
 	
 	/**
@@ -40,7 +39,8 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('filter_tabs', 'activity', __NAMESPACE__ . '\MenuItems::registerActivityTab');
 		$hooks->registerHandler('get', 'subscriptions', __NAMESPACE__ . '\Notifications::getSubscribers', 9999);
 		$hooks->registerHandler('prepare', 'notification:create:relationship:tag_tools:notification', __NAMESPACE__ . '\Notifications::prepareMessage');
-		$hooks->registerHandler('register', 'menu:follow_tag', __NAMESPACE__ . '\MenuItems::registerFollowTag');
+		$hooks->registerHandler('register', 'menu:title', __NAMESPACE__ . '\MenuItems::registerFollowTag');
+		$hooks->registerHandler('register', 'menu:title', __NAMESPACE__ . '\MenuItems::registerTagDefinition');
 		$hooks->registerHandler('register', 'menu:page', __NAMESPACE__ . '\MenuItems::registerAdminItems');
 		$hooks->registerHandler('register', 'menu:page', __NAMESPACE__ . '\MenuItems::registerSettingsMenuItem');
 		$hooks->registerHandler('relationship:url', 'relationship', __NAMESPACE__ . '\Notifications::getNotificationURL');

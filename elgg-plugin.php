@@ -19,6 +19,11 @@ return [
 			'subtype' => 'tag_tools_rule',
 			'class' => TagToolsRule::class,
 		],
+		[
+			'type' => 'object',
+			'subtype' => 'tag_definition',
+			'class' => TagDefinition::class,
+		],
 	],
 	'views' => [
 		'default' => [
@@ -61,8 +66,31 @@ return [
 				Gatekeeper::class,
 			],
 		],
+		'collection:tag' => [
+			'path' => 'tag/{tag}',
+			'resource' => 'tag/view',
+		],
+		'add:object:tag_definition' => [
+			'path' => 'tag_definition/add/{tag}',
+			'resource' => 'tag_definition/add',
+			'middleware' => [
+				AdminGatekeeper::class,
+			],
+		],
+		'edit:object:tag_definition' => [
+			'path' => 'tag_definition/edit/{guid}',
+			'resource' => 'tag_definition/edit',
+			'middleware' => [
+				AdminGatekeeper::class,
+			],
+		],
+		'view:object:tag_definition' => [
+			'path' => 'tag_definition/view/{guid}/{title?}',
+			'controller' => [TagDefinition::class, 'forwarder'],
+		],
 	],
 	'actions' => [
+		'tag_definition/edit' => ['access' => 'admin'],
 		'tag_tools/follow_tag' => [],
 		'tag_tools/notifications/edit' => [],
 		'tag_tools/rules/edit' => ['access' => 'admin'],
