@@ -71,4 +71,15 @@ You can see it here: %s",
 	'tag_tools:actions:follow_tag:success:follow' => "You are now following the tag: %s",
 	'tag_tools:actions:follow_tag:success:unfollow' => "You are no longer following the tag: %s",
 	
+	// tag view page
+	'tag_tools:tag:view:title' => "Tag: %s",
+	
+	// tag definitions
+	// add
+	'tag_tools:tag_definition:add:title' => "Create a new Tag page",
+	
+	// edit
+	'tag_tools:tag_definition:edit:title' => "Edit a Tag page",
+	'tag_tools:tag_definition:edit:field:title' => "Tag",
+	
 ];
