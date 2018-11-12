@@ -3,9 +3,9 @@
 elgg_admin_gatekeeper();
 
 $tag = elgg_extract('tag', $vars);
-if (is_null($tag) || ($tag === '')) {
+if (elgg_is_empty($tag)) {
 	register_error(elgg_echo('error:missing_data'));
-	return '';
+	return;
 }
 
 $details = '';
@@ -18,22 +18,22 @@ if (!empty($stats)) {
 	
 	// header
 	$row = [
-		elgg_format_element('th', [], elgg_echo('widget:content_stats:type')),
-		elgg_format_element('th', [], elgg_echo('widget:content_stats:number')),
+		elgg_format_element('th', [], elgg_echo('admin:statistics:numentities:type')),
+		elgg_format_element('th', [], elgg_echo('admin:statistics:numentities:number')),
 	];
-	$rows[] = elgg_format_element('tr', [], implode('', $row));
+	$rows[] = elgg_format_element('thead', [], elgg_format_element('tr', [], implode(PHP_EOL, $row)));
 	
 	foreach ($stats as $type_subtype => $count) {
 		$row = [
-			elgg_format_element('td', [], elgg_echo("item:{$type_subtype}")),
+			elgg_format_element('td', [], elgg_language_key_exists("item:{$type_subtype}") ? elgg_echo("item:{$type_subtype}") : $type_subtype),
 			elgg_format_element('td', [], $count),
 		];
-		$rows[] = elgg_format_element('tr', [], implode('', $row));
+		$rows[] = elgg_format_element('tr', [], implode(PHP_EOL, $row));
 	}
 	
-	$table = elgg_format_element('table', ['class' => 'elgg-table'], implode('', $rows));
+	$table = elgg_format_element('table', ['class' => 'elgg-table'], implode(PHP_EOL, $rows));
 	
-	$details .= elgg_view_module('inline', elgg_echo('admin:widget:content_stats'), $table);
+	$details .= elgg_view_module('info', elgg_echo('admin:statistics:numentities'), $table);
 }
 
 // list rules
@@ -60,7 +60,7 @@ $rules = elgg_list_entities_from_metadata([
 	],
 ]);
 if (!empty($rules)) {
-	$details .= elgg_view_module('inline', elgg_echo('tag_tools:search:rules'), $rules);
+	$details .= elgg_view_module('info', elgg_echo('tag_tools:search:rules'), $rules);
 }
 
 // return data

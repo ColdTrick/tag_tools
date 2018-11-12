@@ -22,16 +22,6 @@ class TagToolsRule extends ElggObject {
 	private $entity_types;
 	
 	/**
-	 * @var bool state of access bit
-	 */
-	private $ignore_access;
-	
-	/**
-	 * @var bool state of disabled entities
-	 */
-	private $show_hidden_entities;
-	
-	/**
 	 * {@inheritDoc}
 	 * @see ElggObject::initializeAttributes()
 	 */
@@ -42,8 +32,8 @@ class TagToolsRule extends ElggObject {
 		$site = elgg_get_site_entity();
 		
 		$this->attributes['subtype'] = self::SUBTYPE;
-		$this->attributes['owner_guid'] = $site->getGUID();
-		$this->attributes['container_guid'] = $site->getGUID();
+		$this->attributes['owner_guid'] = $site->guid;
+		$this->attributes['container_guid'] = $site->guid;
 		$this->attributes['access_id'] = ACCESS_PUBLIC;
 	}
 	
@@ -100,18 +90,20 @@ class TagToolsRule extends ElggObject {
 		// prepare
 		$this->preApply();
 		
-		try {
-			switch ($this->tag_action) {
-				case 'delete':
-					$this->applyDelete();
-					break;
-				case 'replace':
-					$this->applyReplace();
-					break;
+		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() {
+			try {
+				switch ($this->tag_action) {
+					case 'delete':
+						$this->applyDelete();
+						break;
+					case 'replace':
+						$this->applyReplace();
+						break;
+				}
+			} catch (\Exception $e) {
+				elgg_log($e->getMessage(), 'ERROR');
 			}
-		} catch (\Exception $e) {
-			elgg_log($e->getMessage(), 'ERROR');
-		}
+		});
 		
 		// restore
 		$this->postApply();
@@ -149,11 +141,6 @@ class TagToolsRule extends ElggObject {
 		// this could take a bit
 		set_time_limit(0);
 		
-		// ignore access/disabled entities
-		$this->ignore_access = elgg_set_ignore_access(true);
-		$this->show_hidden_entities = access_get_show_hidden_status();
-		access_show_hidden_entities(true);
-		
 		// unregister some events
 		elgg_unregister_event_handler('create', 'metadata', '\ColdTrick\TagTools\Rules::applyRules');
 		elgg_unregister_event_handler('create', 'metadata', '\ColdTrick\TagTools\Enqueue::createMetadata');
@@ -165,10 +152,6 @@ class TagToolsRule extends ElggObject {
 	 * @return void
 	 */
 	protected function postApply() {
-		
-		// restore access/disabled entities
-		elgg_set_ignore_access($this->ignore_access);
-		access_show_hidden_entities($this->show_hidden_entities);
 		
 		// reregister events
 		elgg_register_event_handler('create', 'metadata', '\ColdTrick\TagTools\Rules::applyRules', 1);
@@ -209,11 +192,11 @@ class TagToolsRule extends ElggObject {
 		$tag_names = $this->getTagNames();
 		$to_tag = $this->to_tag;
 		
-		if (empty($entity_types) || empty($tag_names) || is_null($to_tag) || $to_tag === '') {
+		if (empty($entity_types) || empty($tag_names) || elgg_is_empty($to_tag)) {
 			return;
 		}
 		
-		$batch = elgg_get_entities_from_metadata([
+		$batch = elgg_get_entities([
 			'type_subtype_pairs' => $entity_types,
 			'metadata_names' => $tag_names,
 			'metadata_value' => $this->from_tag,
@@ -228,7 +211,7 @@ class TagToolsRule extends ElggObject {
 			// check all tag fields
 			foreach ($tag_names as $tag_name) {
 				$value = $entity->$tag_name;
-				if (is_null($value) || ($value === '')) {
+				if (elgg_is_empty($value)) {
 					continue;
 				}
 				
@@ -236,16 +219,29 @@ class TagToolsRule extends ElggObject {
 					$value = [$value];
 				}
 				
-				if (!in_array($this->from_tag, $value)) {
+				$found = false;
+				$add = true;
+				
+				foreach ($value as $index => $v) {
+					if (strtolower($v) === $this->from_tag) {
+						$found = true;
+						unset($value[$index]);
+						continue;
+					}
+					
+					if ($v === $to_tag) {
+						// found replacement value, no need to add
+						$add = false;
+					}
+				}
+				
+				if (!$found) {
 					// this field doesn't contain the original value
 					continue;
 				}
 				
-				$key = array_search($this->from_tag, $value);
-				unset($value[$key]);
-				
 				// only add new value if doesn't already contain this
-				if (!in_array($this->to_tag, $value)) {
+				if ($add) {
 					$value[] = $to_tag;
 					
 					if (($tag_name === 'tags') && tag_tools_is_notification_entity($entity)) {

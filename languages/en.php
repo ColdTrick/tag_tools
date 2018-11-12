@@ -3,10 +3,12 @@ return [
 
 	'admin:tags' => "Tags",
 	'admin:tags:search' => "Search",
-	'admin:tags:suggest' => "Suggest",
+	'admin:tags:suggest' => "Suggestions",
 	'admin:tags:rules' => "Rules",
 	
 	'item:object:tag_tools_rule' => "Tag Tools rule",
+	
+	'tag_tools:suggest:ignore' => "Ignore suggestion",
 	
 	'tag_tools:admin:tags:suggest:info' => "The list below shows suggestions for autocorrection rules.",
 	'tag_tools:admin:tags:suggest:results:title' => "Suggestions",

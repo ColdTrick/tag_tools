@@ -3,6 +3,10 @@
  * All plugin functions are bundled here
  */
 
+use Elgg\Database\Select;
+use Elgg\Database\Clauses\EntityWhereClause;
+use Elgg\Database\QueryOptions;
+
 /**
  * Get all the tags a user is following
  *
@@ -18,8 +22,8 @@ function tag_tools_get_user_following_tags($user_guid = 0, $reset_cache = false)
 		$cache = [];
 	}
 	
-	$user_guid = sanitise_int($user_guid, false);
-	if (empty($user_guid)) {
+	$user_guid = (int) $user_guid;
+	if ($user_guid < 1) {
 		$user_guid = elgg_get_logged_in_user_guid();
 	}
 	
@@ -30,15 +34,13 @@ function tag_tools_get_user_following_tags($user_guid = 0, $reset_cache = false)
 	if (!isset($cache[$user_guid]) || $reset_cache) {
 		$cache[$user_guid] = [];
 
-		$ia = elgg_set_ignore_access(true);
-		
-		$annotations = elgg_get_annotations([
-			'guid' => $user_guid,
-			'annotation_name' => 'follow_tag',
-			'limit' => false,
-		]);
-		
-		elgg_set_ignore_access($ia);
+		$annotations = elgg_call(ELGG_IGNORE_ACCESS, function() use ($user_guid) {
+			return elgg_get_annotations([
+				'guid' => $user_guid,
+				'annotation_name' => 'follow_tag',
+				'limit' => false,
+			]);
+		});
 		
 		if (!empty($annotations)) {
 			foreach ($annotations as $annotation) {
@@ -64,8 +66,8 @@ function tag_tools_is_user_following_tag($tag, $user_guid = 0) {
 		return false;
 	}
 
-	$user_guid = sanitise_int($user_guid, false);
-	if (empty($user_guid)) {
+	$user_guid = (int) $user_guid;
+	if ($user_guid < 1) {
 		$user_guid = elgg_get_logged_in_user_guid();
 	}
 
@@ -96,8 +98,8 @@ function tag_tools_toggle_following_tag($tag, $user_guid = 0, $track = null) {
 		return;
 	}
 	
-	$user_guid = sanitise_int($user_guid, false);
-	if (empty($user_guid)) {
+	$user_guid = (int) $user_guid;
+	if ($user_guid < 1) {
 		$user_guid = elgg_get_logged_in_user_guid();
 	}
 
@@ -111,19 +113,17 @@ function tag_tools_toggle_following_tag($tag, $user_guid = 0, $track = null) {
 	}
 
 	// remove the tag from the follow list
-	$ia = elgg_set_ignore_access(true);
+	elgg_call(ELGG_IGNORE_ACCESS, function() use ($user_guid, $tag) {
+		elgg_delete_annotations([
+			'guid' => $user_guid,
+			'limit' => false,
+			'annotation_name' => 'follow_tag',
+			'annotation_value' => $tag,
+		]);
+		
+		tag_tools_remove_tag_from_notification_settings($tag, $user_guid);
+	});
 	
-	elgg_delete_annotations([
-		'guid' => $user_guid,
-		'limit' => false,
-		'annotation_name' => 'follow_tag',
-		'annotation_value' => $tag,
-	]);
-	
-	tag_tools_remove_tag_from_notification_settings($tag, $user_guid);
-	
-	elgg_set_ignore_access($ia);
-
 	// did the user want to follow the tag
 	if ($track) {
 		$user->annotate('follow_tag', $tag, ACCESS_PUBLIC);
@@ -147,8 +147,8 @@ function tag_tools_remove_tag_from_notification_settings($tag, $user_guid = 0) {
 		return false;
 	}
 	
-	$user_guid = sanitise_int($user_guid, false);
-	if (empty($user_guid)) {
+	$user_guid = (int) $user_guid;
+	if ($user_guid < 1) {
 		$user_guid = elgg_get_logged_in_user_guid();
 	}
 	
@@ -190,8 +190,8 @@ function tag_tools_get_user_notification_settings($user_guid = 0, $reset_cache =
 		$cache = [];
 	}
 	
-	$user_guid = sanitise_int($user_guid, false);
-	if (empty($user_guid)) {
+	$user_guid = (int) $user_guid;
+	if ($user_guid < 1) {
 		$user_guid = elgg_get_logged_in_user_guid();
 	}
 	
@@ -225,8 +225,8 @@ function tag_tools_get_user_tag_notification_settings($tag, $user_guid = 0) {
 		return false;
 	}
 	
-	$user_guid = sanitise_int($user_guid, false);
-	if (empty($user_guid)) {
+	$user_guid = (int) $user_guid;
+	if ($user_guid < 1) {
 		$user_guid = elgg_get_logged_in_user_guid();
 	}
 	
@@ -268,8 +268,8 @@ function tag_tools_check_user_tag_notification_method($tag, $method, $user_guid 
 		return false;
 	}
 	
-	$user_guid = sanitise_int($user_guid, false);
-	if (empty($user_guid)) {
+	$user_guid = (int) $user_guid;
+	if ($user_guid < 1) {
 		$user_guid = elgg_get_logged_in_user_guid();
 	}
 	
@@ -296,7 +296,7 @@ function tag_tools_check_user_tag_notification_method($tag, $method, $user_guid 
  */
 function tag_tools_is_notification_entity($entity_guid) {
 	
-	$entity_guid = sanitise_int($entity_guid);
+	$entity_guid = (int) $entity_guid;
 	$entity_row = get_entity_as_row($entity_guid);
 	if (empty($entity_row)) {
 		return false;
@@ -351,10 +351,6 @@ function tag_tools_get_notification_type_subtypes() {
  * @return bool
  */
 function tag_tools_add_sent_tags(ElggEntity $entity, $sending_tags = []) {
-	
-	if (!($entity instanceof \ElggEntity)) {
-		return false;
-	}
 	
 	if (empty($sending_tags)) {
 		// nothing to add
@@ -478,15 +474,15 @@ function tag_tools_rules_get_rule($from_tag) {
 	}
 	
 	// base options
-	$rules = elgg_get_entities_from_metadata([
+	$rules = elgg_get_entities([
 		'type' => 'object',
 		'subtype' => TagToolsRule::SUBTYPE,
 		'limit' => 1,
 		'metadata_name_value_pairs' => [
 			'name' => 'from_tag',
 			'value' => $from_tag,
+			'case_sensitive' => false,
 		],
-		'metadata_case_sensitive' => false,
 	]);
 	if (empty($rules)) {
 		return false;
@@ -504,11 +500,10 @@ function tag_tools_rules_get_rule($from_tag) {
  */
 function tag_tools_get_tag_stats($tag) {
 	
-	if (is_null($tag) || ($tag === '')) {
+	if (elgg_is_empty($tag)) {
 		return false;
 	}
 	
-	$dbprefix = elgg_get_config('dbprefix');
 	$type_subtypes = tag_tools_rules_get_type_subtypes();
 	$tag_names = tag_tools_rules_get_tag_names();
 	
@@ -516,40 +511,34 @@ function tag_tools_get_tag_stats($tag) {
 		return false;
 	}
 	
-	$name_ids = [];
-	foreach ($tag_names as $name) {
-		$name_ids[] = elgg_get_metastring_id($name);
-	}
-	$value_id = elgg_get_metastring_id($tag);
+	$types_where = EntityWhereClause::factory(new QueryOptions(['type_subtype_pairs' => $type_subtypes]));
 	
-	$type_subtype_clause = _elgg_services()->entityTable->getEntityTypeSubtypeWhereSql('e', [], [], $type_subtypes);
+	$select = Select::fromTable('metadata', 'md');
+	$select->select('e.type')
+		->addSelect('e.subtype')
+		->addSelect('count(*) as total')
+		->join('md', 'entities', 'e', $select->compare('md.entity_guid', '=', 'e.guid'))
+		->where($select->compare('md.name', 'in', $tag_names, ELGG_VALUE_STRING))
+		->andWhere($types_where->prepare($select, 'e'))
+		->andWhere($select->compare('md.value', '=', $tag, ELGG_VALUE_STRING))
+		->groupBy('e.type')
+		->addGroupBy('e.subtype')
+		->orderBy('total', 'desc')
+	;
 	
-	$query = "SELECT e.type, es.subtype, count(*) as count
-		FROM {$dbprefix}metadata md
-		JOIN {$dbprefix}entities e ON md.entity_guid = e.guid
-		LEFT OUTER JOIN {$dbprefix}entity_subtypes es ON es.id = e.subtype
-		WHERE md.name_id IN (" . implode(',', $name_ids) . ")
-		AND md.value_id = {$value_id}
-		AND {$type_subtype_clause}
-		AND e.enabled = 'yes'
-		AND md.enabled = 'yes'
-		GROUP BY e.type, es.subtype
-		ORDER BY count DESC
-	";
-	
-	$data = get_data($query);
-	if (empty($data)) {
+	$res = $select->execute()->fetchAll();
+	if (empty($res)) {
 		return false;
 	}
 	
 	$result = [];
-	foreach ($data as $row) {
+	foreach ($res as $row) {
 		$type_subtype = [
 			$row->type,
 			$row->subtype,
 		];
 		$type_subtype = implode(':', $type_subtype);
-		$result[$type_subtype] = (int) $row->count;
+		$result[$type_subtype] = (int) $row->total;
 	}
 	
 	return $result;

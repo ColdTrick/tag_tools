@@ -12,17 +12,16 @@ class Bootstrap extends DefaultPluginBootstrap {
 	public function init() {
 		
 		// register js/ss lib
-		elgg_extend_view('css/elgg', 'css/tag_tools/jquery.tagit.css');
-		elgg_extend_view('css/elgg', 'css/tag_tools/follow.css');
-		elgg_extend_view('css/admin', 'css/tag_tools/admin.css');
+		elgg_extend_view('elgg.css', 'css/tag_tools/jquery.tagit.css');
+		elgg_extend_view('elgg.css', 'css/tag_tools/follow.css');
 		
-		elgg_extend_view('js/elgg', 'js/tag_tools/follow.js');
+		elgg_extend_view('elgg.js', 'js/tag_tools/follow.js');
 	
 		// ajax views
 		elgg_register_ajax_view('tag_tools/tag/view');
 				
 		// extend views
-		elgg_extend_view('input/tags', 'tag_tools/extend_tags');
+		elgg_extend_view('input/tags', 'tag_tools/extend_tags.js');
 		elgg_extend_view('output/tag', 'tag_tools/output/tag');
 		
 		// register events

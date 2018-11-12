@@ -8,13 +8,17 @@
  */
 
 $entity = elgg_extract('item', $vars);
-if (!($entity instanceof TagToolsRule)) {
-	return '&nbsp;';
+if (!$entity instanceof TagToolsRule) {
+	echo elgg_format_element('td', [
+		'style' => 'width: 40px;',
+		'class' => 'center',
+	], '&nbsp;');
+	return ;
 }
 
 $link = elgg_view('output/url', [
 	'text' => elgg_view_icon('edit'),
-	'href' => "tag_tools/rules/edit/{$entity->getGUID()}",
+	'href' => elgg_generate_entity_url($entity, 'edit'),
 	'title' => elgg_echo('edit'),
 	'is_trusted' => true,
 	'class' => 'elgg-lightbox',

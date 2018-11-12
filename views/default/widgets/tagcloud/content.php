@@ -1,5 +1,6 @@
 <?php
 
+/* @var $widget ElggWidget */
 $widget = elgg_extract('entity', $vars);
 $owner = $widget->getOwnerEntity();
 

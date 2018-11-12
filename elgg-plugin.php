@@ -66,7 +66,6 @@ return [
 		'tag_tools/follow_tag' => [],
 		'tag_tools/notifications/edit' => [],
 		'tag_tools/rules/edit' => ['access' => 'admin'],
-		'tag_tools/rules/delete' => ['access' => 'admin'],
 		'tag_tools/suggestions/ignore' => ['access' => 'admin'],
 	],
 	'widgets' => [

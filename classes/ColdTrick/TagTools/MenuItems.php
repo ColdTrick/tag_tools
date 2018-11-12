@@ -151,7 +151,7 @@ class MenuItems {
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'tags:suggest',
-			'href' => 'admin/tags/sugges',
+			'href' => 'admin/tags/suggest',
 			'text' => elgg_echo('admin:tags:suggest'),
 			'parent_name' => 'tags',
 			'section' => 'configure',

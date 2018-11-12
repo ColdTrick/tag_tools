@@ -1,29 +1,31 @@
 <?php
 
+use Elgg\Database\Select;
+
 echo elgg_view('output/longtext', ['value' => elgg_echo('tag_tools:admin:tags:suggest:info')]);
 
-$dbprefix = elgg_get_config('dbprefix');
-
-$min_count = 5; // limit small tag conut
-
 $tag_names = tag_tools_rules_get_tag_names();
-$name_ids = implode(', ', elgg_get_metastring_map($tag_names));
 
-$all_tags_query = "
-		SELECT * FROM (
-			SELECT msv.string, COUNT(md.id) AS count
-			FROM {$dbprefix}metadata md
-			JOIN {$dbprefix}metastrings msv ON md.value_id = msv.id
-			WHERE md.name_id IN ({$name_ids})
-			AND msv.string != ''
-			AND CHAR_LENGTH(msv.string) > 2
-			GROUP BY md.value_id
-		) tags
-		WHERE count > {$min_count}
-		ORDER BY count DESC
-";
+$select = Select::fromTable('metadata', 'md');
+$select->select('md.value')
+	->addSelect('count(md.id) AS total')
+	->where($select->compare('md.name', 'in', $tag_names, ELGG_VALUE_STRING))
+	->groupBy('md.value')
+	->having($select->compare('CHAR_LENGTH(md.value)', '>', 2));
 
-$all_tags = get_data($all_tags_query);
+// limit small tag conut
+$min_count = (int) get_input('min_count', 10);
+if ($min_count > 0) {
+	$select->having($select->compare('total', '>', $min_count, ELGG_VALUE_INTEGER));
+}
+
+$order = get_input('order', 'count');
+if ($order === 'count') {
+	$select->orderBy('total', 'DESC');
+}
+$select->addOrderBy('md.value', 'ASC');
+
+$results = $select->execute()->fetchAll();
 
 $ignore_config = elgg_get_plugin_setting('ignored_suggestions', 'tag_tools');
 if (empty($ignore_config)) {
@@ -41,78 +43,81 @@ $metadata_tags = elgg_get_metadata([
 	'metadata_names' => ['from_tag', 'to_tag'],
 ]);
 
-$configured_rule_tags = array_unique(metadata_array_to_values($metadata_tags));
+$configured_rule_tags = [];
+if (!empty($metadata_tags)) {
+	/* @var $configured_tag \ElggMetdata */
+	foreach ($metadata_tags as $configured_tag) {
+		$configured_rule_tags[] = $configured_tag->value;
+	}
+	
+	$configured_rule_tags = array_values(array_unique($configured_rule_tags));
+}
 
 $suggestions = [];
 
-while ($current_tag = array_pop($all_tags)) {
-
+while ($current_tag = array_pop($results)) {
+	
 	// filter out tags that already have a rule configured
-	if (in_array($current_tag->string, $configured_rule_tags)) {
+	if (in_array($current_tag->value, $configured_rule_tags)) {
 		continue;
 	}
 	
 	// check if tags are ignored
-	$ignore_tags = (array) elgg_extract($current_tag->string, $ignore_config, []);
+	$ignore_tags = (array) elgg_extract($current_tag->value, $ignore_config, []);
 	
 	// check current tag for good suggestions
-	foreach ($all_tags as $tag) {
-		if (in_array($tag->string, $ignore_tags)) {
+	foreach ($results as $tag) {
+		if (in_array($tag->value, $ignore_tags)) {
 			continue;
 		}
 		
-		$levenshtein = levenshtein($current_tag->string, $tag->string);
-		
-		$max_length = max(strlen($current_tag->string), strlen($tag->string));
+		$levenshtein = levenshtein($current_tag->value, $tag->value);
+		$max_length = max(strlen($current_tag->value), strlen($tag->value));
 		
 		if (($levenshtein / $max_length) > (1/3)) {
 			continue;
 		}
 		
-		$suggestions[$current_tag->string][] = $tag->string;
+		$suggestions[$current_tag->value][] = $tag->value;
 	}
 }
 
 if (empty($suggestions)) {
-	echo elgg_view_module('inline', elgg_echo('tag_tools:admin:tags:suggest:results:title'), elgg_echo('notfound'));
+	echo elgg_view_module('info', elgg_echo('tag_tools:admin:tags:suggest:results:title'), elgg_echo('notfound'));
 	return;
 }
 
-$suggestion_items = '';
 foreach ($suggestions as $from_tag => $to_tags) {
 	
-	$to_items = '';
+	$buttons = [];
 	foreach ($to_tags as $to_tag) {
-		$to_items .= elgg_view('output/url', [
+		$buttons[] = elgg_view('output/url', [
+			'icon' => 'angle-right',
 			'text' => $to_tag,
 			'title' => elgg_echo('tag_tools:rules:add'),
-			'href' => elgg_http_add_url_query_elements('tag_tools/rules/add', [
+			'href' => elgg_generate_url('add:object:tag_tools_rule', [
 				'from_tag' => $from_tag,
 				'to_tag' => $to_tag,
 			]),
-			'class' => 'elgg-button elgg-button-action elgg-lightbox',
+			'class' => 'elgg-button elgg-button-action elgg-lightbox mbs',
 			'data-colorbox-opts' => json_encode([
 				'width' => '600px',
 			]),
 		]);
 	}
 	
-	$to_items .= elgg_view('output/url', [
-		'text' => elgg_echo('cancel'),
-		'href' => elgg_http_add_url_query_elements('action/tag_tools/suggestions/ignore', [
+	$ignore = elgg_view('output/url', [
+		'icon' => 'trash-alt',
+		'text' => elgg_echo('tag_tools:suggest:ignore'),
+		'href' => elgg_generate_action_url('tag_tools/suggestions/ignore', [
 			'from_tag' => $from_tag,
 			'ignores' => $to_tags,
 		]),
-		'is_action' => true,
-		'class' => 'elgg-button elgg-button-cancel hidden',
 	]);
 
-	$suggestion_item = '<div>' . elgg_echo('tag_tools:admin:tags:suggest:item', [$from_tag]) . '</div>';
-	$suggestion_item .= elgg_format_element('div', ['class' => ['mll', 'mts']], $to_items);
+	$title = elgg_echo('tag_tools:admin:tags:suggest:item', [$from_tag]);
+	
+	$content = implode('<br />', $buttons);
 
-	$suggestion_items .= elgg_format_element('li', ['class' => 'mbm'], $suggestion_item);
+	echo elgg_view_module('info', $title, $content, ['menu' => $ignore]);
 }
-
-$body = elgg_format_element('ul', ['class' => 'tag-tools-admin-suggestions'], $suggestion_items);
-
-echo elgg_view_module('inline', elgg_echo('tag_tools:admin:tags:suggest:results:title'), $body);

@@ -8,13 +8,19 @@
  */
 
 $entity = elgg_extract('item', $vars);
-if (!($entity instanceof TagToolsRule)) {
-	return '&nbsp;';
+if (!$entity instanceof TagToolsRule) {
+	echo elgg_format_element('td', [
+		'style' => 'width: 40px;',
+		'class' => 'center',
+	], '&nbsp;');
+	return;
 }
 
 $link = elgg_view('output/url', [
 	'text' => elgg_view_icon('delete'),
-	'href' => "action/tag_tools/rules/delete?guid={$entity->getGUID()}",
+	'href' => elgg_generate_action_url('entity/delete', [
+		'guid' => $entity->guid,
+	]),
 	'title' => elgg_echo('delete'),
 	'confirm' => elgg_echo('deleteconfirm'),
 ]);
