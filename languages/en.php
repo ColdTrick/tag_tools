@@ -74,6 +74,10 @@ You can see it here: %s",
 	// tag view page
 	'tag_tools:tag:view:title' => "Tag: %s",
 	
+	'tag_tools:tag:content:content' => "Recent content",
+	'tag_tools:tag:content:groups' => "Groups",
+	'tag_tools:tag:content:users' => "Users",
+	
 	// tag definitions
 	// add
 	'tag_tools:tag_definition:add:title' => "Create a new Tag page",
