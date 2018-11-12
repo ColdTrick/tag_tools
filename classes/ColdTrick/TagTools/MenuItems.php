@@ -58,16 +58,11 @@ class MenuItems {
 			return;
 		}
 		
-		$selected = false;
-		if (strpos(current_page_url(), elgg_generate_url('collection:activity:tags')) === 0) {
-			$selected = true;
-		}
-		
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'tags',
 			'text' => elgg_echo('tags'),
 			'href' => elgg_generate_url('collection:activity:tags'),
-			'selected' => $selected,
+			'selected' => elgg_extract('selected', $params) === 'tags',
 			'priority' => 9999,
 		]);
 		

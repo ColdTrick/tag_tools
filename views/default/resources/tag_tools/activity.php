@@ -7,15 +7,12 @@ elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 
 $tags = tag_tools_get_user_following_tags();
 if (empty($tags)) {
-	forward('activity');
+	forward(elgg_generate_url('collection:river:all'));
 }
 
-$name_ids = [];
-foreach ($tags as $tag) {
-	$name_ids[] = elgg_get_metastring_id($tag);
-}
-
-$options = [];
+$options = [
+	'no_results' => elgg_echo('river:none'),
+];
 
 $title = elgg_echo('tag_tools:activity:tags');
 
@@ -33,30 +30,26 @@ if ($type != 'all') {
 		$options['subtype'] = $subtype;
 	}
 }
-$dbprefix = elgg_get_config('dbprefix');
 
-$tags_id = elgg_get_metastring_id('tags');
-
-$options['joins'] = ["JOIN {$dbprefix}metadata md ON rv.object_guid = md.entity_guid"];
-$options['wheres'] = ["(md.name_id = {$tags_id}) AND md.value_id IN (" . implode(',', $name_ids) . ")"];
-
-$activity = elgg_list_river($options);
-if (!$activity) {
-	$activity = elgg_echo('river:none');
-}
-
-$content = elgg_view('core/river/filter', ['selector' => $selector]);
-
-$sidebar = elgg_view('core/river/sidebar');
-
-$params = [
-	'title' => $title,
-	'content' => $content . $activity,
-	'sidebar' => $sidebar,
-	'filter_context' => 'tags',
-	'class' => 'elgg-river-layout',
+$options['metadata_name_value_pairs'] = [
+	[
+		'name' => 'tags',
+		'value' => $tags,
+	],
 ];
 
-$body = elgg_view_layout('content', $params);
+$activity = elgg_list_river($options);
+
+$content = elgg_view('river/filter', ['selector' => $selector]);
+
+$sidebar = elgg_view('river/sidebar');
+
+$body = elgg_view_layout('default', [
+	'title' => $title,
+	'content' =>  $content . $activity,
+	'sidebar' => $sidebar ? : false,
+	'filter_value' => 'tags',
+	'class' => 'elgg-river-layout',
+]);
 
 echo elgg_view_page($title, $body);

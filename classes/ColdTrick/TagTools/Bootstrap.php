@@ -37,9 +37,9 @@ class Bootstrap extends DefaultPluginBootstrap {
 	protected function registerHooks() {
 		$hooks = $this->elgg()->hooks;
 		
+		$hooks->registerHandler('filter_tabs', 'activity', __NAMESPACE__ . '\MenuItems::registerActivityTab');
 		$hooks->registerHandler('get', 'subscriptions', __NAMESPACE__ . '\Notifications::getSubscribers', 9999);
 		$hooks->registerHandler('prepare', 'notification:create:relationship:tag_tools:notification', __NAMESPACE__ . '\Notifications::prepareMessage');
-		$hooks->registerHandler('register', 'menu:filter', __NAMESPACE__ . '\MenuItems::registerActivityTab');
 		$hooks->registerHandler('register', 'menu:follow_tag', __NAMESPACE__ . '\MenuItems::registerFollowTag');
 		$hooks->registerHandler('register', 'menu:page', __NAMESPACE__ . '\MenuItems::registerAdminItems');
 		$hooks->registerHandler('register', 'menu:page', __NAMESPACE__ . '\MenuItems::registerSettingsMenuItem');
