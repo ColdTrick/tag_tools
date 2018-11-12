@@ -1,19 +1,25 @@
 <?php
 
 $user = elgg_extract('entity', $vars, elgg_get_page_owner_entity());
-if (empty($user) || !elgg_instanceof($user, 'user')) {
+if (!$user instanceof ElggUser) {
 	return;
 }
 
 echo elgg_view_module('info', '', elgg_echo('tag_tools:notifications:description'));
 
-$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
+$notification_methods = elgg_get_notification_methods();
 
-$tags = tag_tools_get_user_following_tags($user->getGUID());
+$tags = tag_tools_get_user_following_tags($user->guid);
 if (empty($tags)) {
 	echo elgg_view('output/longtext', ['value' => elgg_echo('tag_tools:notifications:empty')]);
 	return;
 }
+
+echo elgg_view_field([
+	'#type' => 'hidden',
+	'name' => 'user_guid',
+	'value' => $user->guid,
+]);
 
 elgg_require_js('tag_tools/notifications');
 
@@ -21,7 +27,7 @@ echo "<table class='elgg-table-alt'>";
 // header with notification methods and delete
 echo '<thead>';
 echo '<tr><th>&nbsp;</th>';
-foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
+foreach ($notification_methods as $method) {
 	echo elgg_format_element('th', ['class' => 'center'], elgg_echo("notification:method:{$method}"));
 }
 echo elgg_format_element('th', ['class' => 'center'], elgg_echo('delete'));
@@ -37,14 +43,15 @@ foreach ($tags as $tag) {
 	echo '<tr>';
 	echo '<td>';
 	echo $encoded_tag;
-	echo elgg_view('input/hidden', [
-		'name' => "tags[{$encoded_tag}]", 
+	echo elgg_view_field([
+		'#type' => 'hidden',
+		'name' => "tags[{$encoded_tag}]",
 		'value' => '0',
 	]);
 	echo '</td>';
 	
-	foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
-		$checked = tag_tools_check_user_tag_notification_method($encoded_tag, $method, $user->getGUID());
+	foreach ($notification_methods as $method) {
+		$checked = tag_tools_check_user_tag_notification_method($encoded_tag, $method, $user->guid);
 		
 		echo elgg_format_element('td', ['class' => 'center'], elgg_view("input/checkbox", [
 			'name' => "tags[{$encoded_tag}][]",
@@ -55,8 +62,11 @@ foreach ($tags as $tag) {
 	}
 	
 	echo elgg_format_element('td', ['class' => 'center'], elgg_view('output/url', [
-		'text' => elgg_view_icon('delete'),
-		'href' => 'action/tag_tools/follow_tag?tag=' . urlencode($encoded_tag),
+		'icon' => 'delete',
+		'text' => false,
+		'href' => elgg_generate_action_url('tag_tools/follow_tag', [
+			'tag' => $tag,
+		]),
 		'class' => 'tag-tools-unfollow-tag',
 		'is_action' => true,
 	]));
@@ -67,13 +77,9 @@ foreach ($tags as $tag) {
 echo '</tbody>';
 echo '</table>';
 
-$foot = elgg_view('input/hidden', [
-	'name' => 'user_guid', 
-	'value' => $user->getGUID(),
-]);
-$foot .= elgg_view('input/submit', [
-	'value' => elgg_echo('save'), 
+$foot = elgg_view('input/submit', [
+	'value' => elgg_echo('save'),
 	'class' => 'elgg-button-submit mtl',
 ]);
 
-echo elgg_format_element('div', ['class' => 'elgg-foot'], $foot);
+elgg_set_form_footer($foot);
