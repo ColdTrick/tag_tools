@@ -14,11 +14,13 @@ ul.tagit {
 ul.tagit li {
     display: block;
     float: left;
-    margin: 2px 5px 2px 0;
 }
 ul.tagit li.tagit-choice {
     position: relative;
     line-height: inherit;
+    padding: 4px 6px;
+    margin-top: 3px;
+    margin-right: 4px;
 }
 input.tagit-hidden-field {
     display: none;
@@ -32,20 +34,14 @@ ul.tagit li.tagit-choice-editable {
 }
 
 ul.tagit li.tagit-new {
-    padding: .25em 4px .25em 0;
 }
 
 ul.tagit li.tagit-choice a.tagit-label {
     cursor: pointer;
     text-decoration: none;
 }
-ul.tagit li.tagit-choice .tagit-close {
-    cursor: pointer;
-    position: absolute;
-    right: .1em;
-    top: 50%;
-    margin-top: -8px;
-    line-height: 17px;
+ul.tagit li.tagit-choice .close {
+    margin-left: 4px;
 }
 
 /* used for some custom themes that don't need image icons */
