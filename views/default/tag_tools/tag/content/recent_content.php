@@ -12,17 +12,19 @@ if (elgg_is_empty($tag)) {
 
 $tag = strtolower($tag);
 
-$content = elgg_list_entities([
-	'type_subtype_pairs' => get_registered_entity_types(),
-	'limit' => 10,
-	'metadata_name_value_pairs' => [
-		'name' => elgg_get_registered_tag_metadata_names(),
-		'value' => $tag,
-		'case_sensitive' => false,
-	],
-	'pagination' => false,
-]);
+// fix for elasticsearch
+set_input('sort', 'time_created');
 
+$content = elgg_list_entities([
+	'query' => $tag,
+	'type' => 'user',
+	'type_subtype_pairs' => get_registered_entity_types(),
+	'search_type' => 'entities',
+	'limit' => 10,
+	'pagination' => false,
+	'sort' => 'time_created',
+	'order' => 'desc',
+], 'elgg_search');
 if (empty($content)) {
 	return;
 }
