@@ -27,3 +27,13 @@
 		}
 	}	
 }
+
+.tag-tools-tag-content-wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	
+	> div {
+		flex-basis: 48%;
+	}
+}

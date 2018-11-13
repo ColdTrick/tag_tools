@@ -42,7 +42,7 @@ $select->select('e.owner_guid')
 	->andWhere($select->compare('eo.type', '=', 'user', ELGG_VALUE_STRING))
 	->groupBy('e.owner_guid')
 	->orderBy('total', 'desc')
-	->setMaxResults(10)
+	->setMaxResults(3)
 ;
 
 $res = $select->execute()->fetchAll();

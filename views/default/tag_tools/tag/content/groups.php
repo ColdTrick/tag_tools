@@ -42,7 +42,7 @@ $select->select('e.container_guid')
 	->andWhere($select->compare('ec.type', '=', 'group', ELGG_VALUE_STRING))
 	->groupBy('e.container_guid')
 	->orderBy('total', 'desc')
-	->setMaxResults(10)
+	->setMaxResults(3)
 ;
 
 $res = $select->execute()->fetchAll();

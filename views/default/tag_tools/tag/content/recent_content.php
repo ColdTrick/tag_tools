@@ -15,12 +15,18 @@ $tag = strtolower($tag);
 // fix for elasticsearch
 set_input('sort', 'time_created');
 
+$types = get_registered_entity_types();
+$comments_index = array_search('comment', $types['object']);
+if ($comments_index !== false) {
+	unset($types['object'][$comments_index]);
+}
+
 $content = elgg_list_entities([
 	'query' => $tag,
-	'type' => 'user',
-	'type_subtype_pairs' => get_registered_entity_types(),
+	'type' => 'user', // trick elgg_search
+	'type_subtype_pairs' => $types,
 	'search_type' => 'entities',
-	'limit' => 10,
+	'limit' => 3,
 	'pagination' => false,
 	'sort' => 'time_created',
 	'order' => 'desc',
