@@ -150,6 +150,7 @@ class MenuItems {
 					'name' => 'edit',
 					'icon' => 'edit',
 					'text' => elgg_echo('tag_tools:tag_definition:manage'),
+					'title' => elgg_echo('edit'),
 					'href' => elgg_generate_entity_url($definition, 'edit'),
 					'link_class' => ['elgg-button', 'elgg-button-action', 'elgg-lightbox'],
 					'data-colorbox-opts' => $colorbox_options,
@@ -162,6 +163,7 @@ class MenuItems {
 					'name' => 'add',
 					'icon' => 'plus',
 					'text' => elgg_echo('tag_tools:tag_definition:manage'),
+					'title' => elgg_echo('add'),
 					'href' => elgg_generate_url('add:object:tag_definition', [
 						'tag' => $tag,
 					]),

@@ -27,4 +27,13 @@ if (empty($content)) {
 	return;
 }
 
-echo elgg_view_module('tag_content', elgg_echo('tag_tools:tag:content:content'), $content);
+$more = elgg_view('output/url', [
+	'text' => elgg_echo('tag_tools:tag:view:more'),
+	'href' => elgg_generate_url('default:search', [
+		'q' => $tag,
+		'sort' => 'time_created',
+	]),
+	'is_trusted' => true,
+]);
+
+echo elgg_view_module('tag_content', elgg_echo('tag_tools:tag:content:content'), $content, ['menu' => $more]);
