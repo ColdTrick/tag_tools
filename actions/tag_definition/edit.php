@@ -1,7 +1,5 @@
 <?php
 
-use Elgg\Project\Paths;
-
 elgg_make_sticky_form('tag_definition/edit');
 
 $guid = (int) get_input('guid');
@@ -29,14 +27,35 @@ if (!$entity instanceof TagDefinition) {
 }
 
 $entity->description = get_input('description');
-$entity->bgcolor = get_input('bgcolor');
-$entity->textcolor = get_input('textcolor');
+
+$old_bgcolor = $entity->bgcolor;
+$old_textcolor = $entity->textcolor;
+
+$new_bgcolor = get_input('bgcolor');
+if ($new_bgcolor === '#000000') {
+	if (!empty($old_bgcolor)) {
+		unset($entity->bgcolor);
+	}
+} else {
+	$entity->bgcolor = $new_bgcolor;
+}
+
+$new_textcolor = get_input('textcolor');
+if ($new_textcolor === '#000000') {
+	if (!empty($old_textcolor)) {
+		unset($entity->textcolor);
+	}
+} else {
+	$entity->textcolor = $new_textcolor;
+}
 
 if (!$entity->save()) {
 	return elgg_error_response(elgg_echo('save:fail'));
 }
 
-elgg_invalidate_simplecache();
+if (($entity->bgcolor !== $old_bgcolor) || ($entity->textcolor !== $old_textcolor)) {
+	elgg_invalidate_simplecache();
+}
 
 elgg_clear_sticky_form('tag_definition/edit');
 
