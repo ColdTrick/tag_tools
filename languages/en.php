@@ -73,12 +73,16 @@ You can see it here: %s",
 	
 	// tag view page
 	'tag_tools:tag:view:title' => "Tag: %s",
+	'tag_tools:tag:view:no_results' => "No content related to the tag '%s' could be found.",
 	
 	'tag_tools:tag:content:content' => "Recent content",
 	'tag_tools:tag:content:groups' => "Groups",
+	'tag_tools:tag:content:related_tags' => "Related tags",
 	'tag_tools:tag:content:users' => "Users",
 	
 	// tag definitions
+	'tag_tools:tag_definition:manage' => "Manage tag",
+	
 	// add
 	'tag_tools:tag_definition:add:title' => "Create a new Tag page",
 	

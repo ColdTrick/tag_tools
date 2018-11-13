@@ -2,7 +2,7 @@
 /**
  * Show users with a lot of content created with the given tag
  *
- * @uses $vars['tag'] thje tag being shown
+ * @uses $vars['tag'] the tag being shown
  */
 
 use Elgg\Database\Select;
@@ -65,9 +65,9 @@ foreach ($groups as $group) {
 	$ordered_groups[$key] = $group;
 }
 
-$groups = elgg_view_entity_list($ordered_groups, [
+$content = elgg_view_entity_list($ordered_groups, [
 	'full_view' => false,
 	'pagination' => false,
 ]);
 
-echo elgg_view_module('tag_content', elgg_echo('tag_tools:tag:content:groups'), $groups);
+echo elgg_view_module('tag_content', elgg_echo('tag_tools:tag:content:groups'), $content);

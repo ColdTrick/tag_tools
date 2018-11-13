@@ -10,8 +10,6 @@ if (elgg_is_empty($tag)) {
 // prepare page elements
 $title = elgg_echo('tag_tools:tag:view:title', [$tag]);
 
-$content = '';
-
 $content_vars = [
 	'tag' => $tag,
 ];
@@ -19,13 +17,9 @@ $content_vars = [
 $definition = TagDefinition::find($tag);
 if ($definition instanceof TagDefinition) {
 	$content_vars['entity'] = $definition;
-	
-	$content .= elgg_view('output/longtext', [
-		'value' => $definition->description,
-	]);
 }
 
-$content .= elgg_view('tag_tools/tag/content', $content_vars);
+$content = elgg_view('tag_tools/tag/contents', $content_vars);
 
 // build page
 $page_data = elgg_view_layout('default', [

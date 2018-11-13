@@ -2,7 +2,7 @@
 /**
  * Show users with a lot of content created with the given tag
  *
- * @uses $vars['tag'] thje tag being shown
+ * @uses $vars['tag'] the tag being shown
  */
 
 $tag = elgg_extract('tag', $vars);
