@@ -44,4 +44,8 @@ $more = elgg_view('output/url', [
 	'is_trusted' => true,
 ]);
 
-echo elgg_view_module('tag_content', elgg_echo('tag_tools:tag:content:content'), $content, ['menu' => $more]);
+echo elgg_view('tag_tools/tag/content/item', [
+	'title' => elgg_echo('tag_tools:tag:content:content'),
+	'content' => $content,
+	'more' => $more,
+]);

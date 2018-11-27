@@ -70,4 +70,7 @@ $content = elgg_view_entity_list($ordered_users, [
 	'pagination' => false,
 ]);
 
-echo elgg_view_module('tag_content', elgg_echo('tag_tools:tag:content:users'), $content);
+echo elgg_view('tag_tools/tag/content/item', [
+	'title' => elgg_echo('tag_tools:tag:content:users'),
+	'content' => $content,
+]);
