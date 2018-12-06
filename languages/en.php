@@ -8,6 +8,9 @@ return [
 	
 	'item:object:tag_tools_rule' => "Tag Tools rule",
 	
+	'tag_tools:settings:activity_tab' => "Add a tab to the activity page",
+	'tag_tools:settings:activity_tab:help' => "This tab will show activity on content with the tags you follow",
+	
 	'tag_tools:suggest:ignore' => "Ignore suggestion",
 	
 	'tag_tools:admin:tags:suggest:info' => "The list below shows suggestions for autocorrection rules.",

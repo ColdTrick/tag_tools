@@ -25,6 +25,9 @@ return [
 			'class' => TagDefinition::class,
 		],
 	],
+	'settings' => [
+		'activity_tab' => 1,
+	],
 	'views' => [
 		'default' => [
 			'jquery/tag-it.js' => $composer_path . 'vendor/bower-asset/tag-it/js/tag-it.js',

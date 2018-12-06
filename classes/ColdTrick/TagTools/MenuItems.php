@@ -40,16 +40,17 @@ class MenuItems {
 	/**
 	 * Add a menu item to the filter menu
 	 *
-	 * @param string          $hook         the name of the hook
-	 * @param string          $type         the type of the hook
-	 * @param \ElggMenuItem[] $return_value current return value
-	 * @param mixed           $params       supplied params
+	 * @param \Elgg\Hook $hook 'filter_tabs', 'activity'
 	 *
 	 * @return void|\ElggMenuItem[]
 	 */
-	public static function registerActivityTab($hook, $type, $return_value, $params) {
+	public static function registerActivityTab(\Elgg\Hook $hook) {
 		
-		if (!elgg_is_logged_in() || !elgg_in_context('activity')) {
+		if (!elgg_is_logged_in()) {
+			return;
+		}
+		
+		if (!elgg_get_plugin_setting('activity_tab', 'tag_tools')) {
 			return;
 		}
 		
@@ -58,15 +59,18 @@ class MenuItems {
 			return;
 		}
 		
-		$return_value[] = \ElggMenuItem::factory([
+		$selected = $hook->getParam('selected');
+		$result = $hook->getValue();
+		
+		$result[] = \ElggMenuItem::factory([
 			'name' => 'tags',
 			'text' => elgg_echo('tags'),
 			'href' => elgg_generate_url('collection:activity:tags'),
-			'selected' => elgg_extract('selected', $params) === 'tags',
+			'selected' => $selected === 'tags',
 			'priority' => 9999,
 		]);
 		
-		return $return_value;
+		return $result;
 	}
 	
 	/**
