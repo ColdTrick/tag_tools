@@ -68,4 +68,7 @@ foreach ($res as $row) {
 
 $content = elgg_view('output/tags', ['value' => $tags]);
 
-echo elgg_view_module('tag_content', elgg_echo('tag_tools:tag:content:related_tags'), $content);
+echo elgg_view('tag_tools/tag/content/item', [
+	'title' => elgg_echo('tag_tools:tag:content:related_tags'),
+	'content' => $content,
+]);

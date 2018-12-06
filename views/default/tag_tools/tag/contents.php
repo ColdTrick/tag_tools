@@ -16,6 +16,7 @@ $definition = elgg_extract('entity', $vars);
 if ($definition instanceof TagDefinition) {
 	echo elgg_view('output/longtext', [
 		'value' => $definition->description,
+		'class' => 'tag-tools-tag-description',
 	]);
 }
 

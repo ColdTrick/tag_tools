@@ -42,7 +42,7 @@ $select->select('e.owner_guid')
 	->andWhere($select->compare('eo.type', '=', 'user', ELGG_VALUE_STRING))
 	->groupBy('e.owner_guid')
 	->orderBy('total', 'desc')
-	->setMaxResults(10)
+	->setMaxResults(3)
 ;
 
 $res = $select->execute()->fetchAll();
@@ -70,4 +70,7 @@ $content = elgg_view_entity_list($ordered_users, [
 	'pagination' => false,
 ]);
 
-echo elgg_view_module('tag_content', elgg_echo('tag_tools:tag:content:users'), $content);
+echo elgg_view('tag_tools/tag/content/item', [
+	'title' => elgg_echo('tag_tools:tag:content:users'),
+	'content' => $content,
+]);

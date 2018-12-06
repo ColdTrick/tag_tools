@@ -42,7 +42,7 @@ $select->select('e.container_guid')
 	->andWhere($select->compare('ec.type', '=', 'group', ELGG_VALUE_STRING))
 	->groupBy('e.container_guid')
 	->orderBy('total', 'desc')
-	->setMaxResults(10)
+	->setMaxResults(3)
 ;
 
 $res = $select->execute()->fetchAll();
@@ -70,4 +70,7 @@ $content = elgg_view_entity_list($ordered_groups, [
 	'pagination' => false,
 ]);
 
-echo elgg_view_module('tag_content', elgg_echo('tag_tools:tag:content:groups'), $content);
+echo elgg_view('tag_tools/tag/content/item', [
+	'title' => elgg_echo('tag_tools:tag:content:groups'),
+	'content' => $content,
+]);
