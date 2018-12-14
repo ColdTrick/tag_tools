@@ -1,10 +1,29 @@
 <?php
 /**
- * This file was created by Translation Editor v6.0
- * On 2018-04-12 14:37
+ * This file was created by Translation Editor v7.0-beta
+ * On 2018-12-14 16:35
  */
 
 return array (
+  'tag_tools:settings:activity_tab' => 'Voeg een tab toe aan de activiteiten pagina',
+  'tag_tools:settings:activity_tab:help' => 'Deze tab toont de activiteit van content met de tags die je volgt',
+  'tag_tools:suggest:ignore' => 'Suggestie negeren',
+  'tag_tools:follow_tag:menu:on:text' => 'Tag volgen',
+  'tag_tools:follow_tag:menu:off:text' => 'Tag niet meer volgen',
+  'tag_tools:tag:view:title' => 'Tag: %s',
+  'tag_tools:tag:view:no_results' => 'Geen gerelateerde content gevonden voor de tag \'%s\'.',
+  'tag_tools:tag:view:more' => 'Bekijk meer content',
+  'tag_tools:tag:content:content' => 'Recente content',
+  'tag_tools:tag:content:groups' => 'Groepen',
+  'tag_tools:tag:content:related_tags' => 'Gerelateerde tags',
+  'tag_tools:tag:content:users' => 'Gebruikers',
+  'tag_tools:tag_definition:manage' => 'Beheer tag',
+  'tag_tools:tag_definition:add:title' => 'Creëer een nieuwe Tag pagina',
+  'tag_tools:tag_definition:edit:title' => 'Bewerk een Tag pagina',
+  'tag_tools:tag_definition:edit:field:title' => 'Tag',
+  'tag_tools:tag_definition:edit:colors:help' => 'Een maatwerk kleur wordt getoond bij presentatie van de tags. Zet het terug naar zwart voor de standaard kleuren.',
+  'tag_tools:tag_definition:edit:field:bgcolor' => 'Achtergrondkleur',
+  'tag_tools:tag_definition:edit:field:textcolor' => 'Tekstkleur',
   'tag_tools:rules:from_tag:help' => 'Deze tag zal hoofdletter ongevoelig worden vergeleken',
   'tag_tools:search:min_count' => 'Minimaal voorkomen',
   'tag_tools:search:content_type' => 'Filter op content type',
@@ -41,14 +60,11 @@ return array (
 een content item met de tag(s): %s, is bijgewerkt.
 
 Bekijk het hier: %s',
-  'admin:upgrades:set_tag_notifications_sent' => 'Tag tools - markeer alle tags als verzonden',
-  'admin:upgrades:set_tag_notifications_sent:description' => 'Markeer alle tags als verzonden. Dit is van toepassing indien de plugin is bijgewerkt vanaf een oudere versie of indien dit een nieuwe plugin is.',
   'tag_tools:notification:follow:summary' => 'Nieuwe content met de tag(s): %s',
   'widgets:tagcloud:description' => 'Toon een tagcloud gebaseerd op alle content op de site, in de groep of van een gebruiker',
   'widgets:tagcloud:no_data' => 'Er konden geen tags worden gevonden om weer te geven',
   'tag_tools:actions:follow_tag:success:follow' => 'Je volgt nu de tag: %s',
   'tag_tools:actions:follow_tag:success:unfollow' => 'Je volgt de tag: %s niet meer',
-  'tag_tools:js:autocomplete:required' => 'Vul alstublieft de verplichte tags in',
   'tag_tools:follow_tag:menu:on' => 'Volg nieuwe content met deze tag',
   'tag_tools:follow_tag:menu:off' => 'Stop met volgen van nieuwe content met deze tag',
   'tag_tools:notifications:menu' => 'Tag notificaties',
