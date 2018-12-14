@@ -135,7 +135,7 @@ class Enqueue {
 	 *
 	 * @return void
 	 */
-	protected function cachePlugin() {
+	protected static function cachePlugin() {
 		
 		if (isset(self::$plugin)) {
 			return;
