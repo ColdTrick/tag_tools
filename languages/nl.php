@@ -61,6 +61,7 @@ een content item met de tag(s): %s, is bijgewerkt.
 
 Bekijk het hier: %s',
   'tag_tools:notification:follow:summary' => 'Nieuwe content met de tag(s): %s',
+  'widgets:tagcloud:name' => 'Tagcloud',
   'widgets:tagcloud:description' => 'Toon een tagcloud gebaseerd op alle content op de site, in de groep of van een gebruiker',
   'widgets:tagcloud:no_data' => 'Er konden geen tags worden gevonden om weer te geven',
   'tag_tools:actions:follow_tag:success:follow' => 'Je volgt nu de tag: %s',

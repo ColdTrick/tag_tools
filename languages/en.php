@@ -67,6 +67,7 @@ You can see it here: %s",
 	'widgets:follow_tags:name' => "Following tags",
 	'widgets:follow_tags:description' => "Shows the tags that are being followed",
 	'widgets:follow_tags:empty' => "This user is currently not following a tag",
+	'widgets:tagcloud:name' => "Tagcloud",
 	'widgets:tagcloud:description' => "Shows a tagcloud based on all the content on the site, in the group or from the user",
 	'widgets:tagcloud:no_data' => "No data available to display a tagcloud",
 	

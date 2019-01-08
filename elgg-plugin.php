@@ -104,7 +104,6 @@ return [
 			'context' => ['profile', 'dashboard'],
 		],
 		'tagcloud' => [
-			'name' => elgg_echo('tagcloud'),
 			'context' => ['profile', 'dashboard', 'index', 'groups'],
 			'required_plugin' => 'tagcloud',
 		],
