@@ -42,7 +42,12 @@ foreach ($tags as $tag) {
 	
 	echo '<tr>';
 	echo '<td>';
-	echo $encoded_tag;
+	echo elgg_view('output/url', [
+		'text' => $tag,
+		'href' => elgg_generate_url('collection:tag', [
+			'tag' => $tag,
+		]),
+	]);
 	echo elgg_view_field([
 		'#type' => 'hidden',
 		'name' => "tags[{$encoded_tag}]",
