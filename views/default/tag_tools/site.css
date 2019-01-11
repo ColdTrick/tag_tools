@@ -29,11 +29,7 @@
 }
 
 .tag-tools-tag-content-wrapper {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
-	
-	> div {
-		flex-basis: 48%;
-	}
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+	grid-gap: 0rem 3rem;
 }
