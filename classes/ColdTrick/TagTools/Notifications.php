@@ -21,7 +21,7 @@ class Notifications {
 			return;
 		}
 		
-		/* @var $event \Elgg\Notifications\NotificationEvent */
+		/* @var $event \Elgg\Notifications\SubscriptionNotificationEvent */
 		$event = elgg_extract('event', $params);
 		
 		/* @var $relationship \ElggRelationship */
@@ -159,7 +159,7 @@ class Notifications {
 			return;
 		}
 		
-		/* @var $event \Elgg\Notifications\NotificationEvent */
+		/* @var $event \Elgg\Notifications\SubscriptionNotificationEvent */
 		$event = elgg_extract('event', $params);
 		
 		/* @var $relationship \ElggRelationship */
@@ -222,7 +222,11 @@ class Notifications {
 		}
 		
 		$event = elgg_extract('event', $params);
-		if (!$event instanceof \Elgg\Notifications\NotificationEvent) {
+		if (!$event instanceof \Elgg\Notifications\SubscriptionNotificationEvent) {
+			return false;
+		}
+		
+		if ($event->getAction() !== 'create') {
 			return false;
 		}
 		
