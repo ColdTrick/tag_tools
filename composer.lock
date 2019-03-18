@@ -1,39 +1,39 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8c1986fd9f600646b5f281f2feb719e2",
+    "content-hash": "0599a691165798dd908c071c0108c48c",
     "packages": [
         {
             "name": "bower-asset/tag-it",
-            "version": "v2.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aehlke/tag-it.git",
-                "reference": "fb09577d3c648158066cb1a4bbec9c7dfa304c16"
+                "reference": "6ccd2de95e7cf7e254ad1a82e946450c21e40421"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aehlke/tag-it/zipball/fb09577d3c648158066cb1a4bbec9c7dfa304c16",
-                "reference": "fb09577d3c648158066cb1a4bbec9c7dfa304c16",
+                "url": "https://api.github.com/repos/aehlke/tag-it/zipball/6ccd2de95e7cf7e254ad1a82e946450c21e40421",
+                "reference": "6ccd2de95e7cf7e254ad1a82e946450c21e40421",
                 "shasum": ""
             },
             "type": "bower-asset-library"
         },
         {
             "name": "composer/installers",
-            "version": "v1.5.0",
+            "version": "v1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "049797d727261bf27f2690430d935067710049c2"
+                "reference": "cfcca6b1b60bc4974324efb5783c13dca6932b5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/049797d727261bf27f2690430d935067710049c2",
-                "reference": "049797d727261bf27f2690430d935067710049c2",
+                "url": "https://api.github.com/repos/composer/installers/zipball/cfcca6b1b60bc4974324efb5783c13dca6932b5b",
+                "reference": "cfcca6b1b60bc4974324efb5783c13dca6932b5b",
                 "shasum": ""
             },
             "require": {
@@ -140,7 +140,7 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2017-12-29T09:13:20+00:00"
+            "time": "2018-08-27T06:10:37+00:00"
         }
     ],
     "packages-dev": [
@@ -150,12 +150,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ColdTrick/releases.git",
-                "reference": "60cbbc82f4b5164723d2b40029fead1c5f2715dd"
+                "reference": "bc13aa2831343af35df21022a8458871908111b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ColdTrick/releases/zipball/60cbbc82f4b5164723d2b40029fead1c5f2715dd",
-                "reference": "60cbbc82f4b5164723d2b40029fead1c5f2715dd",
+                "url": "https://api.github.com/repos/ColdTrick/releases/zipball/bc13aa2831343af35df21022a8458871908111b6",
+                "reference": "bc13aa2831343af35df21022a8458871908111b6",
                 "shasum": ""
             },
             "type": "library",
@@ -169,7 +169,7 @@
                 "release",
                 "travis"
             ],
-            "time": "2017-11-01T09:37:42+00:00"
+            "time": "2019-01-11T08:49:49+00:00"
         },
         {
             "name": "coldtrick/sniffs",
@@ -200,16 +200,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.2.3",
+            "version": "3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "4842476c434e375f9d3182ff7b89059583aa8b27"
+                "reference": "379deb987e26c7cd103a7b387aea178baec96e48"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/4842476c434e375f9d3182ff7b89059583aa8b27",
-                "reference": "4842476c434e375f9d3182ff7b89059583aa8b27",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/379deb987e26c7cd103a7b387aea178baec96e48",
+                "reference": "379deb987e26c7cd103a7b387aea178baec96e48",
                 "shasum": ""
             },
             "require": {
@@ -247,12 +247,13 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2018-02-20T21:35:23+00:00"
+            "time": "2018-12-19T23:57:18+00:00"
         }
     ],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "bower-asset/tag-it": 20,
         "coldtrick/sniffs": 20,
         "coldtrick/releases": 20
     },

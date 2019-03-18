@@ -10,7 +10,7 @@
 	},
 	"require": {
 		"composer/installers": "^1.0.8",
-		"bower-asset/tag-it": "^2.0.0"
+		"bower-asset/tag-it": "dev-master#6ccd2de95e7cf7e254ad1a82e946450c21e40421"
 	},
 	"require-dev": {
 		"coldtrick/sniffs": "dev-master",

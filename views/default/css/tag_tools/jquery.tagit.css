@@ -30,7 +30,7 @@ ul.tagit li.tagit-choice-read-only {
 }
 
 ul.tagit li.tagit-choice-editable {
-    padding: .2em 18px .2em .5em;
+    padding: .2em .5em .2em .5em;
 }
 
 ul.tagit li.tagit-new {
@@ -88,6 +88,7 @@ ul.tagit li.tagit-choice .tagit-label:not(a) {
 }
 ul.tagit li.tagit-choice a.tagit-close {
     text-decoration: none;
+    padding-left: 4px;
 }
 ul.tagit li.tagit-choice .tagit-close {
     right: .4em;
