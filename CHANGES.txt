@@ -1,6 +1,22 @@
 Version history
 ===============
 
+3.0 (2019-03-27):
+
+- added: invalidate simplecache on definition edit
+- added: link to tag page
+- added: plugin setting to add/remove tab on activity page
+- added: setting color on tag
+- added: tag definition createion/edit
+- added: tag page sections
+- changed: minimal requirements set to Elgg 3.0
+- changed: now using elgg-plugin for initialisation of plugin
+- changed: updated code for Elgg 3
+- changed: updated tagit dependency
+- fixed: correct route registration
+- fixed: notification event validation
+- fixed: styling of input/tags
+
 2.2.1 (2018-07-26):
 
 - fixed: improved access to entity validation
