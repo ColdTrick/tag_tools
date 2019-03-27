@@ -1,6 +1,10 @@
 Version history
 ===============
 
+2.2.1 (2018-07-26):
+
+- fixed: improved access to entity validation
+
 2.2 (2018-04-19):
 
 - changed: tag rules are now matched case insensitive
