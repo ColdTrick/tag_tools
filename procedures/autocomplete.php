@@ -4,17 +4,21 @@ elgg_gatekeeper();
 
 $query = get_input('q');
 
+$valid_tags = elgg_get_registered_tag_metadata_names();
+
 $result = [];
 
-if (!empty($query)) {
+if (!empty($query) && !empty($valid_tags)) {
 	
 	$dbprefix = elgg_get_config('dbprefix');
-	$tags_id = elgg_get_metastring_id('tags');
-	
+
+	foreach( $valid_tags as $tag_name )
+		$tags_id[] = elgg_get_metastring_id( $tag_name );
+
 	$sql = "SELECT msv.string as string, count(*) as total";
 	$sql .= " FROM {$dbprefix}metadata md";
 	$sql .= " JOIN {$dbprefix}metastrings msv ON md.value_id = msv.id";
-	$sql .= " WHERE md.name_id = {$tags_id}";
+	$sql .= " WHERE md.name_id IN (" . implode(',',$tags_id) . ")";
 	$sql .= " AND msv.string LIKE '" . sanitise_string($query) . "%'";
 	$sql .= " GROUP BY msv.string";
 	$sql .= " ORDER BY total DESC";
