@@ -418,15 +418,21 @@ function tag_tools_get_unsent_tags(ElggEntity $entity) {
 		return false;
 	}
 	
-	$entity_tags = $entity->tags;
+	$tag_names = tag_tools_rules_get_tag_names();
+	$entity_tags = array();
+	foreach ($tag_names as $tag_name) {
+	    if(isset($entity->$tag_name)) {
+		if (is_array($entity->$tag_name)) {
+		    $entity_tags = array_merge($entity_tags, $entity->$tag_name);
+		} else {
+		    $entity_tags[] = $entity->$tag_name;
+		}
+	    }
+	}
 	
-	// Cannot use empty() because it would evaluate
-	// the string "0" as an empty value.
-	if (is_null($entity_tags)) {
+	if (empty($entity_tags)) {
 		// shouldn't happen
 		return false;
-	} elseif (!is_array($entity_tags)) {
-		$entity_tags = [$entity_tags];
 	}
 	
 	$sent_tags = $entity->getPrivateSetting('tag_tools:sent_tags');
@@ -525,11 +531,6 @@ function tag_tools_rules_prepare_form_vars($entity = null) {
  */
 function tag_tools_rules_get_tag_names() {
 	
-	return [
-		'tags',
-	];
-	
-	// make this work
 	$tag_names = elgg_get_registered_tag_metadata_names();
 	return $tag_names;
 }

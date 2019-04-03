@@ -22,7 +22,8 @@ class Enqueue {
 			return;
 		}
 		
-		if ($metadata->name !== 'tags') {
+		$tag_names = tag_tools_rules_get_tag_names();
+		if (!in_array($metadata->name, $tag_names)) {
 			// not a tags metadata
 			return;
 		}
@@ -50,7 +51,19 @@ class Enqueue {
 			return;
 		}
 		
-		if (!isset($entity->tags)) {
+		$tag_names = tag_tools_rules_get_tag_names();
+		$entity_tags = array();
+		foreach ($tag_names as $tag_name) {
+		    if(isset($entity->$tag_name)) {
+			if (is_array($entity->$tag_name)) {
+			    $entity_tags = array_merge($entity_tags, $entity->$tag_name);
+			} else {
+			    $entity_tags[] = $entity->$tag_name;
+			}
+		    }
+		}
+		
+		if (empty($entity_tags)) {
 			// no tags
 			return;
 		}

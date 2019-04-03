@@ -8,14 +8,13 @@ elgg_gatekeeper();
 elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 
 $tags = tag_tools_get_user_following_tags();
-if (empty($tags)) {
+$tag_names = tag_tools_rules_get_tag_names();
+if (empty($tags) || empty($tag_names)) {
 	forward('activity');
 }
 
-$name_ids = [];
-foreach ($tags as $tag) {
-	$name_ids[] = elgg_get_metastring_id($tag);
-}
+$name_ids = elgg_get_metastring_map($tags);
+$tag_ids = elgg_get_metastring_map($tag_names);
 
 $options = [];
 
@@ -37,10 +36,8 @@ if ($type != 'all') {
 }
 $dbprefix = elgg_get_config('dbprefix');
 
-$tags_id = elgg_get_metastring_id('tags');
-
 $options['joins'] = ["JOIN {$dbprefix}metadata md ON rv.object_guid = md.entity_guid"];
-$options['wheres'] = ["(md.name_id = {$tags_id}) AND md.value_id IN (" . implode(',', $name_ids) . ")"];
+$options['wheres'] = ["(md.name_id IN (" . implode(',',$tag_ids) . ")) AND md.value_id IN (" . implode(',', $name_ids) . ")"];
 
 $activity = elgg_list_river($options);
 if (!$activity) {
