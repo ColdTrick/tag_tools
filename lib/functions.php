@@ -44,7 +44,7 @@ function tag_tools_get_user_following_tags($user_guid = 0, $reset_cache = false)
 		
 		if (!empty($annotations)) {
 			foreach ($annotations as $annotation) {
-				$cache[$user_guid][] = $annotation->value;
+				$cache[$user_guid][] = strtolower($annotation->value);
 			}
 		}
 	}
@@ -80,7 +80,7 @@ function tag_tools_is_user_following_tag($tag, $user_guid = 0) {
 		return false;
 	}
 	
-	return in_array($tag, $user_tags);
+	return in_array(strtolower($tag), $user_tags);
 }
 
 /**
@@ -97,6 +97,8 @@ function tag_tools_toggle_following_tag($tag, $user_guid = 0, $track = null) {
 	if (empty($tag)) {
 		return;
 	}
+	
+	$tag = strtolower($tag);
 	
 	$user_guid = (int) $user_guid;
 	if ($user_guid < 1) {
@@ -119,6 +121,7 @@ function tag_tools_toggle_following_tag($tag, $user_guid = 0, $track = null) {
 			'limit' => false,
 			'annotation_name' => 'follow_tag',
 			'annotation_value' => $tag,
+			'annotation_case_sensitive' => false,
 		]);
 		
 		tag_tools_remove_tag_from_notification_settings($tag, $user_guid);
