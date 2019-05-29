@@ -1,6 +1,10 @@
 Version history
 ===============
 
+3.0.1 (2019-05-29):
+
+- fixed: allow follow/unfollow of uppercase tags
+
 3.0 (2019-03-27):
 
 - added: invalidate simplecache on definition edit
