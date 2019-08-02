@@ -1,6 +1,7 @@
 <?php
 
-use ColdTrick\TagTools\Bootstrap;
+namespace ColdTrick\TagTools;
+
 use Elgg\Router\Middleware\AdminGatekeeper;
 use Elgg\Router\Middleware\Gatekeeper;
 
@@ -17,12 +18,12 @@ return [
 		[
 			'type' => 'object',
 			'subtype' => 'tag_tools_rule',
-			'class' => TagToolsRule::class,
+			'class' => \TagToolsRule::class,
 		],
 		[
 			'type' => 'object',
 			'subtype' => 'tag_definition',
-			'class' => TagDefinition::class,
+			'class' => \TagDefinition::class,
 		],
 	],
 	'settings' => [
@@ -89,7 +90,7 @@ return [
 		],
 		'view:object:tag_definition' => [
 			'path' => 'tag_definition/view/{guid}/{title?}',
-			'controller' => [TagDefinition::class, 'forwarder'],
+			'controller' => [\TagDefinition::class, 'forwarder'],
 		],
 	],
 	'actions' => [
@@ -106,6 +107,64 @@ return [
 		'tagcloud' => [
 			'context' => ['profile', 'dashboard', 'index', 'groups'],
 			'required_plugin' => 'tagcloud',
+		],
+	],
+	'hooks' => [
+		'filter_tabs' => [
+			'activity' => [
+				__NAMESPACE__ . '\MenuItems::registerActivityTab' => [],
+			],
+		],
+		'get' => [
+			'subscriptions' => [
+				__NAMESPACE__ . '\Notifications::getSubscribers' => ['priority' => 9999],
+			],
+		],
+		'prepare' => [
+			'notification:create:relationship:tag_tools:notification' => [
+				__NAMESPACE__ . '\Notifications::prepareMessage' => [],
+			],
+		],
+		'register' => [
+			'menu:title' => [
+				__NAMESPACE__ . '\MenuItems::registerFollowTag' => [],
+				__NAMESPACE__ . '\MenuItems::registerTagDefinition' => [],
+			],
+			'menu:page' => [
+				__NAMESPACE__ . '\MenuItems::registerAdminItems' => [],
+				__NAMESPACE__ . '\MenuItems::registerSettingsMenuItem' => [],
+			],
+		],
+		'relationship:url' => [
+			'relationship' => [
+				__NAMESPACE__ . '\Notifications::getNotificationURL' => [],
+			],
+		],
+		'send:after' => [
+			'notifications' => [
+				__NAMESPACE__ . '\Notifications::afterCleanup' => [],
+			],
+		],
+		'view_vars' => [
+			'output/tag' => [
+				__NAMESPACE__ . '\Views::setOutputTagVars' => [],
+			],
+			'output/tags' => [
+				__NAMESPACE__ . '\Views::setOutputTagsVars' => [],
+			],
+		],
+	],
+	'event' => [
+		'create' => [
+			'metadata' => [
+				 __NAMESPACE__ . '\Rules::applyRules' => ['priority' => 1],
+				 __NAMESPACE__ . '\Enqueue::createMetadata' => [],
+			],
+		],
+		'update:after' => [
+			'all' => [
+				 __NAMESPACE__ . '\Enqueue::afterEntityUpdate' => [],
+			],
 		],
 	],
 ];
