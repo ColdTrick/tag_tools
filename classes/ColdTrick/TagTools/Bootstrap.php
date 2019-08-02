@@ -17,8 +17,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		// notifications
 		elgg_register_notification_event('relationship', 'tag_tools:notification');
 		
-		elgg_register_css('tagcolors', elgg_get_simplecache_url('tag_tools/tagcolors.css'));
-		elgg_load_css('tagcolors');
+		elgg_require_css('tag_tools/tagcolors');
 		
 		$this->extendViews();
 		$this->registerEvents();
