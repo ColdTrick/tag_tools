@@ -9,22 +9,19 @@ class Notifications {
 	/**
 	 * Prevent subscribers for the tag notifications
 	 *
-	 * @param string $hook         the name of the hook
-	 * @param string $type         the type of the hook
-	 * @param array  $return_value current return value
-	 * @param array  $params       supplied params
+	 * @param \Elgg\Hook $hook 'get', 'subscriptions'
 	 *
 	 * @return void|array
 	 */
-	public static function getSubscribers($hook, $type, $return_value, $params) {
+	public static function getSubscribers(\Elgg\Hook $hook) {
 		
-		if (!self::validateNotificationEvent($params)) {
+		if (!self::validateNotificationEvent($hook->getParams())) {
 			// not the correct notification event
 			return;
 		}
 		
 		/* @var $event \Elgg\Notifications\SubscriptionNotificationEvent */
-		$event = elgg_extract('event', $params);
+		$event = $hook->getParam('event');
 		if (!$event instanceof NotificationEvent) {
 			return;
 		}
@@ -127,23 +124,20 @@ class Notifications {
 	/**
 	 * Make the tag tools notification
 	 *
-	 * @param string                           $hook         the name of the hook
-	 * @param string                           $type         the type of the hook
-	 * @param \Elgg\Notifications\Notification $return_value current return value
-	 * @param array                            $params       supplied params
+	 * @param \Elgg\Hook $hook 'prepare', 'notification:create:relationship:tag_tools:notification'
 	 *
 	 * @return void|\Elgg\Notifications\Notification
 	 */
-	public static function prepareMessage($hook, $type, $return_value, $params) {
+	public static function prepareMessage(\Elgg\Hook $hook) {
 		
-		if (!self::validateNotificationEvent($params)) {
+		if (!self::validateNotificationEvent($hook->getParams())) {
 			return;
 		}
-		
+		$return_value = $hook->getValue();
 		$recipient = $return_value->getRecipient();
-		$method = elgg_extract('method', $params);
-		$relationship = elgg_extract('object', $params);
-		$language = elgg_extract('language', $params);
+		$method = $hook->getParam('method');
+		$relationship = $hook->getParam('object');
+		$language = $hook->getParam('language');
 		
 		$entity = get_entity($relationship->guid_two);
 		
@@ -184,22 +178,19 @@ class Notifications {
 	/**
 	 * Cleanup some stuff
 	 *
-	 * @param string $hook         the name of the hook
-	 * @param string $type         the type of the hook
-	 * @param null   $return_value current return value
-	 * @param array  $params       supplied params
+	 * @param \Elgg\Hook $hook 'send:after', 'notifications'
 	 *
 	 * @return void
 	 */
-	public static function afterCleanup($hook, $type, $return_value, $params) {
+	public static function afterCleanup(\Elgg\Hook $hook) {
 		
-		if (!self::validateNotificationEvent($params)) {
+		if (!self::validateNotificationEvent($hook->getParams())) {
 			// not the correct notification event
 			return;
 		}
 		
 		/* @var $event \Elgg\Notifications\SubscriptionNotificationEvent */
-		$event = elgg_extract('event', $params);
+		$event = $hook->getParam('event');
 		
 		/* @var $relationship \ElggRelationship */
 		$relationship = $event->getObject();
@@ -207,7 +198,7 @@ class Notifications {
 		$entity = get_entity($relationship->guid_two);
 		
 		// cleanup the relationship
-		remove_entity_relationships($entity->getGUID(), 'tag_tools:notification', true);
+		remove_entity_relationships($entity->guid, 'tag_tools:notification', true);
 		
 		// save the newly sent tags
 		$sending_tags = self::getUnsetTagsForEntity($entity);
@@ -221,16 +212,13 @@ class Notifications {
 	/**
 	 * Set the correct URL for the notification relationship
 	 *
-	 * @param string $hook         the name of the hook
-	 * @param string $type         the type of the hook
-	 * @param string $return_value current return value
-	 * @param array  $params       supplied params
+	 * @param \Elgg\Hook $hook 'relationship:url', 'relationship'
 	 *
 	 * @return void|string
 	 */
-	public static function getNotificationURL($hook, $type, $return_value, $params) {
+	public static function getNotificationURL(\Elgg\Hook $hook) {
 		
-		$relationship = elgg_extract('relationship', $params);
+		$relationship = elgg_extract('relationship', $hook->getParams());
 		if (!$relationship instanceof \ElggRelationship) {
 			return;
 		}

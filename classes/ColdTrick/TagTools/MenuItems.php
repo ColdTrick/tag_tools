@@ -7,14 +7,11 @@ class MenuItems {
 	/**
 	 * Add a menu item to the page menu
 	 *
-	 * @param string          $hook         the name of the hook
-	 * @param string          $type         the type of the hook
-	 * @param \ElggMenuItem[] $return_value current return value
-	 * @param mixed           $params       supplied params
+	 * @param \Elgg\Hook $hook 'register', 'menu:page'
 	 *
 	 * @return void|\ElggMenuItem[]
 	 */
-	public static function registerSettingsMenuItem($hook, $type, $return_value, $params) {
+	public static function registerSettingsMenuItem(\Elgg\Hook $hook) {
 		
 		if (!elgg_is_logged_in() || !elgg_in_context('settings')) {
 			return;
@@ -25,6 +22,7 @@ class MenuItems {
 			$user = elgg_get_logged_in_user_entity();
 		}
 		
+		$return_value = $hook->getValue();
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'tag_notifications',
 			'text' => elgg_echo('tag_tools:notifications:menu'),

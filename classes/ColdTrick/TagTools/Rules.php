@@ -7,15 +7,13 @@ class Rules {
 	/**
 	 * Apply a tag rule to the tag
 	 *
-	 * @param string        $event  the name of the event
-	 * @param string        $type   the type of the event
-	 * @param \ElggMetadata $object supplied object
+	 * @param \Elgg\Event $event 'create', 'metadata'
 	 *
 	 * @return void|false
 	 */
-	public static function applyRules($event, $type, $object) {
-		
-		if (!($object instanceof \ElggMetadata)) {
+	public static function applyRules(\Elgg\Event $event) {
+		$object = $event->getObject();
+		if (!$object instanceof \ElggMetadata) {
 			return;
 		}
 		

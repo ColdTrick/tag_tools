@@ -10,14 +10,12 @@ class Enqueue {
 	/**
 	 * Listen to the create event of metadata
 	 *
-	 * @param string        $event    the name of the event
-	 * @param string        $type     the type of the event
-	 * @param \ElggMetadata $metadata supplied param
+	 * @param \Elgg\Event $event 'create', 'metadata'
 	 *
 	 * @return void
 	 */
-	public static function createMetadata($event, $type, $metadata) {
-		
+	public static function createMetadata(\Elgg\Event $event) {
+		$metadata = $event->getObject();
 		if (!$metadata instanceof \ElggMetadata) {
 			return;
 		}
@@ -37,14 +35,12 @@ class Enqueue {
 	/**
 	 * After an entity is done with ->save() check if we need to enqueue it
 	 *
-	 * @param string      $event  the name of the event
-	 * @param string      $type   the type of the event
-	 * @param \ElggEntity $entity supplied param
+	 * @param \Elgg\Event $event 'update:after', 'all'
 	 *
 	 * @return void
 	 */
-	public static function afterEntityUpdate($event, $type, $entity) {
-		
+	public static function afterEntityUpdate(\Elgg\Event $event) {
+		$entity = $event->getObject();
 		if (!$entity instanceof \ElggEntity) {
 			// not an entity, since we listen to 'all'
 			return;
