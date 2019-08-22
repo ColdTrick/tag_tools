@@ -1,6 +1,12 @@
 Version history
 ===============
 
+4.0 (2019-08-22):
+
+- changed: moved hook and event registration to elgg-plugin.php
+- changed: replaced deprecated css loading of tagcolors
+- changed: updated minimal requirement to Elgg 3.1
+
 3.0.1 (2019-05-29):
 
 - fixed: allow follow/unfollow of uppercase tags
