@@ -26,11 +26,17 @@ $entity_where = EntityWhereClause::factory(new QueryOptions([
 $access_where = new AccessWhereClause();
 $access_where->use_enabled_clause = false;
 
-$metadata_where = new MetadataWhereClause();
-$metadata_where->names = $tag_names;
-$metadata_where->values = [$tag];
-$metadata_where->case_sensitive = false;
-$metadata_where->value_type = ELGG_VALUE_STRING;
+$tag_where = new MetadataWhereClause();
+$tag_where->names = $tag_names;
+$tag_where->values = [$tag];
+$tag_where->case_sensitive = false;
+$tag_where->value_type = ELGG_VALUE_STRING;
+
+$banned_where = new MetadataWhereClause();
+$banned_where->names = 'banned';
+$banned_where->values = 'no';
+$banned_where->case_sensitive = false;
+$banned_where->value_type = ELGG_VALUE_STRING;
 
 $select = Select::fromTable('entities', 'e');
 $select->select('e.owner_guid')
@@ -38,8 +44,9 @@ $select->select('e.owner_guid')
 	->join('e', 'entities', 'eo', $select->compare('e.owner_guid', '=', 'eo.guid'))
 	->where($entity_where->prepare($select, 'e'))
 	->andWhere($access_where->prepare($select, 'e'))
-	->andWhere($metadata_where->prepare($select, $select->joinMetadataTable('e')))
+	->andWhere($tag_where->prepare($select, $select->joinMetadataTable('e')))
 	->andWhere($select->compare('eo.type', '=', 'user', ELGG_VALUE_STRING))
+	->andWhere($banned_where->prepare($select, $select->joinMetadataTable('eo')))
 	->groupBy('e.owner_guid')
 	->orderBy('total', 'desc')
 	->setMaxResults(3)
