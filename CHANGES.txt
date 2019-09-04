@@ -1,6 +1,10 @@
 Version history
 ===============
 
+4.0.1 (2019-09-04):
+
+- fixed: no longer show banned users in trending users
+
 4.0 (2019-08-22):
 
 - changed: moved hook and event registration to elgg-plugin.php
