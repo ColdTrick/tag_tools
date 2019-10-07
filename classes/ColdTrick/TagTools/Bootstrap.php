@@ -20,6 +20,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		elgg_require_css('tag_tools/tagcolors');
 		
 		$this->extendViews();
+		$this->registerHooks();
 	}
 	
 	protected function extendViews() {
@@ -33,5 +34,16 @@ class Bootstrap extends DefaultPluginBootstrap {
 		elgg_extend_view('tag_tools/tag/content', 'tag_tools/tag/content/groups', 200);
 		elgg_extend_view('tag_tools/tag/content', 'tag_tools/tag/content/users', 300);
 		elgg_extend_view('tag_tools/tag/content', 'tag_tools/tag/content/related_tags', 400);
+	}
+	
+	/**
+	 * Register plugin hook handlers
+	 *
+	 * @return void
+	 */
+	protected function registerHooks() {
+		$hooks = $this->elgg()->hooks;
+		
+		$hooks->registerHandler('prepare', 'html', __NAMESPACE__ . '\HtmlFormatter::replaceHashTags');
 	}
 }

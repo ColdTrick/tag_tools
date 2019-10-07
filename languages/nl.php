@@ -1,10 +1,12 @@
 <?php
 /**
- * This file was created by Translation Editor v7.0-beta
- * On 2018-12-14 16:35
+ * This file was created by Translation Editor v7.0.4
+ * On 2019-10-07 15:18
  */
 
 return array (
+  'tag_tools:settings:transform_hashtag' => 'Vervang #tags in de tekst met een link naar de tag pagina',
+  'tag_tools:settings:transform_hashtag:help' => 'Vervang hashtags in de tekst met een link naar de tag pagina van de hashtag',
   'tag_tools:settings:activity_tab' => 'Voeg een tab toe aan de activiteiten pagina',
   'tag_tools:settings:activity_tab:help' => 'Deze tab toont de activiteit van content met de tags die je volgt',
   'tag_tools:suggest:ignore' => 'Suggestie negeren',

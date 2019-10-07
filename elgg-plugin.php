@@ -28,6 +28,7 @@ return [
 	],
 	'settings' => [
 		'activity_tab' => 1,
+		'transform_hashtag' => 1,
 	],
 	'views' => [
 		'default' => [

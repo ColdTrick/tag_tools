@@ -10,6 +10,8 @@ return [
 	
 	'tag_tools:settings:activity_tab' => "Add a tab to the activity page",
 	'tag_tools:settings:activity_tab:help' => "This tab will show activity on content with the tags you follow",
+	'tag_tools:settings:transform_hashtag' => "Replace #tag in text with a link to the tag page",
+	'tag_tools:settings:transform_hashtag:help' => "Replace hashtags in texts with a link to the tag page of that tag",
 	
 	'tag_tools:suggest:ignore' => "Ignore suggestion",
 	
