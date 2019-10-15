@@ -1,6 +1,10 @@
 Version history
 ===============
 
+4.1 (2019-10-15):
+
+- added: hashtag replacement in text with a link to the tag page
+
 4.0.1 (2019-09-04):
 
 - fixed: no longer show banned users in trending users
