@@ -27,18 +27,51 @@ class HtmlFormatter {
 			return;
 		}
 		
-		$result['html'] = preg_replace_callback('/(^|[^\w])#(\w*[^\s\d!-\/:-@]+\w*)/', function($matches) {
-			$match = trim($matches[0]);
-			$tag = $matches[2];
+		
+		$ignoreTags = ['head', 'link', 'a', 'script', 'style', 'code', 'pre', 'select', 'textarea', 'button'];
+		
+		$chunks = preg_split('/(<.+?>)/is', $html, 0, PREG_SPLIT_DELIM_CAPTURE);
+		
+		$matches = [];
+		$openTag = null;
+		for ($i = 0; $i < count($chunks); $i++) {
+			$text = $chunks[$i];
 			
-			return ' ' . elgg_view('output/url', [
-				'text' => $match,
-				'href' => elgg_generate_url('collection:tag', [
-					'tag' => $tag,
-				]),
-				'is_trusted' => true,
-			]);
-		}, $html);
+			if ($i % 2 === 0) { // even numbers are text
+				// Only process this chunk if there are no unclosed $ignoreTags
+				if (null === $openTag) {
+					$text = preg_replace_callback('/(^|[^\w])#(\w*[^\s\d!-\/:-@]+\w*)/', function($matches) {
+						$match = trim($matches[0]);
+						$tag = $matches[2];
+						
+						return ' ' . elgg_view('output/url', [
+							'text' => $match,
+							'href' => elgg_generate_url('collection:tag', [
+								'tag' => $tag,
+							]),
+							'is_trusted' => true,
+						]);
+					}, $text);
+				}
+			} else { // odd numbers are tags
+				// Only process this tag if there are no unclosed $ignoreTags
+				if (null === $openTag) {
+					// Check whether this tag is contained in $ignoreTags and is not self-closing
+					if (preg_match("`<(" . implode('|', $ignoreTags) . ").*(?<!/)>$`is", $text, $matches)) {
+						$openTag = $matches[1];
+					}
+				} else {
+					// Otherwise, check whether this is the closing tag for $openTag.
+					if (preg_match('`</\s*' . $openTag . '>`i', $text, $matches)) {
+						$openTag = null;
+					}
+				}
+			}
+			
+			$chunks[$i] = $text;
+		}
+		
+		$result['html'] = implode($chunks);
 		
 		return $result;
 	}
