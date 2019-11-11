@@ -1,6 +1,10 @@
 Version history
 ===============
 
+4.1.1 (2019-11-11):
+
+- fixed: correctly replace hastags in text
+
 4.1 (2019-10-15):
 
 - added: hashtag replacement in text with a link to the tag page
