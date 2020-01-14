@@ -155,7 +155,7 @@ return [
 			],
 		],
 	],
-	'event' => [
+	'events' => [
 		'create' => [
 			'metadata' => [
 				 __NAMESPACE__ . '\Rules::applyRules' => ['priority' => 1],
