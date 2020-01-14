@@ -122,6 +122,9 @@ return [
 			],
 		],
 		'prepare' => [
+			'html' => [
+				__NAMESPACE__ . '\HtmlFormatter::replaceHashTags' => [],
+			],
 			'notification:create:relationship:tag_tools:notification' => [
 				__NAMESPACE__ . '\Notifications::prepareMessage' => [],
 			],
