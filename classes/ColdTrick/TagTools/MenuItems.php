@@ -221,6 +221,13 @@ class MenuItems {
 			'parent_name' => 'tags',
 			'section' => 'configure',
 		]);
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'tags:followers',
+			'href' => 'admin/tags/followers',
+			'text' => elgg_echo('admin:tags:followers'),
+			'parent_name' => 'tags',
+			'section' => 'configure',
+		]);
 		
 		return $result;
 	}

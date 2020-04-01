@@ -97,6 +97,7 @@ return [
 	'actions' => [
 		'tag_definition/edit' => ['access' => 'admin'],
 		'tag_tools/follow_tag' => [],
+		'tag_tools/followers/export' => ['access' => 'admin'],
 		'tag_tools/notifications/edit' => [],
 		'tag_tools/rules/edit' => ['access' => 'admin'],
 		'tag_tools/suggestions/ignore' => ['access' => 'admin'],

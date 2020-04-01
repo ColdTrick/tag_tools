@@ -1,10 +1,13 @@
 <?php
 /**
  * This file was created by Translation Editor v7.0.4
- * On 2019-10-07 15:18
+ * On 2020-04-01 16:29
  */
 
 return array (
+  'admin:tags:followers' => 'Volgers',
+  'tag_tools:admin:followers:created_since' => 'Volger sinds',
+  'tag_tools:admin:followers:created_until' => 'Volger tot',
   'tag_tools:settings:transform_hashtag' => 'Vervang #tags in de tekst met een link naar de tag pagina',
   'tag_tools:settings:transform_hashtag:help' => 'Vervang hashtags in de tekst met een link naar de tag pagina van de hashtag',
   'tag_tools:settings:activity_tab' => 'Voeg een tab toe aan de activiteiten pagina',
