@@ -4,24 +4,22 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eebee0b7a8319e8929dcba94df4015bc",
+    "content-hash": "30bdc891c8cf6ad7ca7fe97cb6924f93",
     "packages": [
         {
             "name": "bower-asset/tag-it",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/aehlke/tag-it.git",
+                "url": "git@github.com:aehlke/tag-it.git",
                 "reference": "6ccd2de95e7cf7e254ad1a82e946450c21e40421"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/aehlke/tag-it/zipball/6ccd2de95e7cf7e254ad1a82e946450c21e40421",
-                "reference": "6ccd2de95e7cf7e254ad1a82e946450c21e40421",
-                "shasum": ""
+                "reference": "6ccd2de95e7cf7e254ad1a82e946450c21e40421"
             },
-            "type": "bower-asset-library",
-            "time": "2014-11-18T16:09:31+00:00"
+            "type": "bower-asset-library"
         },
         {
             "name": "composer/installers",
@@ -263,5 +261,6 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }
