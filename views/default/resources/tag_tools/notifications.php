@@ -23,15 +23,7 @@ if (elgg_is_active_plugin('notifications')) {
 }
 elgg_push_breadcrumb($title);
 
-// build page elements
-$form = elgg_view_form('tag_tools/notifications/edit', [], ['entity' => $user]);
-
-// build page
-$body = elgg_view_layout('one_sidebar', [
-	'title' => $title,
-	'content' => $form,
+echo elgg_view_page($title, [
+	'content' => elgg_view_form('tag_tools/notifications/edit', [], ['entity' => $user]),
 	'show_owner_block_menu' => false,
 ]);
-
-// draw page
-echo elgg_view_page($title, $body);

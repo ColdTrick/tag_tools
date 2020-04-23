@@ -21,14 +21,9 @@ if ($definition instanceof TagDefinition) {
 
 $content = elgg_view('tag_tools/tag/contents', $content_vars);
 
-// build page
-$page_data = elgg_view_layout('default', [
-	'title' => $title,
+echo elgg_view_page($title, [
 	'content' => $content,
 	'sidebar' => false,
 	'tag' => $tag,
 	'entity' => $definition,
 ]);
-
-// draw page
-echo elgg_view_page($title, $page_data);
