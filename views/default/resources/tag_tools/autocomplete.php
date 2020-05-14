@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Database\Select;
+
 elgg_gatekeeper();
 
 $query = get_input('q');
@@ -7,23 +9,18 @@ $query = get_input('q');
 $result = [];
 
 if (!empty($query)) {
+	$select = Select::fromTable('metadata');
+	$select->select('value AS string')
+		->addSelect('count(*) AS total')
+		->where($select->compare('name', '=', 'tags', ELGG_VALUE_STRING))
+		->andWhere($select->compare('value', 'LIKE', "%{$query}%", ELGG_VALUE_STRING))
+		->groupBy('value')
+		->orderBy('total', 'desc')
+		->setMaxResults(20);
 	
-	$dbprefix = elgg_get_config('dbprefix');
-	
-	$sql = "SELECT md.value as string, count(*) as total";
-	$sql .= " FROM {$dbprefix}metadata md";
-	$sql .= " WHERE md.name = 'tags'";
-	$sql .= " AND md.value LIKE '" . sanitise_string($query) . "%'";
-	$sql .= " GROUP BY md.value";
-	$sql .= " ORDER BY total DESC";
-	$sql .= " LIMIT 0, 20";
-	
-	$data = elgg()->db->getData($sql);
-	if (!empty($data)) {
-		foreach ($data as $row) {
-			$result[] = $row->string;
-		}
-	}
+	$result = elgg()->db->getData($select, function($row) {
+		return $row->string;
+	});
 }
 
 $contents = json_encode($result);
