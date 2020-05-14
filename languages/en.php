@@ -5,6 +5,7 @@ return [
 	'admin:tags:search' => "Search",
 	'admin:tags:suggest' => "Suggestions",
 	'admin:tags:rules' => "Rules",
+	'admin:tags:followers' => "Followers",
 	
 	'item:object:tag_tools_rule' => "Tag Tools rule",
 	
@@ -43,6 +44,9 @@ return [
 	'tag_tools:rules:tag_action:delete' => "Delete",
 	'tag_tools:rules:save_execute' => "Save & execute",
 	'tag_tools:rules:execute' => "Execute",
+	
+	'tag_tools:admin:followers:created_since' => "Following since",
+	'tag_tools:admin:followers:created_until' => "Following until",
 	
 	'tag_tools:follow_tag:menu:on' => "Track new content with this tag",
 	'tag_tools:follow_tag:menu:on:text' => "Follow tag",

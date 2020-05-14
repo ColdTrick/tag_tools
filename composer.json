@@ -16,6 +16,17 @@
 		"coldtrick/sniffs": "dev-master",
 		"coldtrick/releases": "dev-master"
 	},
+	"repositories": [
+		{
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+		}
+	],
+	"config": {
+		"fxp-asset": {
+            "enabled": false
+		}
+	},
 	"conflict": {
 		"elgg/elgg": "<3.3"
 	}
