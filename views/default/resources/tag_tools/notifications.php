@@ -26,12 +26,8 @@ elgg_push_breadcrumb($title);
 // build page elements
 $form = elgg_view_form('tag_tools/notifications/edit', [], ['entity' => $user]);
 
-// build page
-$body = elgg_view_layout('one_sidebar', [
-	'title' => $title,
+// draw page
+echo elgg_view_page($title,  [
 	'content' => $form,
 	'show_owner_block_menu' => false,
 ]);
-
-// draw page
-echo elgg_view_page($title, $body);

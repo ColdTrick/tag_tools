@@ -14,8 +14,6 @@ $options = [
 	'no_results' => elgg_echo('river:none'),
 ];
 
-$title = elgg_echo('tag_tools:activity:tags');
-
 $type = preg_replace('[\W]', '', get_input('type', 'all'));
 $subtype = preg_replace('[\W]', '', get_input('subtype', ''));
 if ($subtype) {
@@ -38,18 +36,19 @@ $options['metadata_name_value_pairs'] = [
 	],
 ];
 
+// build page elements
+$title = elgg_echo('tag_tools:activity:tags');
+
 $activity = elgg_list_river($options);
 
 $content = elgg_view('river/filter', ['selector' => $selector]);
 
 $sidebar = elgg_view('river/sidebar');
 
-$body = elgg_view_layout('default', [
-	'title' => $title,
+// draw page
+echo elgg_view_page($title, [
 	'content' =>  $content . $activity,
 	'sidebar' => $sidebar ? : false,
 	'filter_value' => 'tags',
 	'class' => 'elgg-river-layout',
 ]);
-
-echo elgg_view_page($title, $body);

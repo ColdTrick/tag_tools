@@ -26,12 +26,7 @@ if (elgg_is_xhr()) {
 	return;
 }
 
-// build page
-$page_data = elgg_view_layout('content', [
-	'title' => $title,
-	'content' => $content,
-	'filter' => false,
-]);
-
 // draw page
-echo elgg_view_page($title, $page_data);
+echo elgg_view_page($title, [
+	'content' => $content,
+]);

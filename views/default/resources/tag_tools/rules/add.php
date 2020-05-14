@@ -13,13 +13,10 @@ $body = elgg_view_form('tag_tools/rules/edit', [], $body_vars);
 // how to display content
 if (elgg_is_xhr()) {
 	echo elgg_view_module('inline', $title, $body);
-} else {
-	// build page
-	$page = elgg_view_layout('content', [
-		'title' => $title,
-		'body' => $body,
-		'filter' => false,
-	]);
-	
-	echo elgg_view_page($title, $page);
+	return;
 }
+
+// draw page
+echo elgg_view_page($title, [
+	'content' => $body,
+]);
