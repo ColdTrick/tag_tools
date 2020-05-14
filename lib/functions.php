@@ -150,6 +150,8 @@ function tag_tools_remove_tag_from_notification_settings($tag, $user_guid = 0) {
 		return false;
 	}
 	
+	$tag = strtolower($tag);
+	
 	$user_guid = (int) $user_guid;
 	if ($user_guid < 1) {
 		$user_guid = elgg_get_logged_in_user_guid();
@@ -207,7 +209,12 @@ function tag_tools_get_user_notification_settings($user_guid = 0, $reset_cache =
 		
 		$setting = elgg_get_plugin_user_setting('notifications', $user_guid, 'tag_tools');
 		if (!empty($setting)) {
-			$cache[$user_guid] = json_decode($setting, true);
+			$settings = json_decode($setting, true);
+			foreach ($settings as $tag => $methods) {
+				$tag = strtolower($tag);
+				
+				$cache[$user_guid][$tag] = $methods;
+			}
 		}
 	}
 	
@@ -227,6 +234,8 @@ function tag_tools_get_user_tag_notification_settings($tag, $user_guid = 0) {
 	if (empty($tag)) {
 		return false;
 	}
+	
+	$tag = strtolower($tag);
 	
 	$user_guid = (int) $user_guid;
 	if ($user_guid < 1) {
@@ -263,13 +272,11 @@ function tag_tools_get_user_tag_notification_settings($tag, $user_guid = 0) {
  */
 function tag_tools_check_user_tag_notification_method($tag, $method, $user_guid = 0) {
 	
-	if (empty($tag)) {
+	if (empty($tag) || empty($method)) {
 		return false;
 	}
 	
-	if (empty($method)) {
-		return false;
-	}
+	$tag = strtolower($tag);
 	
 	$user_guid = (int) $user_guid;
 	if ($user_guid < 1) {
