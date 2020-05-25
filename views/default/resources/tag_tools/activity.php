@@ -33,6 +33,7 @@ $options['metadata_name_value_pairs'] = [
 	[
 		'name' => 'tags',
 		'value' => $tags,
+		'case_sensitive' => false,
 	],
 ];
 

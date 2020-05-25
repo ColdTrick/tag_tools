@@ -71,17 +71,19 @@ class Notifications {
 		};
 		
 		$tag_subscribers = [];
+		
 		// get interested users
-		$user_options = [
+		$users_batch = elgg_get_entities([
 			'type' => 'user',
 			'annotation_name_value_pairs' => [
 				'name' => 'follow_tag',
 				'value' => $sending_tags,
+				'case_sensitive' => false,
 			],
 			'limit' => false,
 			'batch' => true,
-		];
-		$users_batch = elgg_get_entities($user_options);
+		]);
+		
 		/* @var $user \ElggUser */
 		foreach ($users_batch as $user) {
 			

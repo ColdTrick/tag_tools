@@ -119,9 +119,11 @@ function tag_tools_toggle_following_tag($tag, $user_guid = 0, $track = null) {
 		elgg_delete_annotations([
 			'guid' => $user_guid,
 			'limit' => false,
-			'annotation_name' => 'follow_tag',
-			'annotation_value' => $tag,
-			'annotation_case_sensitive' => false,
+			'annotation_name_value_pairs' => [
+				'name' => 'follow_tag',
+				'value' => $tag,
+				'case_sensitive' => false,
+			],
 		]);
 		
 		tag_tools_remove_tag_from_notification_settings($tag, $user_guid);
