@@ -23,14 +23,29 @@ echo elgg_view_field([
 
 elgg_require_js('tag_tools/notifications');
 
-echo "<table class='elgg-table-alt'>";
+$method_icons = [
+	'email' => 'mail',
+	'site' => 'bell-regular',
+];
+
+echo "<table class='elgg-table-alt tag-tools-notification-methods'>";
 // header with notification methods and delete
 echo '<thead>';
 echo '<tr><th>&nbsp;</th>';
 foreach ($notification_methods as $method) {
-	echo elgg_format_element('th', ['class' => 'center'], elgg_echo("notification:method:{$method}"));
+	$method_title = elgg_echo("notification:method:{$method}");
+	
+	$classes = ['center'];
+	$icon = elgg_extract($method, $method_icons);
+	if ($icon) {
+		$icon = elgg_view_icon($icon, ['title' => $method_title]);
+		$classes[] = 'label-with-icon';
+	}
+	$label = elgg_format_element('span', [], $method_title);
+	
+	echo elgg_format_element('th', ['class' => $classes], $icon . $label);
 }
-echo elgg_format_element('th', ['class' => 'center'], elgg_echo('delete'));
+echo elgg_format_element('th', ['class' => ['center', 'label-with-icon']], elgg_view_icon('trash-alt-regular') . elgg_format_element('span', [], elgg_echo('delete')));
 
 echo '</tr>';
 echo '</thead>';
