@@ -1,6 +1,10 @@
 Version history
 ===============
 
+5.0.1 (2020-08-18):
+
+- fixed: added icons to tag notifications settings for smaller screens
+
 5.0 (2020-05-26):
 
 - changed: increased minimal Elgg version to 3.3
