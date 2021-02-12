@@ -1,10 +1,32 @@
 <?php
-/**
- * This file was created by Translation Editor v7.0-beta
- * On 2018-12-14 16:36
- */
 
 return array (
+  'tag_tools:settings:activity_tab' => 'Ajouter un onglet à la page d\'activité',
+  'tag_tools:settings:activity_tab:help' => 'Cet onglet affichera l\'activité des contenus publiés avec les tags que vous suivez',
+  'tag_tools:suggest:ignore' => 'Ignorer la suggestion',
+  'tag_tools:rule:notify:replace' => 'Le tag \'%s\' a été remplacé par \'%s\'',
+  'tag_tools:rule:notify:delete' => 'Le tag \'%s\' a été supprimé',
+  'tag_tools:search:min_count' => 'Occurrence minimale',
+  'tag_tools:search:content_type' => 'Filtrer par type de contenu',
+  'tag_tools:search:order' => 'Ordre de tri',
+  'tag_tools:rules:from_tag:help' => 'Ce tag sera pris en compte sans distinction de majuscules et de minuscules',
+  'tag_tools:rules:notify_user' => 'Afficher un message à l\'utilisateur lorsque la règle est appliquée',
+  'tag_tools:follow_tag:menu:on:text' => 'Suivre le tag',
+  'tag_tools:follow_tag:menu:off:text' => 'Ne plus suivre le tag',
+  'tag_tools:tag:view:title' => 'Tag : %s',
+  'tag_tools:tag:view:no_results' => 'Aucun contenu se rapportant à ce tag n\'a pu être trouvé.',
+  'tag_tools:tag:content:groups' => 'Groupes',
+  'tag_tools:tag:content:users' => 'Membres',
+  'tag_tools:tag:view:more' => 'Voir plus de contenus',
+  'tag_tools:tag:content:content' => 'Contenus récents',
+  'tag_tools:tag:content:related_tags' => 'Tags associés',
+  'tag_tools:tag_definition:manage' => 'Gérer le tag',
+  'tag_tools:tag_definition:add:title' => 'Créer une nouvelle page pour le tag',
+  'tag_tools:tag_definition:edit:title' => 'Modifier la page du tag',
+  'tag_tools:tag_definition:edit:field:title' => 'Tag',
+  'tag_tools:tag_definition:edit:field:textcolor' => 'Couleur du texte',
+  'tag_tools:tag_definition:edit:field:bgcolor' => 'Couleur de l\'arrière plan',
+  'tag_tools:tag_definition:edit:colors:help' => 'La définition d\'une couleur personnalisée affichera le tag de cette manière. Si vous la définissez sur le noir, les couleurs par défaut seront utilisées.',
   'tag_tools:rules:edit' => 'Éditer la règle de tag: %s',
   'tag_tools:notifications:description' => 'Configurer les centres d’intérêt que vous souhaitez suivre, comment et pour quel type de contenu vous serez notifié sur ces centres d’intérêt.',
   'tag_tools:notifications:menu' => 'Notification de mes centres d’intérêt',
@@ -55,4 +77,5 @@ Vous pouvez le consulter ici : %s',
   'widgets:tagcloud:description' => 'Affiche un nuage de cloud basé sur tous le contenu du site, dans le groupe ou relatif à un utilisateur',
   'widgets:tagcloud:no_data' => 'Aucune donnée disponible pour afficher le nuage de tag',
   'tag_tools:admin:tags:suggest:info' => 'La liste ci-dessous affiche les suggestions pour les autocorrections',
+  'widgets:tagcloud:name' => 'Nuage de Tags',
 );
