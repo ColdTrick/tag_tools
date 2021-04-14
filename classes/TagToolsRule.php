@@ -172,13 +172,25 @@ class TagToolsRule extends ElggObject {
 			return;
 		}
 		
-		return elgg_delete_metadata([
+		$metadata = elgg_get_metadata([
 			'type_subtype_pairs' => $entity_types,
 			'metadata_names' => $tag_names,
 			'metadata_value' => $this->from_tag,
 			'metadata_case_sensitive' => false,
 			'limit' => false,
+			'batch' => true,
+			'batch_inc_offset' => false,
 		]);
+		
+		foreach ($metadata as $md) {
+			$entity = $md->getEntity();
+			$md->delete();
+			
+			// let system know entity has been updated
+			$entity->save();
+		}
+		
+		return true;
 	}
 	
 	/**
@@ -252,6 +264,9 @@ class TagToolsRule extends ElggObject {
 				
 				// store new value
 				$entity->$tag_name = $value;
+				
+				// let system know entity has been updated
+				$entity->save();
 			}
 		}
 	}
