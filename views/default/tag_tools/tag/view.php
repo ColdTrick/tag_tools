@@ -39,7 +39,7 @@ if (!empty($stats)) {
 // list rules
 $tb = elgg()->table_columns;
 
-$rules = elgg_list_entities_from_metadata([
+$rules = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => \TagToolsRule::SUBTYPE,
 	'metadata_name_value_pairs' => [[
