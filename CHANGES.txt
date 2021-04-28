@@ -1,6 +1,11 @@
 Version history
 ===============
 
+5.0.2 (2021-04-28):
+
+- fixed: mark entity as updated after apply/delete tag
+- fixed: replaced deprecated list_from_metadata function
+
 5.0.1 (2020-08-18):
 
 - fixed: added icons to tag notifications settings for smaller screens
