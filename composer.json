@@ -1,6 +1,7 @@
 {
 	"name": "coldtrick/tag_tools",
 	"description": "Offers enhancements/tools for tags",
+	"homepage": "https://www.coldtrick.com",
 	"type": "elgg-plugin",
 	"keywords": ["elgg", "plugin"],
 	"license": "GPL-2.0-only",
@@ -9,25 +10,13 @@
 		"issues": "https://github.com/ColdTrick/tag_tools/issues"
 	},
 	"require": {
-		"composer/installers": "^1.0.8",
-		"bower-asset/tag-it": "dev-master#6ccd2de95e7cf7e254ad1a82e946450c21e40421"
+		"composer/installers": "^1.0.8"
 	},
 	"require-dev": {
 		"coldtrick/sniffs": "dev-master",
 		"coldtrick/releases": "dev-master"
 	},
-	"repositories": [
-		{
-            "type": "composer",
-            "url": "https://asset-packagist.org"
-		}
-	],
-	"config": {
-		"fxp-asset": {
-            "enabled": false
-		}
-	},
 	"conflict": {
-		"elgg/elgg": "<3.3"
+		"elgg/elgg": "<4.0"
 	}
 }

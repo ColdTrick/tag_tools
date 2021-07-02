@@ -44,11 +44,15 @@ if ($order === 'count') {
 }
 $select->addOrderBy('md.value', 'ASC');
 
-$count_query = "SELECT count(*) as row_count
-	FROM ({$select->getSQL()}) c
-";
+$count_query = new Select(_elgg_services()->db->getConnection('read'));
+$count_query->select('count(*) as row_count');
+$count_query->add('from', [
+	'table' => "({$select->getSQL()})",
+	'alias' => 'c',
+], true);
+$count_query->setParameters($select->getParameters());
 
-$count_res = elgg()->db->getDataRow($count_query, false, $select->getParameters());
+$count_res = elgg()->db->getDataRow($count_query);
 if (empty($count_res) || empty($count_res->row_count)) {
 	echo elgg_echo('notfound');
 	return;
@@ -62,7 +66,7 @@ $limit = max((int) get_input('limit'), 50, elgg_get_config('default_limit'));
 $select->setFirstResult($offset);
 $select->setMaxResults($limit);
 
-$results = $select->execute()->fetchAll();
+$results = $select->execute()->fetchAllAssociative();
 
 // load js
 elgg_require_js('tag_tools/admin/search');
@@ -81,19 +85,19 @@ $rows[] = elgg_format_element('thead', [], elgg_format_element('tr', [], implode
 // list tags
 foreach ($results as $result) {
 	$tag_link_params = [
-		'text' => $result->value,
+		'text' => $result['value'],
 		'href' => false,
 		'class' => 'tag-tools-search-result-tag',
-		'data-tag' => $result->value,
+		'data-tag' => $result['value'],
 		'is_trusted' => true,
 	];
 	
 	$row = [
 		elgg_format_element('td', [], elgg_view('output/url', $tag_link_params)),
-		elgg_format_element('td', ['style' => 'width: 1%;', 'class' => 'center'], $result->total),
+		elgg_format_element('td', ['style' => 'width: 1%;', 'class' => 'center'], $result['total']),
 	];
 	
-	$rule = tag_tools_rules_get_rule($result->value);
+	$rule = tag_tools_rules_get_rule($result['value']);
 	if (empty($rule)) {
 		// create a rule (replace)
 		$row[] = elgg_format_element('td', [
@@ -102,7 +106,7 @@ foreach ($results as $result) {
 		], elgg_view('output/url', [
 			'text' => elgg_view_icon('random'),
 			'href' => elgg_http_add_url_query_elements('tag_tools/rules/add', [
-				'from_tag' => $result->value,
+				'from_tag' => $result['value'],
 			]),
 			'title' => elgg_echo('tag_tools:search:replace'),
 			'class' => 'elgg-lightbox',
@@ -118,7 +122,7 @@ foreach ($results as $result) {
 		], elgg_view('output/url', [
 			'text' => elgg_view_icon('delete'),
 			'href' => elgg_http_add_url_query_elements('tag_tools/rules/add', [
-				'from_tag' => $result->value,
+				'from_tag' => $result['value'],
 				'tag_action' => 'delete',
 			]),
 			'title' => elgg_echo('delete'),

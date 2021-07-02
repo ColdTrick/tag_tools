@@ -7,7 +7,7 @@ class MenuItems {
 	/**
 	 * Add a menu item to the page menu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:page'
+	 * @param \Elgg\Hook $hook 'register', 'menu:filter:settings/notifications'
 	 *
 	 * @return void|\ElggMenuItem[]
 	 */
@@ -29,7 +29,7 @@ class MenuItems {
 			'href' => elgg_generate_url('settings:notification:tags', [
 				'username' => $user->username,
 			]),
-			'section' => 'notifications',
+			'priority' => 600,
 		]);
 		
 		return $return_value;
@@ -43,8 +43,7 @@ class MenuItems {
 	 * @return void|\ElggMenuItem[]
 	 */
 	public static function registerActivityTab(\Elgg\Hook $hook) {
-		
-		if (!elgg_is_logged_in()) {
+		if (!elgg_is_logged_in() || !elgg_in_context('activity')) {
 			return;
 		}
 		

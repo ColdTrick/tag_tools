@@ -18,7 +18,7 @@ if (elgg_is_empty($tag)) {
 
 $tag = strtolower($tag);
 
-$tag_names = elgg_get_registered_tag_metadata_names();
+$tag_names = tag_tools_rules_get_tag_names();
 
 $entity_where = EntityWhereClause::factory(new QueryOptions([
 	'type_subtype_pairs' => get_registered_entity_types(),
@@ -39,8 +39,12 @@ $select->select('md2.value')
 $subquery = $select->subquery('metadata', 'md');
 $subquery->select('md.entity_guid')
 	->where($entity_where->prepare($subquery, $subquery->joinEntitiesTable('md', 'entity_guid')))
-	->andWhere($access_where->prepare($subquery, $subquery->joinEntitiesTable('md', 'entity_guid')))
 	->andWhere($metadata_where->prepare($subquery, 'md'));
+
+$access_part = $access_where->prepare($subquery, $subquery->joinEntitiesTable('md', 'entity_guid'));
+if (!empty($access_part)) {
+	$subquery->andWhere($access_part);
+}
 
 $metadata_where = new MetadataWhereClause();
 $metadata_where->names = $tag_names;
@@ -48,7 +52,6 @@ $metadata_where->names = $tag_names;
 $select->setParameters($subquery->getParameters(), $subquery->getParameterTypes());
 $select->andWhere($metadata_where->prepare($select, 'md2'))
 	->andWhere($entity_where->prepare($select, $select->joinEntitiesTable('md2', 'entity_guid')))
-	->andWhere($access_where->prepare($select, $select->joinEntitiesTable('md2', 'entity_guid')))
 	->andWhere($select->compare('md2.entity_guid', 'in', $subquery->getSQL()))
 	->andWhere($select->compare('md2.value', '!=', $tag, ELGG_VALUE_STRING))
 	->groupBy('md2.value')
@@ -56,14 +59,19 @@ $select->andWhere($metadata_where->prepare($select, 'md2'))
 	->setMaxResults(10)
 ;
 
-$res = $select->execute()->fetchAll();
+$access_part = $access_where->prepare($select, $select->joinEntitiesTable('md2', 'entity_guid'));
+if (!empty($access_part)) {
+	$select->andWhere($access_part);
+}
+
+$res = $select->execute()->fetchAllAssociative();
 if (empty($res)) {
 	return;
 }
 
 $tags = [];
 foreach ($res as $row) {
-	$tags[] = $row->value;
+	$tags[] = $row['value'];
 }
 
 $content = elgg_view('output/tags', ['value' => $tags]);

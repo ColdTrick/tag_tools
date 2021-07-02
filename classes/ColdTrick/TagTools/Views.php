@@ -20,14 +20,11 @@ class Views {
 			return;
 		}
 		
-		$url = elgg_generate_url('collection:tag', [
+		elgg_require_css('tag_tools/tagcolors');
+		
+		$vars['href'] = elgg_generate_url('collection:tag', [
 			'tag' => strtolower($value),
 		]);
-		if (!$url) {
-			return;
-		}
-		
-		$vars['href'] = $url;
 		
 		// set name for colors
 		$vars['class'] = elgg_extract_class($vars, [elgg_get_friendly_title("tag-color-{$value}")]);

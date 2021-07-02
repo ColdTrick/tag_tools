@@ -25,7 +25,7 @@ if ($order === 'count') {
 }
 $select->addOrderBy('md.value', 'ASC');
 
-$results = $select->execute()->fetchAll();
+$results = $select->execute()->fetchAllAssociative();
 
 $ignore_config = elgg_get_plugin_setting('ignored_suggestions', 'tag_tools');
 if (empty($ignore_config)) {
@@ -58,27 +58,27 @@ $suggestions = [];
 while ($current_tag = array_pop($results)) {
 	
 	// filter out tags that already have a rule configured
-	if (in_array($current_tag->value, $configured_rule_tags)) {
+	if (in_array($current_tag['value'], $configured_rule_tags)) {
 		continue;
 	}
 	
 	// check if tags are ignored
-	$ignore_tags = (array) elgg_extract($current_tag->value, $ignore_config, []);
+	$ignore_tags = (array) elgg_extract($current_tag['value'], $ignore_config, []);
 	
 	// check current tag for good suggestions
 	foreach ($results as $tag) {
-		if (in_array($tag->value, $ignore_tags)) {
+		if (in_array($tag['value'], $ignore_tags)) {
 			continue;
 		}
 		
-		$levenshtein = levenshtein($current_tag->value, $tag->value);
-		$max_length = max(strlen($current_tag->value), strlen($tag->value));
+		$levenshtein = levenshtein($current_tag['value'], $tag['value']);
+		$max_length = max(strlen($current_tag['value']), strlen($tag['value']));
 		
 		if (($levenshtein / $max_length) > (1/3)) {
 			continue;
 		}
 		
-		$suggestions[$current_tag->value][] = $tag->value;
+		$suggestions[$current_tag['value']][] = $tag['value'];
 	}
 }
 

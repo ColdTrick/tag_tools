@@ -25,10 +25,10 @@ $fields = [
 	[
 		'#type' => 'number',
 		'name' => 'min_count',
-		'value' => sanitize_int(get_input('min_count', 10), false),
+		'value' => (int) get_input('min_count', 10),
 		'placeholder' => elgg_echo('tag_tools:search:min_count'),
 		'title' => elgg_echo('tag_tools:search:min_count'),
-		'style' => 'width: 3em',
+		'style' => 'width: 4rem',
 		'min' => 0,
 	],
 	[

@@ -54,7 +54,7 @@ if (!$entity->save()) {
 }
 
 if (($entity->bgcolor !== $old_bgcolor) || ($entity->textcolor !== $old_textcolor)) {
-	elgg_invalidate_simplecache();
+	elgg_invalidate_caches();
 }
 
 elgg_clear_sticky_form('tag_definition/edit');

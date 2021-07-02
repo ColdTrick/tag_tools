@@ -1,6 +1,6 @@
 <?php
 
-use Elgg\EntityPermissionsException;
+use Elgg\Exceptions\Http\EntityPermissionsException;
 
 $user = elgg_get_page_owner_entity();
 if (!$user instanceof ElggUser || !$user->canEdit()) {
@@ -10,24 +10,18 @@ if (!$user instanceof ElggUser || !$user->canEdit()) {
 // Set the context to settings
 elgg_set_context('settings');
 
-$title = elgg_echo('tag_tools:notifications:menu');
-
 // build breadcrumb
 elgg_push_breadcrumb(elgg_echo('settings'), elgg_generate_url('settings:account', [
 	'username' => $user->username,
 ]));
-if (elgg_is_active_plugin('notifications')) {
-	elgg_push_breadcrumb(elgg_echo('notifications:subscriptions:changesettings'), elgg_generate_url('settings:notification:personal', [
-		'username' => $user->username,
-	]));
-}
-elgg_push_breadcrumb($title);
 
 // build page elements
 $form = elgg_view_form('tag_tools/notifications/edit', [], ['entity' => $user]);
 
 // draw page
-echo elgg_view_page($title,  [
+echo elgg_view_page(elgg_echo('tag_tools:notifications:menu'),  [
 	'content' => $form,
 	'show_owner_block_menu' => false,
+	'filter_id' => 'settings/notifications',
+	'filter_value' => 'tags',
 ]);

@@ -15,14 +15,13 @@ use Elgg\Database\QueryOptions;
  *
  * @return bool|array
  */
-function tag_tools_get_user_following_tags($user_guid = 0, $reset_cache = false) {
+function tag_tools_get_user_following_tags(int $user_guid = 0, bool $reset_cache = false) {
 	static $cache;
 	
 	if (!isset($cache)) {
 		$cache = [];
 	}
 	
-	$user_guid = (int) $user_guid;
 	if ($user_guid < 1) {
 		$user_guid = elgg_get_logged_in_user_guid();
 	}
@@ -60,13 +59,12 @@ function tag_tools_get_user_following_tags($user_guid = 0, $reset_cache = false)
  *
  * @return bool
  */
-function tag_tools_is_user_following_tag($tag, $user_guid = 0) {
+function tag_tools_is_user_following_tag(string $tag, int $user_guid = 0): bool {
 	
 	if (empty($tag)) {
 		return false;
 	}
 
-	$user_guid = (int) $user_guid;
 	if ($user_guid < 1) {
 		$user_guid = elgg_get_logged_in_user_guid();
 	}
@@ -92,7 +90,7 @@ function tag_tools_is_user_following_tag($tag, $user_guid = 0) {
  *
  * @return void
  */
-function tag_tools_toggle_following_tag($tag, $user_guid = 0, $track = null) {
+function tag_tools_toggle_following_tag(string $tag, int $user_guid = 0, bool $track = null): void {
 	
 	if (empty($tag)) {
 		return;
@@ -100,7 +98,6 @@ function tag_tools_toggle_following_tag($tag, $user_guid = 0, $track = null) {
 	
 	$tag = strtolower($tag);
 	
-	$user_guid = (int) $user_guid;
 	if ($user_guid < 1) {
 		$user_guid = elgg_get_logged_in_user_guid();
 	}
@@ -146,7 +143,7 @@ function tag_tools_toggle_following_tag($tag, $user_guid = 0, $track = null) {
  *
  * @return bool
  */
-function tag_tools_remove_tag_from_notification_settings($tag, $user_guid = 0) {
+function tag_tools_remove_tag_from_notification_settings(string $tag, int $user_guid = 0): bool {
 	
 	if (empty($tag)) {
 		return false;
@@ -154,7 +151,6 @@ function tag_tools_remove_tag_from_notification_settings($tag, $user_guid = 0) {
 	
 	$tag = strtolower($tag);
 	
-	$user_guid = (int) $user_guid;
 	if ($user_guid < 1) {
 		$user_guid = elgg_get_logged_in_user_guid();
 	}
@@ -176,7 +172,10 @@ function tag_tools_remove_tag_from_notification_settings($tag, $user_guid = 0) {
 	
 	// remove the tag from the settings
 	unset($settings[$tag]);
-	elgg_set_plugin_user_setting('notifications', json_encode($settings), $user_guid, 'tag_tools');
+	
+	$user = get_user($user_guid);
+	$user->setPluginSetting('tag_tools', 'notifications', json_encode($settings));
+	
 	tag_tools_get_user_notification_settings($user_guid, true);
 	
 	return true;
@@ -190,14 +189,13 @@ function tag_tools_remove_tag_from_notification_settings($tag, $user_guid = 0) {
  *
  * @return bool|array
  */
-function tag_tools_get_user_notification_settings($user_guid = 0, $reset_cache = false) {
+function tag_tools_get_user_notification_settings(int $user_guid = 0, bool $reset_cache = false) {
 	static $cache;
 	
 	if (!isset($cache)) {
 		$cache = [];
 	}
 	
-	$user_guid = (int) $user_guid;
 	if ($user_guid < 1) {
 		$user_guid = elgg_get_logged_in_user_guid();
 	}
@@ -231,7 +229,7 @@ function tag_tools_get_user_notification_settings($user_guid = 0, $reset_cache =
  *
  * @return false|array
  */
-function tag_tools_get_user_tag_notification_settings($tag, $user_guid = 0) {
+function tag_tools_get_user_tag_notification_settings(string $tag, int $user_guid = 0) {
 	
 	if (empty($tag)) {
 		return false;
@@ -239,7 +237,6 @@ function tag_tools_get_user_tag_notification_settings($tag, $user_guid = 0) {
 	
 	$tag = strtolower($tag);
 	
-	$user_guid = (int) $user_guid;
 	if ($user_guid < 1) {
 		$user_guid = elgg_get_logged_in_user_guid();
 	}
@@ -272,7 +269,7 @@ function tag_tools_get_user_tag_notification_settings($tag, $user_guid = 0) {
  *
  * @return bool
  */
-function tag_tools_check_user_tag_notification_method($tag, $method, $user_guid = 0) {
+function tag_tools_check_user_tag_notification_method(string $tag, string $method, int $user_guid = 0): bool {
 	
 	if (empty($tag) || empty($method)) {
 		return false;
@@ -280,7 +277,6 @@ function tag_tools_check_user_tag_notification_method($tag, $method, $user_guid 
 	
 	$tag = strtolower($tag);
 	
-	$user_guid = (int) $user_guid;
 	if ($user_guid < 1) {
 		$user_guid = elgg_get_logged_in_user_guid();
 	}
@@ -306,9 +302,8 @@ function tag_tools_check_user_tag_notification_method($tag, $method, $user_guid 
  *
  * @return bool
  */
-function tag_tools_is_notification_entity($entity_guid) {
+function tag_tools_is_notification_entity(int $entity_guid): bool {
 	
-	$entity_guid = (int) $entity_guid;
 	$entity_row = get_entity_as_row($entity_guid);
 	if (empty($entity_row)) {
 		return false;
@@ -362,7 +357,7 @@ function tag_tools_get_notification_type_subtypes() {
  *
  * @return bool
  */
-function tag_tools_add_sent_tags(ElggEntity $entity, $sending_tags = []) {
+function tag_tools_add_sent_tags(ElggEntity $entity, $sending_tags = []): bool {
 	
 	if (empty($sending_tags)) {
 		// nothing to add
@@ -394,7 +389,7 @@ function tag_tools_add_sent_tags(ElggEntity $entity, $sending_tags = []) {
  *
  * @return array
  */
-function tag_tools_rules_prepare_form_vars($entity = null) {
+function tag_tools_rules_prepare_form_vars(TagToolsRule $entity = null): array {
 	
 	$defaults = [
 		'from_tag' => get_input('from_tag'),
@@ -429,15 +424,10 @@ function tag_tools_rules_prepare_form_vars($entity = null) {
  *
  * @return string[]
  */
-function tag_tools_rules_get_tag_names() {
-	
+function tag_tools_rules_get_tag_names(): array {
 	return [
 		'tags',
 	];
-	
-	// make this work
-	$tag_names = elgg_get_registered_tag_metadata_names();
-	return $tag_names;
 }
 
 /**
@@ -447,7 +437,7 @@ function tag_tools_rules_get_tag_names() {
  *
  * @return array
  */
-function tag_tools_rules_get_type_subtypes() {
+function tag_tools_rules_get_type_subtypes(): array {
 	static $result;
 	
 	if (isset($result)) {
@@ -468,8 +458,7 @@ function tag_tools_rules_get_type_subtypes() {
 		}
 	}
 	
-	$result = elgg_trigger_plugin_hook('rules_type_subtypes', 'tag_tools', $result, $result);
-	return $result;
+	return elgg_trigger_plugin_hook('rules_type_subtypes', 'tag_tools', $result, $result);
 }
 
 /**
@@ -479,7 +468,7 @@ function tag_tools_rules_get_type_subtypes() {
  *
  * @return false|TagToolsRule
  */
-function tag_tools_rules_get_rule($from_tag) {
+function tag_tools_rules_get_rule(string $from_tag) {
 	
 	if(trim($from_tag) === '') {
 		return false;
@@ -510,7 +499,7 @@ function tag_tools_rules_get_rule($from_tag) {
  *
  * @return false|array
  */
-function tag_tools_get_tag_stats($tag) {
+function tag_tools_get_tag_stats(string $tag) {
 	
 	if (elgg_is_empty($tag)) {
 		return false;
@@ -538,7 +527,7 @@ function tag_tools_get_tag_stats($tag) {
 		->orderBy('total', 'desc')
 	;
 	
-	$res = $select->execute()->fetchAll();
+	$res = $select->execute()->fetchAllAssociative();
 	if (empty($res)) {
 		return false;
 	}
@@ -546,11 +535,11 @@ function tag_tools_get_tag_stats($tag) {
 	$result = [];
 	foreach ($res as $row) {
 		$type_subtype = [
-			$row->type,
-			$row->subtype,
+			$row['type'],
+			$row['subtype'],
 		];
 		$type_subtype = implode(':', $type_subtype);
-		$result[$type_subtype] = (int) $row->total;
+		$result[$type_subtype] = (int) $row['total'];
 	}
 	
 	return $result;

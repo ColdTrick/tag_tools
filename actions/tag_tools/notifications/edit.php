@@ -1,6 +1,6 @@
 <?php
 
-$tags = get_input('tags');
+$tags = array_filter(get_input('tags'));
 $user_guid = (int) get_input('user_guid');
 
 if (empty($user_guid)) {
@@ -17,9 +17,9 @@ if (!$user->canEdit()) {
 }
 
 if (empty($tags)) {
-	elgg_unset_plugin_user_setting('notifications', $user->guid, 'tags_tools');
+	$user->removePluginSetting('tag_tools', 'notifications');
 } else {
-	elgg_set_plugin_user_setting('notifications', json_encode($tags), $user->guid, 'tag_tools');
+	$user->setPluginSetting('tag_tools', 'notifications', json_encode($tags));
 }
 
 return elgg_ok_response('', elgg_echo('save:success'));

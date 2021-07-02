@@ -1,7 +1,5 @@
-define(function(require) {
-	
-	var $ = require('jquery');
-	var Ajax = require('elgg/Ajax');
+define(['jquery', 'elgg/Ajax'], function($, Ajax) {
+	var ajax = new Ajax();
 	
 	$(document).on('click', '#tag-tools-search-results .tag-tools-search-result-tag', function(event) {
 		event.preventDefault();
@@ -15,7 +13,6 @@ define(function(require) {
 			// load new data
 			var tag = $link.data('tag');
 			
-			var ajax = new Ajax();
 			ajax.view('tag_tools/tag/view', {
 				data: {
 					tag: tag

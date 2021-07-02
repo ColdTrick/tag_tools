@@ -1,6 +1,6 @@
 <?php
 
-use Elgg\EntityNotFoundException;
+use Elgg\Exceptions\Http\EntityNotFoundException;
 
 class TagDefinition extends ElggObject {
 	

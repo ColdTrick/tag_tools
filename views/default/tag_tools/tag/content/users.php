@@ -18,7 +18,7 @@ if (elgg_is_empty($tag)) {
 
 $tag = strtolower($tag);
 
-$tag_names = elgg_get_registered_tag_metadata_names();
+$tag_names = tag_tools_rules_get_tag_names();
 
 $entity_where = EntityWhereClause::factory(new QueryOptions([
 	'type_subtype_pairs' => get_registered_entity_types(),
@@ -39,11 +39,12 @@ $banned_where->case_sensitive = false;
 $banned_where->value_type = ELGG_VALUE_STRING;
 
 $select = Select::fromTable('entities', 'e');
+$access_part = $access_where->prepare($select, 'e');
+
 $select->select('e.owner_guid')
 	->addSelect('count(*) as total')
 	->join('e', 'entities', 'eo', $select->compare('e.owner_guid', '=', 'eo.guid'))
 	->where($entity_where->prepare($select, 'e'))
-	->andWhere($access_where->prepare($select, 'e'))
 	->andWhere($tag_where->prepare($select, $select->joinMetadataTable('e')))
 	->andWhere($select->compare('eo.type', '=', 'user', ELGG_VALUE_STRING))
 	->andWhere($banned_where->prepare($select, $select->joinMetadataTable('eo')))
@@ -52,14 +53,18 @@ $select->select('e.owner_guid')
 	->setMaxResults(3)
 ;
 
-$res = $select->execute()->fetchAll();
+if (!empty($access_part)) {
+	$select->andWhere($access_part);
+}
+
+$res = $select->execute()->fetchAllAssociative();
 if (empty($res)) {
 	return;
 }
 
 $guids = [];
 foreach ($res as $row) {
-	$guids[] = (int) $row->owner_guid;
+	$guids[] = (int) $row['owner_guid'];
 }
 
 $users = elgg_get_entities([

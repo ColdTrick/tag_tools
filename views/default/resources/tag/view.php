@@ -1,6 +1,6 @@
 <?php
 
-use Elgg\BadRequestException;
+use Elgg\Exceptions\Http\BadRequestException;
 
 $tag = strtolower(elgg_extract('tag', $vars));
 if (elgg_is_empty($tag)) {

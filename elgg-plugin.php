@@ -13,7 +13,15 @@ if (is_dir(__DIR__ . '/vendor')) {
 require_once(dirname(__FILE__) . '/lib/functions.php');
 
 return [
-	'bootstrap' => Bootstrap::class,
+	'plugin' => [
+		'version' => '5.0.2',
+		'dependencies' => [
+			'tagcloud' => [
+				'position' => 'after',
+				'must_be_active' => false,
+			],
+		],
+	],
 	'entities' => [
 		[
 			'type' => 'object',
@@ -30,10 +38,23 @@ return [
 		'activity_tab' => 1,
 		'transform_hashtag' => 1,
 	],
-	'views' => [
-		'default' => [
-			'jquery/tag-it.js' => $composer_path . 'vendor/bower-asset/tag-it/js/tag-it.js',
+	'view_extensions' => [
+		'elgg.css' => [
+			'tag_tools/site.css' => [],
 		],
+		'admin.css' => [
+			'tag_tools/site.css' => [],
+		],
+		'tag_tools/tag/content' => [
+			'tag_tools/tag/content/recent_content' => ['priority' => 100],
+			'tag_tools/tag/content/groups' => ['priority' => 200],
+			'tag_tools/tag/content/users' => ['priority' => 300],
+			'tag_tools/tag/content/related_tags' => ['priority' => 400],
+		],
+	],
+	'view_options' => [
+		'tag_tools/tag/view' => ['ajax' => true],
+		'tag_tools/tagcolors.css' => ['simplecache' => true],
 	],
 	'routes' => [
 		'add:object:tag_tools_rule' => [
@@ -53,13 +74,6 @@ return [
 		'collection:activity:tags' => [
 			'path' => '/activity/tags',
 			'resource' => 'tag_tools/activity',
-			'middleware' => [
-				Gatekeeper::class,
-			],
-		],
-		'collection:tags:autocomplete' => [
-			'path' => '/tags/autocomplete',
-			'resource' => 'tag_tools/autocomplete',
 			'middleware' => [
 				Gatekeeper::class,
 			],
@@ -112,11 +126,6 @@ return [
 		],
 	],
 	'hooks' => [
-		'filter_tabs' => [
-			'activity' => [
-				__NAMESPACE__ . '\MenuItems::registerActivityTab' => [],
-			],
-		],
 		'get' => [
 			'subscriptions' => [
 				__NAMESPACE__ . '\Notifications::getSubscribers' => ['priority' => 9999],
@@ -137,7 +146,12 @@ return [
 			],
 			'menu:page' => [
 				__NAMESPACE__ . '\MenuItems::registerAdminItems' => [],
+			],
+			'menu:filter:settings/notifications' => [
 				__NAMESPACE__ . '\MenuItems::registerSettingsMenuItem' => [],
+			],
+			'menu:filter:filter' => [
+				__NAMESPACE__ . '\MenuItems::registerActivityTab' => [],
 			],
 		],
 		'relationship:url' => [
@@ -169,6 +183,13 @@ return [
 		'update:after' => [
 			'all' => [
 				 __NAMESPACE__ . '\Enqueue::afterEntityUpdate' => [],
+			],
+		],
+	],
+	'notifications' => [
+		'relationship' => [
+			'tag_tools:notification' => [
+				'create' => true,
 			],
 		],
 	],

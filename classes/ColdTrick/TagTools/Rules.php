@@ -25,7 +25,8 @@ class Rules {
 		
 		if (trim($object->value) === '') {
 			// don't save 'empty' strings
-			return false;
+			$object->delete();
+			return;
 		}
 		
 		$self_exists = (int) elgg_get_metadata([
@@ -41,7 +42,8 @@ class Rules {
 		]);
 		if ($self_exists > 1) {
 			// a previous replace already added this tag
-			return false;
+			$object->delete();
+			return;
 		}
 		
 		$entity = $object->getEntity();
@@ -59,7 +61,7 @@ class Rules {
 		switch ($rule->tag_action) {
 			case 'delete':
 				$rule->notify('delete');
-				return false;
+				$object->delete();
 				break;
 			case 'replace':
 				

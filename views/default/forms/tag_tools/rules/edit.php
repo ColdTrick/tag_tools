@@ -63,6 +63,7 @@ if (!$edit || $entity->tag_action !== 'delete') {
 echo elgg_view_field([
 	'#type' => 'checkbox',
 	'#label' => elgg_echo('tag_tools:rules:notify_user'),
+	'switch' => true,
 	'name' => 'notify_user',
 	'checked' => (bool) elgg_extract('notify_user', $vars),
 ]);

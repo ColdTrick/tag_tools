@@ -31,6 +31,7 @@ $content = elgg_list_entities([
 	'sort' => 'time_created',
 	'order' => 'desc',
 ], 'elgg_search');
+
 if (empty($content)) {
 	return;
 }

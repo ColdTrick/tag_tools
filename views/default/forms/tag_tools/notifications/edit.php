@@ -5,7 +5,12 @@ if (!$user instanceof ElggUser) {
 	return;
 }
 
-echo elgg_view_module('info', '', elgg_echo('tag_tools:notifications:description'));
+$methods = elgg_get_notification_methods();
+if (empty($methods)) {
+	return;
+}
+
+echo elgg_view('output/longtext', ['value' => elgg_echo('tag_tools:notifications:description')]);
 
 $notification_methods = elgg_get_notification_methods();
 
@@ -22,80 +27,44 @@ echo elgg_view_field([
 ]);
 
 elgg_require_js('tag_tools/notifications');
+elgg_require_css('notifications/subscriptions/record');
 
-$method_icons = [
-	'email' => 'mail',
-	'site' => 'bell-regular',
-];
-
-echo "<table class='elgg-table-alt tag-tools-notification-methods'>";
-// header with notification methods and delete
-echo '<thead>';
-echo '<tr><th>&nbsp;</th>';
-foreach ($notification_methods as $method) {
-	$method_title = elgg_echo("notification:method:{$method}");
-	
-	$classes = ['center'];
-	$icon = elgg_extract($method, $method_icons);
-	if ($icon) {
-		$icon = elgg_view_icon($icon, ['title' => $method_title]);
-		$classes[] = 'label-with-icon';
-	}
-	$label = elgg_format_element('span', [], $method_title);
-	
-	echo elgg_format_element('th', ['class' => $classes], $icon . $label);
+$method_options = [];
+foreach ($methods as $method) {
+	$label = elgg_echo("notification:method:{$method}");
+	$method_options[$label] = $method;
 }
-echo elgg_format_element('th', ['class' => ['center', 'label-with-icon']], elgg_view_icon('trash-alt-regular') . elgg_format_element('span', [], elgg_echo('delete')));
 
-echo '</tr>';
-echo '</thead>';
+$lis = [];
 
-echo '<tbody>';
-// all tags
 foreach ($tags as $tag) {
 	$encoded_tag = htmlspecialchars($tag, ENT_QUOTES, 'UTF-8', false);
 	
-	echo '<tr>';
-	echo '<td>';
-	echo elgg_view('output/url', [
-		'text' => $tag,
-		'href' => elgg_generate_url('collection:tag', [
-			'tag' => $tag,
-		]),
-	]);
-	echo elgg_view_field([
-		'#type' => 'hidden',
+	$preferred_methods = tag_tools_get_user_tag_notification_settings($tag, $user->guid);
+	
+	$container = elgg_format_element('div', ['class' => 'elgg-subscription-description'], elgg_view_url(elgg_generate_url('collection:tag', ['tag' => $tag]), $tag));
+	$container .= elgg_view_field([
+		'#type' => 'checkboxes',
+		'#class' => 'elgg-subscription-methods',
 		'name' => "tags[{$encoded_tag}]",
-		'value' => '0',
+		'options' => $method_options,
+		'value' => $preferred_methods,
+		'align' => 'horizontal',
 	]);
-	echo '</td>';
 	
-	foreach ($notification_methods as $method) {
-		$checked = tag_tools_check_user_tag_notification_method($encoded_tag, $method, $user->guid);
-		
-		echo elgg_format_element('td', ['class' => 'center'], elgg_view("input/checkbox", [
-			'name' => "tags[{$encoded_tag}][]",
-			'checked' => $checked,
-			'value' => $method,
-			'default' => false,
-		]));
-	}
-	
-	echo elgg_format_element('td', ['class' => 'center'], elgg_view('output/url', [
-		'icon' => 'delete',
-		'text' => false,
+	$container .= elgg_view('output/url', [
 		'href' => elgg_generate_action_url('tag_tools/follow_tag', [
 			'tag' => $tag,
 		]),
-		'class' => 'tag-tools-unfollow-tag',
-		'is_action' => true,
-	]));
+		'text' => false,
+		'icon' => 'delete',
+	]);
 	
-	echo '</tr>';
+	$item = elgg_format_element('div', ['class' => 'elgg-subscription-container'], $container);
+	$lis[] = elgg_format_element('li', ['class' => 'elgg-item elgg-subscription-record'], $item);
 }
 
-echo '</tbody>';
-echo '</table>';
+echo elgg_format_element('ul', ['class' => 'elgg-list elgg-subscriptions'], implode($lis));
 
 $foot = elgg_view('input/submit', [
 	'value' => elgg_echo('save'),
