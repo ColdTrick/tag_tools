@@ -1,7 +1,7 @@
 <?php
 /**
- * This file was created by Translation Editor v7.0.4
- * On 2020-04-01 16:29
+ * This file was created by Translation Editor v8.0
+ * On 2021-07-05 14:16
  */
 
 return array (
@@ -10,8 +10,6 @@ return array (
   'tag_tools:admin:followers:created_until' => 'Volger tot',
   'tag_tools:settings:transform_hashtag' => 'Vervang #tags in de tekst met een link naar de tag pagina',
   'tag_tools:settings:transform_hashtag:help' => 'Vervang hashtags in de tekst met een link naar de tag pagina van de hashtag',
-  'tag_tools:settings:activity_tab' => 'Voeg een tab toe aan de activiteiten pagina',
-  'tag_tools:settings:activity_tab:help' => 'Deze tab toont de activiteit van content met de tags die je volgt',
   'tag_tools:suggest:ignore' => 'Suggestie negeren',
   'tag_tools:follow_tag:menu:on:text' => 'Tag volgen',
   'tag_tools:follow_tag:menu:off:text' => 'Tag niet meer volgen',
@@ -58,8 +56,8 @@ return array (
   'tag_tools:rules:tag_action:delete' => 'Verwijder',
   'tag_tools:rules:save_execute' => 'Opslaan & uitvoeren',
   'tag_tools:rules:execute' => 'Uitvoeren',
-  'tag_tools:notification:follow:update:subject' => 'Content met de tag(s): %s, is bijgewerkt',
-  'tag_tools:notification:follow:update:summary' => 'Content met de tag(s): %s, is bijgewerkt',
+  'tag_tools:notification:follow:update:subject' => 'Content met de tag(s): %s is bijgewerkt',
+  'tag_tools:notification:follow:update:summary' => 'Content met de tag(s): %s is bijgewerkt',
   'tag_tools:notification:follow:update:message' => 'Hallo,
 
 een content item met de tag(s): %s, is bijgewerkt.
@@ -82,7 +80,6 @@ Bekijk het hier: %s',
 er is nieuwe content met de tag(s): %s.
 
 Bekijk het hier: %s',
-  'tag_tools:activity:tags' => 'Activiteit gebaseerd op tags die je volgt',
   'widgets:follow_tags:name' => 'Gevolgde tags',
   'widgets:follow_tags:description' => 'Toont de tags die je volgt',
   'widgets:follow_tags:empty' => 'Deze gebruiker volgt op dit moment geen tags',

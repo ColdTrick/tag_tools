@@ -1,8 +1,10 @@
 <?php
+/**
+ * This file was created by Translation Editor v8.0
+ * On 2021-07-05 14:17
+ */
 
 return array (
-  'tag_tools:settings:activity_tab' => 'Ajouter un onglet à la page d\'activité',
-  'tag_tools:settings:activity_tab:help' => 'Cet onglet affichera l\'activité des contenus publiés avec les tags que vous suivez',
   'tag_tools:suggest:ignore' => 'Ignorer la suggestion',
   'tag_tools:rule:notify:replace' => 'Le tag \'%s\' a été remplacé par \'%s\'',
   'tag_tools:rule:notify:delete' => 'Le tag \'%s\' a été supprimé',
@@ -35,15 +37,11 @@ return array (
   'tag_tools:notifications:empty' => 'Vous ne suivez aucun centre d’intérêt. Si vous voyez un centre d’intérêt que vous voulez suivre, cliquez sur le picto à coté de celui-ci.',
   'widgets:follow_tags:name' => 'Tags suivis',
   'widgets:follow_tags:description' => 'Indique les tags que vous suivez',
-  'tag_tools:notification:follow:update:message' => 'Bonjour,
-
-Une nouvelle publication à été publiée contenant le tag : %s.
+  'tag_tools:notification:follow:update:message' => 'Une nouvelle publication à été publiée contenant le tag : %s.
 Vous pouvez la consulter ici : %s
 
 Bonne lecture et à bientôt sur Parcours Croisés',
-  'tag_tools:notification:follow:message' => 'Bonjour,
-
-Un nouveau contenu a été publié avec le(s) tag(s): %s.
+  'tag_tools:notification:follow:message' => 'Un nouveau contenu a été publié avec le(s) tag(s): %s.
 
 Vous pouvez le consulter ici : %s',
   'tag_tools:notification:follow:subject' => 'Nouveau contenu avec le(s) tag(s): %s',
@@ -72,7 +70,6 @@ Vous pouvez le consulter ici : %s',
   'tag_tools:rules:execute' => 'Executer',
   'tag_tools:notification:follow:update:subject' => 'Contenu mise à jour avec le(s) tag(s): %s',
   'tag_tools:notification:follow:update:summary' => 'Contenu mise à jour avec le(s) tag(s): %s',
-  'tag_tools:activity:tags' => 'Activité basée sur vos tags',
   'widgets:follow_tags:empty' => 'Cet utilisateur ne suit plus actuellement ce tag',
   'widgets:tagcloud:description' => 'Affiche un nuage de cloud basé sur tous le contenu du site, dans le groupe ou relatif à un utilisateur',
   'widgets:tagcloud:no_data' => 'Aucune donnée disponible pour afficher le nuage de tag',

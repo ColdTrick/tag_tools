@@ -12,6 +12,5 @@ Offers enhancements/tools for tags
 
 - adds option to follow tags
  - content created with the tag sends notification to follower
- - adds a activity tab filtering the content to content related to tags you follow
  - tag follow configuration can be found at the notifications settings page
 - adds an improved version of the tagcloud widget

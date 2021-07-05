@@ -35,7 +35,6 @@ return [
 		],
 	],
 	'settings' => [
-		'activity_tab' => 1,
 		'transform_hashtag' => 1,
 	],
 	'view_extensions' => [
@@ -69,13 +68,6 @@ return [
 			'resource' => 'tag_tools/rules/edit',
 			'middleware' => [
 				AdminGatekeeper::class,
-			],
-		],
-		'collection:activity:tags' => [
-			'path' => '/activity/tags',
-			'resource' => 'tag_tools/activity',
-			'middleware' => [
-				Gatekeeper::class,
 			],
 		],
 		'settings:notification:tags' => [
@@ -149,9 +141,6 @@ return [
 			],
 			'menu:filter:settings/notifications' => [
 				__NAMESPACE__ . '\MenuItems::registerSettingsMenuItem' => [],
-			],
-			'menu:filter:filter' => [
-				__NAMESPACE__ . '\MenuItems::registerActivityTab' => [],
 			],
 		],
 		'relationship:url' => [

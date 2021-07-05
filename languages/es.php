@@ -1,7 +1,7 @@
 <?php
 /**
- * This file was created by Translation Editor v7.0-beta
- * On 2018-12-14 16:36
+ * This file was created by Translation Editor v8.0
+ * On 2021-07-05 14:17
  */
 
 return array (
@@ -12,10 +12,7 @@ return array (
   'tag_tools:notifications:empty' => 'Actualmente no recibes notificaciones de ninguna etiqueta. Si ves una etiqueta sobre la cual quieres recibir notificaciones, clickea en
 el icono al lado de ella.',
   'tag_tools:notification:follow:subject' => 'Hay un nuevo contenido con la etiqueta: %s',
-  'tag_tools:notification:follow:message' => 'Hola,
-
-hay un nuevo contenido etiquetado con %s. Puedes verlo en este enlace: %s',
-  'tag_tools:activity:tags' => 'Actividad relacionada a tus etiquetas',
+  'tag_tools:notification:follow:message' => 'Hay un nuevo contenido etiquetado con %s. Puedes verlo en este enlace: %s',
   'widgets:follow_tags:name' => 'Notificiones de etiquetas',
   'widgets:follow_tags:description' => 'Muestra las etiquetas sobre las cuales se notifica',
   'widgets:follow_tags:empty' => 'Este usuario no recibe notificaciones de etiquetas',

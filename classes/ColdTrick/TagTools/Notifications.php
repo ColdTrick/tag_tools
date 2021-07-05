@@ -87,6 +87,10 @@ class Notifications {
 		/* @var $user \ElggUser */
 		foreach ($users_batch as $user) {
 			
+			if ($entity->owner_guid === $user->guid) {
+				continue;
+			}
+			
 			// check user access
 			if (!$validate_access($user)) {
 				continue;

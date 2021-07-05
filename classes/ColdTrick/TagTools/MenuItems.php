@@ -36,41 +36,6 @@ class MenuItems {
 	}
 	
 	/**
-	 * Add a menu item to the filter menu
-	 *
-	 * @param \Elgg\Hook $hook 'filter_tabs', 'activity'
-	 *
-	 * @return void|\ElggMenuItem[]
-	 */
-	public static function registerActivityTab(\Elgg\Hook $hook) {
-		if (!elgg_is_logged_in() || !elgg_in_context('activity')) {
-			return;
-		}
-		
-		if (!elgg_get_plugin_setting('activity_tab', 'tag_tools')) {
-			return;
-		}
-		
-		$tags = tag_tools_get_user_following_tags();
-		if (empty($tags)) {
-			return;
-		}
-		
-		$selected = $hook->getParam('selected');
-		$result = $hook->getValue();
-		
-		$result[] = \ElggMenuItem::factory([
-			'name' => 'tags',
-			'text' => elgg_echo('tags'),
-			'href' => elgg_generate_url('collection:activity:tags'),
-			'selected' => $selected === 'tags',
-			'priority' => 9999,
-		]);
-		
-		return $result;
-	}
-	
-	/**
 	 * Add a menu item to the title menu of a tag page
 	 *
 	 * @param \Elgg\Hook $hook 'register', 'menu:title'

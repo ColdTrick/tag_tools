@@ -9,8 +9,6 @@ return [
 	
 	'item:object:tag_tools_rule' => "Tag Tools rule",
 	
-	'tag_tools:settings:activity_tab' => "Add a tab to the activity page",
-	'tag_tools:settings:activity_tab:help' => "This tab will show activity on content with the tags you follow",
 	'tag_tools:settings:transform_hashtag' => "Replace #tag in text with a link to the tag page",
 	'tag_tools:settings:transform_hashtag:help' => "Replace hashtags in texts with a link to the tag page of that tag",
 	
@@ -57,19 +55,14 @@ return [
 	'tag_tools:notifications:empty' => "You currently follow no tags. If you see a tag you would like to follow. Click the follow tag icon next to the tag.",
 	'tag_tools:notification:follow:subject' => "New content with the tag(s): %s",
 	'tag_tools:notification:follow:summary' => "New content with the tag(s): %s",
-	'tag_tools:notification:follow:message' => "Hi,
-
-there is new content with the tag(s): %s.
+	'tag_tools:notification:follow:message' => "There is new content with the tag(s): %s.
 
 You can see it here: %s",
 	'tag_tools:notification:follow:update:subject' => "Updated content with the tag(s): %s",
 	'tag_tools:notification:follow:update:summary' => "Updated content with the tag(s): %s",
-	'tag_tools:notification:follow:update:message' => "Hi,
-
-a content item was updated with the tag(s): %s.
+	'tag_tools:notification:follow:update:message' => "A content item was updated with the tag(s): %s.
 
 You can see it here: %s",
-	'tag_tools:activity:tags' => "Activity based on your tags",
 	'widgets:follow_tags:name' => "Following tags",
 	'widgets:follow_tags:description' => "Shows the tags that are being followed",
 	'widgets:follow_tags:empty' => "This user is currently not following a tag",
