@@ -11,7 +11,9 @@ if (elgg_is_empty($tag)) {
 $definition = TagDefinition::find($tag);
 if ($definition instanceof TagDefinition) {
 	// a definition already exists, so go edit that one
-	forward(elgg_generate_entity_url($definition, 'edit'));
+	$exception = new BadRequestException(elgg_echo('tag_tools:tag_definition:exists'));
+	$exception->setRedirectUrl(elgg_generate_entity_url($definition, 'edit'));
+	throw $exception;
 }
 
 $title = elgg_echo('tag_tools:tag_definition:add:title', [$tag]);

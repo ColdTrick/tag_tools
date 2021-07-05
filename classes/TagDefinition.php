@@ -109,7 +109,7 @@ class TagDefinition extends ElggObject {
 			throw new EntityNotFoundException();
 		}
 		
-		forward(elgg_generate_url('collection:tag', [
+		return elgg_redirect_response(elgg_generate_url('collection:tag', [
 			'tag' => $entity->title,
 		]));
 	}

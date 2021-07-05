@@ -85,6 +85,7 @@ You can see it here: %s",
 	
 	// tag definitions
 	'tag_tools:tag_definition:manage' => "Manage tag",
+	'tag_tools:tag_definition:exists' => "Definition already exists. Forwarding to edit page.",
 	
 	// add
 	'tag_tools:tag_definition:add:title' => "Create a new Tag page",
