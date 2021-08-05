@@ -178,7 +178,7 @@ return [
 	'notifications' => [
 		'relationship' => [
 			'tag_tools:notification' => [
-				'create' => true,
+				'create' => \ColdTrick\TagTools\Notifications\CreateNotificationRelationshipEventHandler::class,
 			],
 		],
 	],
