@@ -7,6 +7,7 @@ return [
 	'admin:tags:rules' => "Rules",
 	'admin:tags:followers' => "Followers",
 	
+	'item:object:tag_definition' => "Tag definition",
 	'item:object:tag_tools_rule' => "Tag Tools rule",
 	
 	'tag_tools:settings:transform_hashtag' => "Replace #tag in text with a link to the tag page",
