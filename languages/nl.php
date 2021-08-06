@@ -1,10 +1,12 @@
 <?php
 /**
  * This file was created by Translation Editor v8.0
- * On 2021-07-05 14:16
+ * On 2021-08-06 10:17
  */
 
 return array (
+  'item:object:tag_definition' => 'Tag definitie',
+  'tag_tools:tag_definition:exists' => 'Definitie bestaat al. Je wordt doorgestuurd naar de pagina om de definitie te bewerken.',
   'admin:tags:followers' => 'Volgers',
   'tag_tools:admin:followers:created_since' => 'Volger sinds',
   'tag_tools:admin:followers:created_until' => 'Volger tot',
