@@ -1,6 +1,6 @@
 <?php
 
-$tags = array_filter(get_input('tags'));
+$tags = get_input('tags');
 $user_guid = (int) get_input('user_guid');
 
 if (empty($user_guid)) {
