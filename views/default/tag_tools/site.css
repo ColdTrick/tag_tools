@@ -33,26 +33,3 @@
 	grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
 	grid-gap: 0rem 3rem;
 }
-
-.tag-tools-notification-methods {
-	.label-with-icon {
-		> .elgg-icon {
-			padding-right: .5rem;
-		}
-	}
-}
-
-@media $(media-mobile-only) {
-	.tag-tools-notification-methods {
-		.label-with-icon {
-			> * {
-				display: none;
-			}
-			
-			> .elgg-icon {
-				display: inline-block;
-				padding-right: unset;
-			}
-		}
-	}
-}
