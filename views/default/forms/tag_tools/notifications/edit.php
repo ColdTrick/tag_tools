@@ -57,6 +57,7 @@ foreach ($tags as $tag) {
 			'tag' => $tag,
 		]),
 		'text' => false,
+		'title' => elgg_echo('tag_tools:follow_tag:menu:off'),
 		'icon' => 'delete',
 	]);
 	
