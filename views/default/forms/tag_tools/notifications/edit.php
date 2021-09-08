@@ -27,6 +27,7 @@ echo elgg_view_field([
 ]);
 
 elgg_require_js('tag_tools/notifications');
+elgg_require_js('notifications/subscriptions/record');
 elgg_require_css('notifications/subscriptions/record');
 
 $method_options = [];
