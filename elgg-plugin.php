@@ -36,6 +36,7 @@ return [
 	],
 	'settings' => [
 		'transform_hashtag' => 1,
+		'whitelist' => 1,
 	],
 	'view_extensions' => [
 		'elgg.css' => [
@@ -118,6 +119,11 @@ return [
 		],
 	],
 	'hooks' => [
+		'cron' => [
+			'daily' => [
+				__NAMESPACE__ . '\Views::resetTagsWhitelist' => [],
+			],
+		],
 		'get' => [
 			'subscriptions' => [
 				__NAMESPACE__ . '\Notifications::getSubscribers' => ['priority' => 9999],
@@ -154,6 +160,9 @@ return [
 			],
 		],
 		'view_vars' => [
+			'input/tags' => [
+				__NAMESPACE__ . '\Views::setInputTagsWhitelist' => [],
+			],
 			'output/tag' => [
 				__NAMESPACE__ . '\Views::setOutputTagVars' => [],
 			],

@@ -33,3 +33,30 @@
 	grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
 	grid-gap: 0rem 3rem;
 }
+
+.tags-look {
+	.tagify__dropdown__wrapper {
+		border-color: $(border-color-mild);
+	}
+	
+	.tagify__dropdown__item {
+		display: inline-block;
+		border-radius: 3px;
+		padding: .3em .5em;
+		border: 1px solid $(border-color-mild);
+		background: #F3F3F3;
+		margin: .2em;
+		font-size: .85em;
+		color: black;
+		transition: 0s;
+		
+		&:hover {
+			background: $(state-notice-background-color);
+			border-color: $(state-notice-border-color);
+		}
+	}
+	
+	.tagify__dropdown__item--active{
+		color: black;
+	}
+}

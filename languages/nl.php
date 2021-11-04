@@ -1,10 +1,12 @@
 <?php
 /**
  * This file was created by Translation Editor v8.0
- * On 2021-08-06 10:17
+ * On 2021-11-04 15:02
  */
 
 return array (
+  'tag_tools:settings:whitelist' => 'Tags whitelist activeren',
+  'tag_tools:settings:whitelist:help' => 'Toont een lijst van veelgebruikte tags tijdens het invoeren van nieuwe tags',
   'item:object:tag_definition' => 'Tag definitie',
   'tag_tools:tag_definition:exists' => 'Definitie bestaat al. Je wordt doorgestuurd naar de pagina om de definitie te bewerken.',
   'admin:tags:followers' => 'Volgers',
