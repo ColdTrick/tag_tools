@@ -12,6 +12,9 @@ return [
 	
 	'tag_tools:settings:transform_hashtag' => "Replace #tag in text with a link to the tag page",
 	'tag_tools:settings:transform_hashtag:help' => "Replace hashtags in texts with a link to the tag page of that tag",
+
+	'tag_tools:settings:whitelist' => "Enable tags whitelist",
+	'tag_tools:settings:whitelist:help' => "Shows a list of frequently used tags when entering new tags",
 	
 	'tag_tools:suggest:ignore' => "Ignore suggestion",
 	

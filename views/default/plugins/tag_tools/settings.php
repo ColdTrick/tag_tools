@@ -12,3 +12,13 @@ echo elgg_view_field([
 	'checked' => (bool) $plugin->transform_hashtag,
 	'switch' => true,
 ]);
+
+echo elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('tag_tools:settings:whitelist'),
+	'#help' => elgg_echo('tag_tools:settings:whitelist:help'),
+	'name' => 'params[whitelist]',
+	'value' => 1,
+	'checked' => (bool) $plugin->whitelist,
+	'switch' => true,
+]);
