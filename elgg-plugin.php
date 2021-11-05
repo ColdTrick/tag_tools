@@ -5,11 +5,6 @@ namespace ColdTrick\TagTools;
 use Elgg\Router\Middleware\AdminGatekeeper;
 use Elgg\Router\Middleware\Gatekeeper;
 
-$composer_path = '';
-if (is_dir(__DIR__ . '/vendor')) {
-	$composer_path = __DIR__ . '/';
-}
-
 require_once(dirname(__FILE__) . '/lib/functions.php');
 
 return [
