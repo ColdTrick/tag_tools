@@ -15,7 +15,7 @@ $tag = strtolower($tag);
 // fix for elasticsearch
 set_input('sort', 'time_created');
 
-$types = get_registered_entity_types();
+$types = elgg_entity_types_with_capability('searchable');
 $comments_index = array_search('comment', $types['object']);
 if ($comments_index !== false) {
 	unset($types['object'][$comments_index]);

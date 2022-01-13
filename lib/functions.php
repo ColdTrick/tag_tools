@@ -337,7 +337,7 @@ function tag_tools_get_notification_type_subtypes() {
 	
 	if (!isset($result)) {
 		// default to registered (searchable) entities
-		$result = get_registered_entity_types();
+		$result = elgg_entity_types_with_capability('searchable');
 		
 		// remove users from tag notifications
 		unset($result['user']);
@@ -446,7 +446,7 @@ function tag_tools_rules_get_type_subtypes(): array {
 	
 	$result = [];
 	
-	$entity_types = get_registered_entity_types();
+	$entity_types = elgg_entity_types_with_capability('searchable');
 	if (!empty($entity_types)) {
 		foreach ($entity_types as $type => $subtypes) {
 			if (empty($subtypes) || !is_array($subtypes)) {
@@ -458,7 +458,9 @@ function tag_tools_rules_get_type_subtypes(): array {
 		}
 	}
 	
-	return elgg_trigger_plugin_hook('rules_type_subtypes', 'tag_tools', $result, $result);
+	$result = elgg_trigger_plugin_hook('rules_type_subtypes', 'tag_tools', $result, $result);
+	
+	return $result;
 }
 
 /**

@@ -22,11 +22,17 @@ return [
 			'type' => 'object',
 			'subtype' => 'tag_tools_rule',
 			'class' => \TagToolsRule::class,
+			'capabilities' => [
+				'commentable' => false,
+			],
 		],
 		[
 			'type' => 'object',
 			'subtype' => 'tag_definition',
 			'class' => \TagDefinition::class,
+			'capabilities' => [
+				'commentable' => false,
+			],
 		],
 	],
 	'settings' => [

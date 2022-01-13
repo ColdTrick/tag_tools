@@ -21,7 +21,7 @@ $tag = strtolower($tag);
 $tag_names = tag_tools_rules_get_tag_names();
 
 $entity_where = EntityWhereClause::factory(new QueryOptions([
-	'type_subtype_pairs' => get_registered_entity_types(),
+	'type_subtype_pairs' => elgg_entity_types_with_capability('searchable'),
 ]));
 $access_where = new AccessWhereClause();
 $access_where->use_enabled_clause = false;
