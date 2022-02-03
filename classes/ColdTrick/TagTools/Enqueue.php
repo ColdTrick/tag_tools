@@ -15,6 +15,11 @@ class Enqueue {
 	 * @return void
 	 */
 	public static function createMetadata(\Elgg\Event $event) {
+		if (elgg_get_config('testing_mode')) {
+			// @todo when the database bug is resolved this can be re-enabled
+			return;
+		}
+		
 		$metadata = $event->getObject();
 		if (!$metadata instanceof \ElggMetadata) {
 			return;
@@ -40,6 +45,11 @@ class Enqueue {
 	 * @return void
 	 */
 	public static function afterEntityUpdate(\Elgg\Event $event) {
+		if (elgg_get_config('testing_mode')) {
+			// @todo when the database bug is resolved this can be re-enabled
+			return;
+		}
+		
 		$entity = $event->getObject();
 		if (!$entity instanceof \ElggEntity) {
 			// not an entity, since we listen to 'all'
