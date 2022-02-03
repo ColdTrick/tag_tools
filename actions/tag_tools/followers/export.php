@@ -2,6 +2,11 @@
 
 use Elgg\Database\Select;
 
+if (\Elgg\Application::isCli()) {
+	// this is in case of PHPUnit action integration tests
+	return elgg_error_response();
+}
+
 $created_since = get_input('created_since');
 $created_until = get_input('created_until');
 $order = get_input('order', 'popular');

@@ -1,7 +1,7 @@
 <?php
 
 $from_tag = get_input('from_tag');
-$ignores = get_input('ignores');
+$ignores = (array) get_input('ignores', []);
 
 $ignore_config = elgg_get_plugin_setting('ignored_suggestions', 'tag_tools');
 
