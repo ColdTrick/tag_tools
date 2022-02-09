@@ -4,6 +4,7 @@ namespace ColdTrick\TagTools;
 
 use Elgg\Router\Middleware\AdminGatekeeper;
 use Elgg\Router\Middleware\Gatekeeper;
+use Elgg\Router\Middleware\PageOwnerCanEditGatekeeper;
 
 require_once(dirname(__FILE__) . '/lib/functions.php');
 
@@ -73,11 +74,13 @@ return [
 			],
 		],
 		'settings:notification:tags' => [
-			'path' => '/notifications/tag/{username?}',
+			'path' => '/notifications/tag/{username}',
 			'resource' => 'tag_tools/notifications',
 			'middleware' => [
 				Gatekeeper::class,
+				PageOwnerCanEditGatekeeper::class,
 			],
+			'detect_page_owner' => true,
 		],
 		'collection:tag' => [
 			'path' => 'tag/{tag}',

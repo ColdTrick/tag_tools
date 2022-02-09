@@ -1,11 +1,6 @@
 <?php
 
-use Elgg\Exceptions\Http\EntityPermissionsException;
-
 $user = elgg_get_page_owner_entity();
-if (!$user instanceof ElggUser || !$user->canEdit()) {
-	throw new EntityPermissionsException();
-}
 
 // Set the context to settings
 elgg_set_context('settings');
