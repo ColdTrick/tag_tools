@@ -16,6 +16,10 @@ return [
 	'tag_tools:settings:whitelist' => "Enable tags whitelist",
 	'tag_tools:settings:whitelist:help' => "Shows a list of frequently used tags when entering new tags",
 	
+	'tag_tools:settings:separate_notifications' => "How to send out tag notifications",
+	'tag_tools:settings:separate_notifications:enabled' => "Send a separate notification for the tag notifications",
+	'tag_tools:settings:separate_notifications:disabled' => "Extend the content create notification to include the tag subscribers",
+	
 	'tag_tools:suggest:ignore' => "Ignore suggestion",
 	
 	'tag_tools:admin:tags:suggest:info' => "The list below shows suggestions for autocorrection rules.",
@@ -67,6 +71,9 @@ You can see it here: %s",
 	'tag_tools:notification:follow:update:message' => "A content item was updated with the tag(s): %s.
 
 You can see it here: %s",
+	
+	'tag_tools:notification:extended:content_tags' => "The content contains tags you follow: %s",
+	
 	'widgets:follow_tags:name' => "Following tags",
 	'widgets:follow_tags:description' => "Shows the tags that are being followed",
 	'widgets:follow_tags:empty' => "This user is currently not following a tag",

@@ -22,3 +22,14 @@ echo elgg_view_field([
 	'checked' => (bool) $plugin->whitelist,
 	'switch' => true,
 ]);
+
+echo elgg_view_field([
+	'#type' => 'radio',
+	'#label' => elgg_echo('tag_tools:settings:separate_notifications'),
+	'name' => 'params[separate_notifications]',
+	'options_values' => [
+		1 => elgg_echo('tag_tools:settings:separate_notifications:enabled'),
+		0 => elgg_echo('tag_tools:settings:separate_notifications:disabled'),
+	],
+	'value' => $plugin->separate_notifications,
+]);

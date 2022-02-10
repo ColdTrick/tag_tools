@@ -20,11 +20,6 @@ class CreateNotificationRelationshipEventHandler extends NotificationEventHandle
 	protected $unsent_tags;
 	
 	/**
-	 * @var int[]|false
-	 */
-	protected $acl_members;
-	
-	/**
 	 * {@inheritDoc}
 	 */
 	public static function isConfigurableByUser(): bool {
@@ -93,7 +88,7 @@ class CreateNotificationRelationshipEventHandler extends NotificationEventHandle
 			}
 			
 			// check user access
-			if (!$this->validateEntityAccess($user)) {
+			if (!tag_tools_validate_entity_access($entity, $user)) {
 				continue;
 			}
 			
@@ -152,28 +147,9 @@ class CreateNotificationRelationshipEventHandler extends NotificationEventHandle
 			return $this->unsent_tags;
 		}
 		
-		$this->unsent_tags = [];
-		
 		$entity = $this->getNotificationEntity();
-		$entity_tags = $entity->tags;
 		
-		// Cannot use empty() because it would evaluate
-		// the string "0" as an empty value.
-		if (is_null($entity_tags)) {
-			// shouldn't happen
-			return [];
-		} elseif (!is_array($entity_tags)) {
-			$entity_tags = [$entity_tags];
-		}
-		
-		$sent_tags = $entity->getPrivateSetting('tag_tools:sent_tags');
-		if (!empty($sent_tags)) {
-			$sent_tags = json_decode($sent_tags, true);
-		} else {
-			$sent_tags = [];
-		}
-		
-		$this->unsent_tags = array_diff($entity_tags, $sent_tags);
+		$this->unsent_tags = tag_tools_get_unsent_notification_tags($entity);
 		return $this->unsent_tags;
 	}
 	
@@ -244,58 +220,7 @@ class CreateNotificationRelationshipEventHandler extends NotificationEventHandle
 	 */
 	protected function getUnsentTagsForRecipient(\ElggUser $recipient, string $method): array {
 		$unsent_tags = $this->getUnsentTagsForEntity();
-		$result = [];
 		
-		foreach ($unsent_tags as $tag) {
-			if (!tag_tools_is_user_following_tag($tag, $recipient->guid)) {
-				// user is not following this tag
-				continue;
-			}
-			
-			if (!tag_tools_check_user_tag_notification_method($tag, $method, $recipient->guid)) {
-				// user is not following this tag by the current method
-				continue;
-			}
-			
-			$result[] = $tag;
-		}
-		
-		return $result;
-	}
-	
-	/**
-	 * Validate that the user has access to the notification entity
-	 *
-	 * @param \ElggUser $user the user to check
-	 *
-	 * @return bool
-	 */
-	protected function validateEntityAccess(\ElggUser $user): bool {
-		$entity = $this->getNotificationEntity();
-		if ($entity->access_id === ACCESS_PRIVATE) {
-			return false;
-		}
-		
-		if (!has_access_to_entity($entity, $user)) {
-			return false;
-		}
-		
-		// this is needed for admins, since they have access to everything we need to check if
-		// the content was shared with an acl (mostly groups) which they are a member of
-		if (!isset($this->acl_members)) {
-			$this->acl_members = false;
-			
-			if (get_access_collection($entity->access_id) !== false) {
-				// this is an acl
-				$this->acl_members = get_members_of_access_collection($entity->access_id, true);
-			}
-		}
-		
-		if ($this->acl_members === false) {
-			// not an acl
-			return true;
-		}
-		
-		return in_array($user->guid, $this->acl_members);
+		return tag_tools_get_unsent_notification_tags_for_recipient($unsent_tags, $recipient, $method);
 	}
 }

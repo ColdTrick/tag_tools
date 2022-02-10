@@ -546,3 +546,103 @@ function tag_tools_get_tag_stats(string $tag) {
 	
 	return $result;
 }
+
+/**
+ * Get the unsent tags
+ *
+ * @param \ElggEntity $entity the entity to check
+ *
+ * @return string[]
+ * @internal
+ */
+function tag_tools_get_unsent_notification_tags(\ElggEntity $entity): array {
+	$entity_tags = $entity->tags;
+	
+	// Cannot use empty() because it would evaluate
+	// the string "0" as an empty value.
+	if (is_null($entity_tags)) {
+		// shouldn't happen
+		return [];
+	} elseif (!is_array($entity_tags)) {
+		$entity_tags = [$entity_tags];
+	}
+	
+	$sent_tags = $entity->getPrivateSetting('tag_tools:sent_tags');
+	if (!empty($sent_tags)) {
+		$sent_tags = json_decode($sent_tags, true);
+	} else {
+		$sent_tags = [];
+	}
+	
+	return array_diff($entity_tags, $sent_tags);
+}
+
+/**
+ * Filter the unsent tags to the specific tags of the recipient
+ *
+ * @param array     $all_unsent_tags all unsent tags
+ * @param \ElggUser $recipient       the recipient of the notification
+ * @param string    $method          the notification method
+ *
+ * @return array
+ * @internal
+ */
+function tag_tools_get_unsent_notification_tags_for_recipient(array $all_unsent_tags, \ElggUser $recipient, string $method): array {
+	$result = [];
+	
+	foreach ($all_unsent_tags as $tag) {
+		if (!tag_tools_is_user_following_tag($tag, $recipient->guid)) {
+			// user is not following this tag
+			continue;
+		}
+		
+		if (!tag_tools_check_user_tag_notification_method($tag, $method, $recipient->guid)) {
+			// user is not following this tag by the current method
+			continue;
+		}
+		
+		$result[] = $tag;
+	}
+	
+	return $result;
+}
+
+/**
+ * Validate access to a entity
+ *
+ * @param \ElggEntity $entity the entity to check
+ * @param \ElggUser   $user   the user to check for
+ *
+ * @return bool
+ * @internal
+ */
+function tag_tools_validate_entity_access(\ElggEntity $entity, \ElggUser $user): bool {
+	static $acl_members = [];
+	
+	if ($entity->access_id === ACCESS_PRIVATE) {
+		return false;
+	}
+	
+	if (!has_access_to_entity($entity, $user)) {
+		return false;
+	}
+	
+	// this is needed for admins, since they have access to everything we need to check if
+	// the content was shared with an acl (mostly groups) which they are a member of
+	if (!isset($acl_members[$entity->guid])) {
+		$acl_members = []; // reset cache
+		$acl_members[$entity->guid] = false;
+		
+		if (get_access_collection($entity->access_id) !== false) {
+			// this is an acl
+			$acl_members[$entity->guid] = get_members_of_access_collection($entity->access_id, true);
+		}
+	}
+	
+	if ($acl_members[$entity->guid] === false) {
+		// not an acl
+		return true;
+	}
+	
+	return in_array($user->guid, $acl_members[$entity->guid]);
+}

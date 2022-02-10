@@ -14,3 +14,14 @@ Offers enhancements/tools for tags
  - content created with the tag sends notification to follower
  - tag follow configuration can be found at the notifications settings page
 - adds an improved version of the tagcloud widget
+
+## Notifications
+
+The tag notifications can be send out using one of the following methods:
+
+- (default) as a separate notification with only information about the tag.
+- as an extension on the existing create notification. The tag followers will be added to the subscribers and the content
+  of the notification will be appended with some text to indicate the recipient received this notification because of the 
+  tags he/she followed.
+
+Which method is used can be configured in the plugin settings.

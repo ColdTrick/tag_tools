@@ -39,6 +39,7 @@ return [
 	'settings' => [
 		'transform_hashtag' => 1,
 		'whitelist' => 1,
+		'separate_notifications' => 1,
 	],
 	'view_extensions' => [
 		'elgg.css' => [
@@ -128,9 +129,17 @@ return [
 				__NAMESPACE__ . '\Views::resetTagsWhitelist' => [],
 			],
 		],
+		'get' => [
+			'subscribers' => [
+				__NAMESPACE__ . '\Notifications\ExtendedContentNotification::extendNotificationBody' => [],
+			],
+		],
 		'prepare' => [
 			'html' => [
 				__NAMESPACE__ . '\HtmlFormatter::replaceHashTags' => [],
+			],
+			'notification' => [
+				__NAMESPACE__ . '\Notifications\ExtendedContentNotification::extendNotificationBody' => ['priority' => 999],
 			],
 		],
 		'register' => [

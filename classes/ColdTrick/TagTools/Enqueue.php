@@ -128,6 +128,11 @@ class Enqueue {
 		// cache plugin
 		self::cachePlugin();
 		
+		if (!(bool) self::$plugin->getSetting('separate_notifications')) {
+			// no separate tag notifications
+			return;
+		}
+		
 		if (check_entity_relationship(self::$plugin->guid, 'tag_tools:notification', $entity_guid)) {
 			// already queued
 			return;
