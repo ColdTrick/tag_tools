@@ -128,17 +128,9 @@ return [
 				__NAMESPACE__ . '\Views::resetTagsWhitelist' => [],
 			],
 		],
-		'get' => [
-			'subscriptions' => [
-				__NAMESPACE__ . '\Notifications::getSubscribers' => ['priority' => 9999],
-			],
-		],
 		'prepare' => [
 			'html' => [
 				__NAMESPACE__ . '\HtmlFormatter::replaceHashTags' => [],
-			],
-			'notification:create:relationship:tag_tools:notification' => [
-				__NAMESPACE__ . '\Notifications::prepareMessage' => [],
 			],
 		],
 		'register' => [
@@ -153,14 +145,9 @@ return [
 				__NAMESPACE__ . '\MenuItems::registerSettingsMenuItem' => [],
 			],
 		],
-		'relationship:url' => [
-			'relationship' => [
-				__NAMESPACE__ . '\Notifications::getNotificationURL' => [],
-			],
-		],
 		'send:after' => [
 			'notifications' => [
-				__NAMESPACE__ . '\Notifications::afterCleanup' => [],
+				__NAMESPACE__ . '\Notifications\CreateNotificationRelationshipEventHandler::afterCleanup' => [],
 			],
 		],
 		'view_vars' => [
