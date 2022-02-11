@@ -1,10 +1,14 @@
 <?php
 /**
- * This file was created by Translation Editor v8.0
- * On 2021-11-04 15:02
+ * This file was created by Translation Editor v9.0
+ * On 2022-02-11 09:17
  */
 
 return array (
+  'tag_tools:settings:separate_notifications' => 'Hoe moeten tag notificaties worden verzonden',
+  'tag_tools:settings:separate_notifications:enabled' => 'Verstuur een aparte notificatie voor de tag notificaties',
+  'tag_tools:settings:separate_notifications:disabled' => 'Breidt de content creatie notificaties uit met de tag abonnees',
+  'tag_tools:notification:extended:content_tags' => 'Deze content bevat de volgende tags die je volgt: %s',
   'tag_tools:settings:whitelist' => 'Tags whitelist activeren',
   'tag_tools:settings:whitelist:help' => 'Toont een lijst van veelgebruikte tags tijdens het invoeren van nieuwe tags',
   'item:object:tag_definition' => 'Tag definitie',
