@@ -1,6 +1,13 @@
 Version history
 ===============
 
+7.0 (2022-02-16):
+
+- added: plugin setting to configure the tag notifications
+- changed: moved tag notification handling to notification event handler
+- changed: updated code for Elgg 4.1 capabilities system
+- fixed: notification settings page owner detection
+
 6.1 (2021-11-17):
 
 - added: adds a whitelist autocomplete to tag inputs
