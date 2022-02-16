@@ -130,8 +130,8 @@ return [
 			],
 		],
 		'get' => [
-			'subscribers' => [
-				__NAMESPACE__ . '\Notifications\ExtendedContentNotification::extendNotificationBody' => [],
+			'subscriptions' => [
+				__NAMESPACE__ . '\Notifications\ExtendedContentNotification::getSubscribers' => [],
 			],
 		],
 		'prepare' => [

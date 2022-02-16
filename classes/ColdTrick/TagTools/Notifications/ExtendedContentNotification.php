@@ -13,36 +13,32 @@ class ExtendedContentNotification {
 	/**
 	 * Add the tag subscribers to the content subscribers
 	 *
-	 * @param \Elgg\Hook $hook 'get', 'subscribers'
+	 * @param \Elgg\Hook $hook 'get', 'subscriptions'
 	 *
 	 * @return array|null
 	 */
 	public static function getSubscribers(\Elgg\Hook $hook): ?array {
-		error_log('start');
+		
 		if ((bool) elgg_get_plugin_setting('separate_notifications', 'tag_tools')) {
 			// don't extend normal notifications
-			error_log('no');
 			return null;
 		}
 		
 		$event = $hook->getParam('event');
 		if (!$event instanceof SubscriptionNotificationEvent) {
-			error_log('event');
 			return null;
 		}
 		
 		$entity = $event->getObject();
 		$action = $event->getAction();
 		if (!$entity instanceof \ElggEntity || !in_array($action, ['create', 'publish'])) {
-			error_log('action');
 			return null;
 		}
 		
 		if (!tag_tools_is_notification_entity($entity->guid)) {
-			error_log('entity');
 			return null;
 		}
-		error_log('extending');
+		
 		$sending_tags = tag_tools_get_unsent_notification_tags($entity);
 		$subscribers = $hook->getValue();
 		
