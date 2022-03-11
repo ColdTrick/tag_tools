@@ -1,6 +1,10 @@
 Version history
 ===============
 
+7.0.1 (2022-03-11):
+
+- several small chores/fixes
+
 7.0 (2022-02-16):
 
 - added: plugin setting to configure the tag notifications
