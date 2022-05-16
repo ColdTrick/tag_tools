@@ -304,7 +304,7 @@ function tag_tools_check_user_tag_notification_method(string $tag, string $metho
  */
 function tag_tools_is_notification_entity(int $entity_guid): bool {
 	
-	$entity_row = get_entity_as_row($entity_guid);
+	$entity_row = elgg_get_entity_as_row($entity_guid);
 	if (empty($entity_row)) {
 		return false;
 	}

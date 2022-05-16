@@ -12,9 +12,6 @@ if (elgg_is_empty($tag)) {
 
 $tag = strtolower($tag);
 
-// fix for elasticsearch
-set_input('sort', 'time_created');
-
 $types = elgg_entity_types_with_capability('searchable');
 $comments_index = array_search('comment', $types['object']);
 if ($comments_index !== false) {
@@ -23,13 +20,15 @@ if ($comments_index !== false) {
 
 $content = elgg_list_entities([
 	'query' => $tag,
-	'type' => 'user', // trick elgg_search
 	'type_subtype_pairs' => $types,
 	'search_type' => 'entities',
 	'limit' => 3,
 	'pagination' => false,
-	'sort' => 'time_created',
-	'order' => 'desc',
+	'sort_by' => [
+		'property_type' => 'attribute',
+		'property' => 'time_created',
+		'direction' => 'DESC',
+	],
 ], 'elgg_search');
 
 if (empty($content)) {
