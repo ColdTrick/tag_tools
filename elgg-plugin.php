@@ -10,7 +10,7 @@ require_once(dirname(__FILE__) . '/lib/functions.php');
 
 return [
 	'plugin' => [
-		'version' => '6.1',
+		'version' => '7.0.1',
 		'dependencies' => [
 			'tagcloud' => [
 				'position' => 'after',
@@ -130,8 +130,8 @@ return [
 			],
 		],
 		'get' => [
-			'subscribers' => [
-				__NAMESPACE__ . '\Notifications\ExtendedContentNotification::extendNotificationBody' => [],
+			'subscriptions' => [
+				__NAMESPACE__ . '\Notifications\ExtendedContentNotification::getSubscribers' => [],
 			],
 		],
 		'prepare' => [

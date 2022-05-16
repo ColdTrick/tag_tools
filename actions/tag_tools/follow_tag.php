@@ -1,6 +1,6 @@
 <?php
 
-$encoded_tag = htmlspecialchars(get_input('tag'), ENT_QUOTES, 'UTF-8', false);
+$encoded_tag = htmlspecialchars(get_input('tag', ''), ENT_QUOTES, 'UTF-8', false);
 if (empty($encoded_tag)) {
 	return elgg_error_response(elgg_echo('error:missing_data'));
 }
