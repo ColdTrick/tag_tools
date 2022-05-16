@@ -91,7 +91,7 @@ class Enqueue {
 		}
 		
 		// can't use elgg get entity because cache is not correctly updated
-		$entity_row = get_entity_as_row($entity_guid);
+		$entity_row = elgg_get_entity_as_row($entity_guid);
 		if ($entity_row === false) {
 			// invalid entity
 			return false;
