@@ -123,10 +123,10 @@ class TagToolsRule extends ElggObject {
 		
 		switch ($type) {
 			case 'replace':
-				system_message(elgg_echo('tag_tools:rule:notify:replace', [$this->from_tag, $this->to_tag]));
+				elgg_register_success_message(elgg_echo('tag_tools:rule:notify:replace', [$this->from_tag, $this->to_tag]));
 				break;
 			case 'delete':
-				system_message(elgg_echo('tag_tools:rule:notify:delete', [$this->from_tag]));
+				elgg_register_success_message(elgg_echo('tag_tools:rule:notify:delete', [$this->from_tag]));
 				break;
 		}
 	}
