@@ -27,7 +27,7 @@ $content = elgg_list_entities([
 	'sort_by' => [
 		'property_type' => 'attribute',
 		'property' => 'time_created',
-		'direction' => 'DESC',
+		'direction' => 'desc',
 	],
 ], 'elgg_search');
 
@@ -39,7 +39,11 @@ $more = elgg_view('output/url', [
 	'text' => elgg_echo('tag_tools:tag:view:more'),
 	'href' => elgg_generate_url('default:search', [
 		'q' => $tag,
-		'sort' => 'time_created',
+		'sort_by' => [
+			'property_type' => 'attribute',
+			'property' => 'time_created',
+			'direction' => 'desc',
+		],
 	]),
 	'is_trusted' => true,
 ]);
