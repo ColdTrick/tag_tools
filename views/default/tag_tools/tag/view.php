@@ -4,7 +4,7 @@ elgg_admin_gatekeeper();
 
 $tag = elgg_extract('tag', $vars);
 if (elgg_is_empty($tag)) {
-	register_error(elgg_echo('error:missing_data'));
+	elgg_register_error_message(elgg_echo('error:missing_data'));
 	return;
 }
 
