@@ -8,12 +8,8 @@ if (empty($user_guid)) {
 }
 
 $user = get_user($user_guid);
-if (empty($user)) {
-	return elgg_error_response(elgg_echo('error:missing_data'));
-}
-
-if (!$user->canEdit()) {
-	return elgg_error_response(elgg_echo('noaccess'));
+if (!$user instanceof \ElggUser || !$user->canEdit()) {
+	return elgg_error_response(elgg_echo('actionunauthorized'));
 }
 
 if (empty($tags)) {
