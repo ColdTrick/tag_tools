@@ -85,7 +85,7 @@ class Enqueue {
 		// cache plugin
 		self::cachePlugin();
 		
-		if (check_entity_relationship(self::$plugin->guid, 'tag_tools:notification', $entity_guid)) {
+		if (self::$plugin->hasRelationship($entity_guid, 'tag_tools:notification')) {
 			// already enqueued
 			return false;
 		}
@@ -133,12 +133,12 @@ class Enqueue {
 			return;
 		}
 		
-		if (check_entity_relationship(self::$plugin->guid, 'tag_tools:notification', $entity_guid)) {
+		if (self::$plugin->hasRelationship($entity_guid, 'tag_tools:notification')) {
 			// already queued
 			return;
 		}
 		
-		add_entity_relationship(self::$plugin->guid, 'tag_tools:notification', $entity_guid);
+		self::$plugin->addRelationship($entity_guid, 'tag_tools:notification');
 	}
 	
 	/**

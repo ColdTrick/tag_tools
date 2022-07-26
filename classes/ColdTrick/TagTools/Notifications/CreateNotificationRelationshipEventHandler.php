@@ -45,7 +45,7 @@ class CreateNotificationRelationshipEventHandler extends NotificationEventHandle
 		$entity = $handler->getNotificationEntity();
 		
 		// cleanup the relationship
-		remove_entity_relationships($entity->guid, 'tag_tools:notification', true);
+		$entity->removeAllRelationships('tag_tools:notification', true);
 		
 		// save the newly sent tags
 		$sending_tags = $handler->getUnsentTagsForEntity();

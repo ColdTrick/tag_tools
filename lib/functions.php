@@ -623,7 +623,7 @@ function tag_tools_validate_entity_access(\ElggEntity $entity, \ElggUser $user):
 		return false;
 	}
 	
-	if (!has_access_to_entity($entity, $user)) {
+	if (!$entity->hasAccess($user->guid)) {
 		return false;
 	}
 	
@@ -633,9 +633,14 @@ function tag_tools_validate_entity_access(\ElggEntity $entity, \ElggUser $user):
 		$acl_members = []; // reset cache
 		$acl_members[$entity->guid] = false;
 		
-		if (get_access_collection($entity->access_id) !== false) {
-			// this is an acl
-			$acl_members[$entity->guid] = get_members_of_access_collection($entity->access_id, true);
+		$acl = elgg_get_access_collection($entity->access_id);
+		if ($acl instanceof \ElggAccessCollection) {
+			$acl_members[$entity->guid] = $acl->getMembers([
+				'limit' => false,
+				'callback' => function($row) {
+					return (int) $row->guid;
+				},
+			]);
 		}
 	}
 	
