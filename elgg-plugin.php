@@ -10,7 +10,7 @@ require_once(dirname(__FILE__) . '/lib/functions.php');
 
 return [
 	'plugin' => [
-		'version' => '8.0.1',
+		'version' => '9.0',
 		'dependencies' => [
 			'tagcloud' => [
 				'position' => 'after',
