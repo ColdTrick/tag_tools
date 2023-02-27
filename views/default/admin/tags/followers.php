@@ -35,6 +35,7 @@ if ($count < 1) {
 	echo elgg_echo('notfound');
 	return;
 }
+
 $order = get_input('order', 'popular');
 
 elgg_register_menu_item('title', [
@@ -76,6 +77,7 @@ foreach ($tags as $tag) {
 	
 	$rows[] = elgg_format_element('tr', [], implode(PHP_EOL, $row));
 }
+
 $body = elgg_format_element('tbody', [], implode(PHP_EOL, $rows));
 
 echo elgg_format_element('table', ['class' => 'elgg-table'], $header . $body);

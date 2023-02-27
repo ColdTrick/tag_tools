@@ -2,6 +2,9 @@
 
 namespace ColdTrick\TagTools;
 
+/**
+ * Rule related callbacks
+ */
 class Rules {
 	
 	/**
@@ -64,7 +67,6 @@ class Rules {
 				$object->delete();
 				break;
 			case 'replace':
-				
 				$new_value = $rule->to_tag;
 				
 				$rule->notify('replace');
@@ -96,7 +98,7 @@ class Rules {
 	/**
 	 * Validate if the provided entity can have rules applied
 	 *
-	 * @param \ElggEntity $entity
+	 * @param \ElggEntity $entity the entity to validate
 	 *
 	 * @return bool
 	 */

@@ -23,6 +23,7 @@ $order = get_input('order', 'count');
 if ($order === 'count') {
 	$select->orderBy('total', 'DESC');
 }
+
 $select->addOrderBy('md.value', 'ASC');
 
 $results = $select->execute()->fetchAllAssociative();
@@ -56,7 +57,6 @@ if (!empty($metadata_tags)) {
 $suggestions = [];
 
 while ($current_tag = array_pop($results)) {
-	
 	// filter out tags that already have a rule configured
 	if (in_array($current_tag['value'], $configured_rule_tags)) {
 		continue;
@@ -74,7 +74,7 @@ while ($current_tag = array_pop($results)) {
 		$levenshtein = levenshtein($current_tag['value'], $tag['value']);
 		$max_length = max(strlen($current_tag['value']), strlen($tag['value']));
 		
-		if (($levenshtein / $max_length) > (1/3)) {
+		if (($levenshtein / $max_length) > (1 / 3)) {
 			continue;
 		}
 		
@@ -88,7 +88,6 @@ if (empty($suggestions)) {
 }
 
 foreach ($suggestions as $from_tag => $to_tags) {
-	
 	$buttons = [];
 	foreach ($to_tags as $to_tag) {
 		$buttons[] = elgg_view('output/url', [

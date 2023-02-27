@@ -16,7 +16,7 @@ define(['jquery', 'elgg/Ajax'], function($, Ajax) {
 				// Something went wrong, so undo the optimistic changes
 				$row.show();
 			}
-		}); 
+		});
 		 
 		return false;
 	});

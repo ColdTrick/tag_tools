@@ -2,6 +2,9 @@
 
 use Elgg\Exceptions\Http\EntityNotFoundException;
 
+/**
+ * Tag definition
+ */
 class TagDefinition extends ElggObject {
 	
 	/**
@@ -10,8 +13,7 @@ class TagDefinition extends ElggObject {
 	const SUBTYPE = 'tag_definition';
 	
 	/**
-	 * {@inheritDoc}
-	 * @see ElggEntity::initializeAttributes()
+	 * {@inheritdoc}
 	 */
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
@@ -27,7 +29,7 @@ class TagDefinition extends ElggObject {
 	/**
 	 * Find a definition for the given tag
 	 *
-	 * @param string $tag
+	 * @param string $tag the tag
 	 *
 	 * @return false|TagDefinition
 	 */

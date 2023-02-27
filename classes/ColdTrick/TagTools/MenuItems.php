@@ -2,16 +2,19 @@
 
 namespace ColdTrick\TagTools;
 
+/**
+ * Menu item callbacks
+ */
 class MenuItems {
 	
 	/**
 	 * Add a menu item to the page menu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:filter:settings/notifications'
+	 * @param \Elgg\Event $event 'register', 'menu:filter:settings/notifications'
 	 *
 	 * @return void|\ElggMenuItem[]
 	 */
-	public static function registerSettingsMenuItem(\Elgg\Hook $hook) {
+	public static function registerSettingsMenuItem(\Elgg\Event $event) {
 		
 		if (!elgg_is_logged_in() || !elgg_in_context('settings')) {
 			return;
@@ -22,7 +25,7 @@ class MenuItems {
 			$user = elgg_get_logged_in_user_entity();
 		}
 		
-		$return_value = $hook->getValue();
+		$return_value = $event->getValue();
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'tag_notifications',
 			'text' => elgg_echo('tag_tools:notifications:menu'),
@@ -38,22 +41,22 @@ class MenuItems {
 	/**
 	 * Add a menu item to the title menu of a tag page
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:title'
+	 * @param \Elgg\Event $event 'register', 'menu:title'
 	 *
 	 * @return void|\ElggMenuItem[]
 	 */
-	public static function registerFollowTag(\Elgg\Hook $hook) {
+	public static function registerFollowTag(\Elgg\Event $event) {
 		
 		if (!elgg_is_logged_in() || !elgg_in_context('tag')) {
 			return;
 		}
 		
-		$tag = $hook->getParam('tag');
+		$tag = $event->getParam('tag');
 		if (elgg_is_empty($tag)) {
 			return;
 		}
 		
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
 		$following = tag_tools_is_user_following_tag($tag);
 		$action_url = elgg_generate_action_url('tag_tools/follow_tag', [
@@ -88,22 +91,22 @@ class MenuItems {
 	/**
 	 * Add a menu item to the title menu of a tag page
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:title'
+	 * @param \Elgg\Event $event 'register', 'menu:title'
 	 *
 	 * @return void|\ElggMenuItem[]
 	 */
-	public static function registerTagDefinition(\Elgg\Hook $hook) {
+	public static function registerTagDefinition(\Elgg\Event $event) {
 		
 		if (!elgg_is_admin_logged_in() || !elgg_in_context('tag')) {
 			return;
 		}
 		
-		$tag = $hook->getParam('tag');
+		$tag = $event->getParam('tag');
 		if (elgg_is_empty($tag)) {
 			return;
 		}
 		
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
 		$colorbox_options = json_encode([
 			'innerWidth' => '500px',
@@ -145,22 +148,23 @@ class MenuItems {
 	/**
 	 * Adds admin menu items
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:admin'
+	 * @param \Elgg\Event $event 'register', 'menu:admin_header'
 	 *
 	 * @return void|\ElggMenuItem[]
 	 */
-	public static function registerAdminItems(\Elgg\Hook $hook) {
+	public static function registerAdminItems(\Elgg\Event $event) {
 		
-		if (!elgg_is_admin_logged_in() || !elgg_in_context('admin')) {
+		if (!elgg_is_admin_logged_in()) {
 			return;
 		}
 		
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'tags',
 			'text' => elgg_echo('admin:tags'),
-			'section' => 'configure',
+			'href' => false,
+			'parent_name' => 'configure',
 		]);
 		
 		$result[] = \ElggMenuItem::factory([
@@ -168,7 +172,6 @@ class MenuItems {
 			'href' => 'admin/tags/search',
 			'text' => elgg_echo('admin:tags:search'),
 			'parent_name' => 'tags',
-			'section' => 'configure',
 		]);
 		
 		$result[] = \ElggMenuItem::factory([
@@ -176,21 +179,18 @@ class MenuItems {
 			'href' => 'admin/tags/suggest',
 			'text' => elgg_echo('admin:tags:suggest'),
 			'parent_name' => 'tags',
-			'section' => 'configure',
 		]);
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'tags:rules',
 			'href' => 'admin/tags/rules',
 			'text' => elgg_echo('admin:tags:rules'),
 			'parent_name' => 'tags',
-			'section' => 'configure',
 		]);
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'tags:followers',
 			'href' => 'admin/tags/followers',
 			'text' => elgg_echo('admin:tags:followers'),
 			'parent_name' => 'tags',
-			'section' => 'configure',
 		]);
 		
 		return $result;

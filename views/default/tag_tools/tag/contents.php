@@ -10,6 +10,7 @@ $tag = elgg_extract('tag', $vars);
 if (elgg_is_empty($tag)) {
 	return;
 }
+
 $tag = strtolower($tag);
 
 $definition = elgg_extract('entity', $vars);

@@ -13,7 +13,6 @@ $details = '';
 // get stats
 $stats = tag_tools_get_tag_stats($tag);
 if (!empty($stats)) {
-	
 	$rows = [];
 	
 	// header
@@ -42,7 +41,8 @@ $tb = elgg()->table_columns;
 $rules = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => \TagToolsRule::SUBTYPE,
-	'metadata_name_value_pairs' => [[
+	'metadata_name_value_pairs' => [
+		[
 			'name' => 'from_tag',
 			'value' => $tag,
 		],

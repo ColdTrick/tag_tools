@@ -13,24 +13,24 @@ class ExtendedContentNotification {
 	/**
 	 * Add the tag subscribers to the content subscribers
 	 *
-	 * @param \Elgg\Hook $hook 'get', 'subscriptions'
+	 * @param \Elgg\Event $event 'get', 'subscriptions'
 	 *
 	 * @return array|null
 	 */
-	public static function getSubscribers(\Elgg\Hook $hook): ?array {
+	public static function getSubscribers(\Elgg\Event $event): ?array {
 		
 		if ((bool) elgg_get_plugin_setting('separate_notifications', 'tag_tools')) {
 			// don't extend normal notifications
 			return null;
 		}
 		
-		$event = $hook->getParam('event');
-		if (!$event instanceof SubscriptionNotificationEvent) {
+		$notification_event = $event->getParam('event');
+		if (!$notification_event instanceof SubscriptionNotificationEvent) {
 			return null;
 		}
 		
-		$entity = $event->getObject();
-		$action = $event->getAction();
+		$entity = $notification_event->getObject();
+		$action = $notification_event->getAction();
 		if (!$entity instanceof \ElggEntity || !in_array($action, ['create', 'publish'])) {
 			return null;
 		}
@@ -40,7 +40,7 @@ class ExtendedContentNotification {
 		}
 		
 		$sending_tags = tag_tools_get_unsent_notification_tags($entity);
-		$subscribers = $hook->getValue();
+		$subscribers = $event->getValue();
 		
 		// get interested users
 		$users_batch = elgg_get_entities([
@@ -94,23 +94,23 @@ class ExtendedContentNotification {
 	/**
 	 * Extend the content notification with the tag text
 	 *
-	 * @param \Elgg\Hook $hook 'prepare', 'notification'
+	 * @param \Elgg\Event $event 'prepare', 'notification'
 	 *
 	 * @return Notification|null
 	 */
-	public static function extendNotificationBody(\Elgg\Hook $hook): ?Notification {
+	public static function extendNotificationBody(\Elgg\Event $event): ?Notification {
 		if ((bool) elgg_get_plugin_setting('separate_notifications', 'tag_tools')) {
 			// don't extend normal notifications
 			return null;
 		}
 		
-		$event = $hook->getParam('event');
-		if (!$event instanceof SubscriptionNotificationEvent) {
+		$notification_event = $event->getParam('event');
+		if (!$notification_event instanceof SubscriptionNotificationEvent) {
 			return null;
 		}
 		
-		$object = $hook->getParam('object');
-		$action = $hook->getParam('action');
+		$object = $event->getParam('object');
+		$action = $event->getParam('action');
 		if (!$object instanceof \ElggEntity || !in_array($action, ['create', 'publish'])) {
 			return null;
 		}
@@ -120,10 +120,10 @@ class ExtendedContentNotification {
 		}
 		
 		/* @var $notification Notification */
-		$notification = $hook->getValue();
-		$recipient = $hook->getParam('recipient');
-		$language = $hook->getParam('language');
-		$method = $hook->getParam('method');
+		$notification = $event->getValue();
+		$recipient = $event->getParam('recipient');
+		$language = $event->getParam('language');
+		$method = $event->getParam('method');
 		
 		$sending_tags = tag_tools_get_unsent_notification_tags($object);
 		$user_tags = tag_tools_get_unsent_notification_tags_for_recipient($sending_tags, $recipient, $method);

@@ -5,6 +5,7 @@ namespace ColdTrick\TagTools;
 use Elgg\Router\Middleware\AdminGatekeeper;
 use Elgg\Router\Middleware\Gatekeeper;
 use Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper;
+use ColdTrick\TagTools\Forms\PrepareFields;
 
 require_once(dirname(__FILE__) . '/lib/functions.php');
 
@@ -123,10 +124,21 @@ return [
 			'required_plugin' => 'tagcloud',
 		],
 	],
-	'hooks' => [
+	'events' => [
+		'create' => [
+			'metadata' => [
+				__NAMESPACE__ . '\Rules::applyRules' => ['priority' => 1],
+				__NAMESPACE__ . '\Enqueue::createMetadata' => [],
+			],
+		],
 		'cron' => [
 			'daily' => [
 				__NAMESPACE__ . '\Views::resetTagsWhitelist' => [],
+			],
+		],
+		'form:prepare:fields' => [
+			'tag_tools/rules/edit' => [
+				PrepareFields::class => [],
 			],
 		],
 		'get' => [
@@ -147,7 +159,7 @@ return [
 				__NAMESPACE__ . '\MenuItems::registerFollowTag' => [],
 				__NAMESPACE__ . '\MenuItems::registerTagDefinition' => [],
 			],
-			'menu:page' => [
+			'menu:admin_header' => [
 				__NAMESPACE__ . '\MenuItems::registerAdminItems' => [],
 			],
 			'menu:filter:settings/notifications' => [
@@ -159,6 +171,11 @@ return [
 				__NAMESPACE__ . '\Notifications\CreateNotificationRelationshipEventHandler::afterCleanup' => [],
 			],
 		],
+		'update:after' => [
+			'all' => [
+				__NAMESPACE__ . '\Enqueue::afterEntityUpdate' => [],
+			],
+		],
 		'view_vars' => [
 			'input/tags' => [
 				__NAMESPACE__ . '\Views::setInputTagsWhitelist' => [],
@@ -168,19 +185,6 @@ return [
 			],
 			'output/tags' => [
 				__NAMESPACE__ . '\Views::setOutputTagsVars' => [],
-			],
-		],
-	],
-	'events' => [
-		'create' => [
-			'metadata' => [
-				 __NAMESPACE__ . '\Rules::applyRules' => ['priority' => 1],
-				 __NAMESPACE__ . '\Enqueue::createMetadata' => [],
-			],
-		],
-		'update:after' => [
-			'all' => [
-				 __NAMESPACE__ . '\Enqueue::afterEntityUpdate' => [],
 			],
 		],
 	],

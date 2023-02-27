@@ -39,8 +39,7 @@ $select->select('e.container_guid')
 	->andWhere($select->compare('ec.type', '=', 'group', ELGG_VALUE_STRING))
 	->groupBy('e.container_guid')
 	->orderBy('total', 'desc')
-	->setMaxResults(3)
-;
+	->setMaxResults(3);
 
 if (!empty($access_part)) {
 	$select->andWhere($access_part);

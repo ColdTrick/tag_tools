@@ -18,7 +18,7 @@ $select->select('md.value')
 
 $min_count = (int) get_input('min_count', 10);
 if ($min_count > 0) {
-	$select->having($select->compare('total', '>', $min_count, ELGG_VALUE_INTEGER));
+	$select->having($select->compare('total', '>=', $min_count, ELGG_VALUE_INTEGER));
 }
 
 $query = get_input('q');
@@ -42,6 +42,7 @@ $order = get_input('order', 'count');
 if ($order === 'count') {
 	$select->orderBy('total', 'DESC');
 }
+
 $select->addOrderBy('md.value', 'ASC');
 
 $count_query = new Select(_elgg_services()->db->getConnection('read'));

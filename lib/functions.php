@@ -343,7 +343,7 @@ function tag_tools_get_notification_type_subtypes() {
 		unset($result['user']);
 		
 		// allow others to change the type/subtypes
-		$result = elgg_trigger_plugin_hook('notification_type_subtype', 'tag_tools', $result, $result);
+		$result = elgg_trigger_event_results('notification_type_subtype', 'tag_tools', $result, $result);
 	}
 	
 	return $result;
@@ -368,7 +368,7 @@ function tag_tools_add_sent_tags(ElggEntity $entity, $sending_tags = []): bool {
 		$sending_tags = [$sending_tags];
 	}
 	
-	$sent_tags = $entity->getPrivateSetting('tag_tools:sent_tags');
+	$sent_tags = $entity->{'tag_tools:sent_tags'};
 	if (!empty($sent_tags)) {
 		$sent_tags = json_decode($sent_tags, true);
 	} else {
@@ -379,42 +379,9 @@ function tag_tools_add_sent_tags(ElggEntity $entity, $sending_tags = []): bool {
 	$processed_tags = array_merge($sent_tags, $sending_tags);
 	$processed_tags = array_unique($processed_tags);
 	
-	return $entity->setPrivateSetting('tag_tools:sent_tags', json_encode($processed_tags));
-}
-
-/**
- * Prepare the form for edit/create of a tag rule
- *
- * @param TagToolsRule $entity the entity to edit
- *
- * @return array
- */
-function tag_tools_rules_prepare_form_vars(TagToolsRule $entity = null): array {
+	$entity->{'tag_tools:sent_tags'} = json_encode($processed_tags);
 	
-	$defaults = [
-		'from_tag' => get_input('from_tag'),
-		'to_tag' => get_input('to_tag'),
-		'tag_action' => get_input('tag_action', 'replace'),
-		'notify_user' => (bool) get_input('notify_user'),
-	];
-	
-	// load data from existing entity
-	if ($entity instanceof TagToolsRule) {
-		
-		foreach ($defaults as $name => $value) {
-			$defaults[$name] = $entity->$name;
-		}
-		
-		$defaults['entity'] = $entity;
-	}
-	
-	// load sticky form
-	$sticky = elgg_get_sticky_values('tag_tools/rules/edit');
-	if (!empty($sticky)) {
-		return array_merge($defaults, $sticky);
-	}
-	
-	return $defaults;
+	return true;
 }
 
 /**
@@ -458,7 +425,7 @@ function tag_tools_rules_get_type_subtypes(): array {
 		}
 	}
 	
-	$result = elgg_trigger_plugin_hook('rules_type_subtypes', 'tag_tools', $result, $result);
+	$result = elgg_trigger_event_results('rules_type_subtypes', 'tag_tools', $result, $result);
 	
 	return $result;
 }
@@ -471,8 +438,7 @@ function tag_tools_rules_get_type_subtypes(): array {
  * @return false|TagToolsRule
  */
 function tag_tools_rules_get_rule(string $from_tag) {
-	
-	if(trim($from_tag) === '') {
+	if (trim($from_tag) === '') {
 		return false;
 	}
 	
@@ -526,8 +492,7 @@ function tag_tools_get_tag_stats(string $tag) {
 		->andWhere($select->compare('md.value', '=', $tag, ELGG_VALUE_STRING))
 		->groupBy('e.type')
 		->addGroupBy('e.subtype')
-		->orderBy('total', 'desc')
-	;
+		->orderBy('total', 'desc');
 	
 	$res = $select->execute()->fetchAllAssociative();
 	if (empty($res)) {
@@ -567,7 +532,7 @@ function tag_tools_get_unsent_notification_tags(\ElggEntity $entity): array {
 		$entity_tags = [$entity_tags];
 	}
 	
-	$sent_tags = $entity->getPrivateSetting('tag_tools:sent_tags');
+	$sent_tags = $entity->{'tag_tools:sent_tags'};
 	if (!empty($sent_tags)) {
 		$sent_tags = json_decode($sent_tags, true);
 	} else {

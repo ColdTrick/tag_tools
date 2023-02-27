@@ -1,5 +1,5 @@
 define(['jquery'], function($) {
-	$(document).on('change', '#tag-tools-rules-edit-action', function() {	
+	$(document).on('change', '#tag-tools-rules-edit-action', function() {
 		if ($(this).val() === 'delete') {
 			$('#tag-tools-rules-edit-to').prop('disabled', true).closest('.elgg-field').hide();
 		} else {

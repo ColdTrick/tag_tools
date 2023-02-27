@@ -29,13 +29,13 @@ class CreateNotificationRelationshipEventHandler extends NotificationEventHandle
 	/**
 	 * Cleanup some stuff
 	 *
-	 * @param \Elgg\Hook $hook 'send:after', 'notifications'
+	 * @param \Elgg\Event $event 'send:after', 'notifications'
 	 *
 	 * @return void
 	 */
-	public static function afterCleanup(\Elgg\Hook $hook): void {
+	public static function afterCleanup(\Elgg\Event $event): void {
 		/* @var $handler CreateNotificationRelationshipEventHandler */
-		$handler = $hook->getParam('handler');
+		$handler = $event->getParam('handler');
 		$class_name = self::class;
 		if (!$handler instanceof $class_name) {
 			// not the correct notification event

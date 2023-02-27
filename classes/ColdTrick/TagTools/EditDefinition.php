@@ -2,6 +2,9 @@
 
 namespace ColdTrick\TagTools;
 
+/**
+ * Defines and edit rule
+ */
 class EditDefinition {
 	
 	/**

@@ -22,10 +22,10 @@
 		
 		> a {
 			border: 1px solid $(border-color-mild);
-    		padding: 0.25rem .5rem;
-    		border-radius: 4px;
+			padding: 0.25rem .5rem;
+			border-radius: 4px;
 		}
-	}	
+	}
 }
 
 .tag-tools-tag-content-wrapper {

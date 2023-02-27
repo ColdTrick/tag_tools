@@ -2,18 +2,21 @@
 
 namespace ColdTrick\TagTools;
 
+/**
+ * Html Formatting callbacks
+ */
 class HtmlFormatter {
 
 	/**
 	 * Replace #tag with a link to the tag page
 	 *
-	 * @param \Elgg\Hook $hook 'prepare', 'html'
+	 * @param \Elgg\Event $event 'prepare', 'html'
 	 *
 	 * @return void|array
 	 */
-	public static function replaceHashTags(\Elgg\Hook $hook) {
+	public static function replaceHashTags(\Elgg\Event $event) {
 		
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
 		$options = elgg_extract('options', $result);
 		$html = elgg_extract('html', $result);
@@ -27,7 +30,6 @@ class HtmlFormatter {
 			return;
 		}
 		
-		
 		$ignoreTags = ['head', 'link', 'a', 'script', 'style', 'code', 'pre', 'select', 'textarea', 'button'];
 		
 		$chunks = preg_split('/(<.+?>)/is', $html, 0, PREG_SPLIT_DELIM_CAPTURE);
@@ -39,7 +41,7 @@ class HtmlFormatter {
 			
 			if ($i % 2 === 0) { // even numbers are text
 				// Only process this chunk if there are no unclosed $ignoreTags
-				if (null === $openTag) {
+				if ($openTag === null) {
 					$text = preg_replace_callback('/(^|[^\w])#(\w*[^\s\d!-\/:-@]+\w*)/', function($matches) {
 						$match = trim($matches[0]);
 						$tag = $matches[2];
@@ -55,9 +57,9 @@ class HtmlFormatter {
 				}
 			} else { // odd numbers are tags
 				// Only process this tag if there are no unclosed $ignoreTags
-				if (null === $openTag) {
+				if ($openTag === null) {
 					// Check whether this tag is contained in $ignoreTags and is not self-closing
-					if (preg_match("`<(" . implode('|', $ignoreTags) . ").*(?<!/)>$`is", $text, $matches)) {
+					if (preg_match('`<(' . implode('|', $ignoreTags) . ').*(?<!/)>$`is', $text, $matches)) {
 						$openTag = $matches[1];
 					}
 				} else {

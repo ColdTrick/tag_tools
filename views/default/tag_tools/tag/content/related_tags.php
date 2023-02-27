@@ -56,8 +56,7 @@ $select->andWhere($metadata_where->prepare($select, 'md2'))
 	->andWhere($select->compare('md2.value', '!=', $tag, ELGG_VALUE_STRING))
 	->groupBy('md2.value')
 	->orderBy('total', 'desc')
-	->setMaxResults(10)
-;
+	->setMaxResults(10);
 
 $access_part = $access_where->prepare($select, $select->joinEntitiesTable('md2', 'entity_guid'));
 if (!empty($access_part)) {

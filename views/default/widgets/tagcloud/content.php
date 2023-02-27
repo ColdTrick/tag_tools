@@ -5,9 +5,9 @@ $widget = elgg_extract('entity', $vars);
 $owner = $widget->getOwnerEntity();
 
 $cloud_options = [];
-if ($owner instanceof ElggUser) {
+if ($owner instanceof \ElggUser) {
 	$cloud_options['owner_guid'] = $owner->guid;
-} elseif ($owner instanceof ElggGroup) {
+} elseif ($owner instanceof \ElggGroup) {
 	$cloud_options['container_guid'] = $owner->guid;
 }
 

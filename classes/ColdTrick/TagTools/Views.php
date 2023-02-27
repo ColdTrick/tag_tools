@@ -2,18 +2,21 @@
 
 namespace ColdTrick\TagTools;
 
+/**
+ * View callbacks
+ */
 class Views {
 	
 	/**
 	 * Sets some output tag vars
 	 *
-	 * @param \Elgg\Hook $hook 'view_vars', 'output/tag'
+	 * @param \Elgg\Event $event 'view_vars', 'output/tag'
 	 *
 	 * @return array
 	 */
-	public static function setOutputTagVars(\Elgg\Hook $hook) {
+	public static function setOutputTagVars(\Elgg\Event $event) {
 
-		$vars = $hook->getValue();
+		$vars = $event->getValue();
 		
 		$value = elgg_extract('value', $vars);
 		if (elgg_is_empty($value)) {
@@ -35,16 +38,14 @@ class Views {
 	/**
 	 * Changes view vars for output/tags
 	 *
-	 * @param \Elgg\Hook $hook 'view_vars', 'output/tags'
+	 * @param \Elgg\Event $event 'view_vars', 'output/tags'
 	 *
 	 * @return array
 	 */
-	public static function setOutputTagsVars(\Elgg\Hook $hook) {
+	public static function setOutputTagsVars(\Elgg\Event $event) {
 
-		$vars = $hook->getValue();
-		
-		$value = elgg_extract('value', $vars);
-		
+		$vars = $event->getValue();
+				
 		$vars['separator'] = '';
 		return $vars;
 	}
@@ -52,11 +53,11 @@ class Views {
 	/**
 	 * Adds tagify whitelist to tags input
 	 *
-	 * @param \Elgg\Hook $hook 'view_vars', 'input/tags'
+	 * @param \Elgg\Event $event 'view_vars', 'input/tags'
 	 *
 	 * @return array
 	 */
-	public static function setInputTagsWhitelist(\Elgg\Hook $hook) {
+	public static function setInputTagsWhitelist(\Elgg\Event $event) {
 		if (!(bool) elgg_get_plugin_setting('whitelist', 'tag_tools')) {
 			return;
 		}
@@ -66,7 +67,7 @@ class Views {
 			return;
 		}
 		
-		$vars = $hook->getValue();
+		$vars = $event->getValue();
 		
 		$options = elgg_extract('tagify_options', $vars, []);
 		
@@ -114,11 +115,11 @@ class Views {
 	/**
 	 * Resets the tags whitelist every day
 	 *
-	 * @param \Elgg\Hook $hook 'cron', 'daily'
+	 * @param \Elgg\Event $event 'cron', 'daily'
 	 *
 	 * @return array
 	 */
-	public static function resetTagsWhitelist(\Elgg\Hook $hook) {
+	public static function resetTagsWhitelist(\Elgg\Event $event) {
 		if (!(bool) elgg_get_plugin_setting('whitelist', 'tag_tools') !== 1) {
 			return;
 		}

@@ -13,7 +13,8 @@ if (!$entity instanceof TagToolsRule) {
 		'style' => 'width: 40px;',
 		'class' => 'center',
 	], '&nbsp;');
-	return ;
+	
+	return;
 }
 
 $link = elgg_view('output/url', [

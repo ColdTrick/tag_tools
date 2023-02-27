@@ -14,16 +14,15 @@ class TagToolsRule extends ElggObject {
 	/**
 	 * @var string[] registered tag names
 	 */
-	private $tag_names;
+	protected $tag_names;
 	
 	/**
 	 * @var array the registered entity types in Elgg
 	 */
-	private $entity_types;
+	protected $entity_types;
 	
 	/**
-	 * {@inheritDoc}
-	 * @see ElggObject::initializeAttributes()
+	 * {@inheritdoc}
 	 */
 	protected function initializeAttributes() {
 		
@@ -38,25 +37,23 @@ class TagToolsRule extends ElggObject {
 	}
 	
 	/**
-	 * {@inheritDoc}
-	 * @see ElggEntity::__get()
+	 * {@inheritdoc}
 	 */
 	public function __get($name) {
 		
 		$result = parent::__get($name);
 		
-		if ($name == 'from_tag') {
-			return strtolower($result);
+		if ($name === 'from_tag') {
+			return strtolower((string) $result);
 		}
 		
 		return $result;
 	}
 	
 	/**
-	 * {@inheritDoc}
-	 * @see ElggObject::getDisplayName()
+	 * {@inheritdoc}
 	 */
-	public function getDisplayName() {
+	public function getDisplayName(): string {
 		
 		switch ($this->tag_action) {
 			case 'delete':
@@ -75,7 +72,7 @@ class TagToolsRule extends ElggObject {
 	 *
 	 * @return void
 	 */
-	public function apply() {
+	public function apply(): void {
 		
 		// can we safely execute this?
 		$entity_types = $this->getRegisteredEntityTypes();
@@ -116,7 +113,7 @@ class TagToolsRule extends ElggObject {
 	 *
 	 * @return void
 	 */
-	public function notify($type) {
+	public function notify($type): void {
 		if (!$this->notify_user) {
 			return;
 		}
@@ -136,7 +133,7 @@ class TagToolsRule extends ElggObject {
 	 *
 	 * @return void
 	 */
-	protected function preApply() {
+	protected function preApply(): void {
 		
 		// this could take a bit
 		set_time_limit(0);
@@ -151,7 +148,7 @@ class TagToolsRule extends ElggObject {
 	 *
 	 * @return void
 	 */
-	protected function postApply() {
+	protected function postApply(): void {
 		
 		// reregister events
 		elgg_register_event_handler('create', 'metadata', '\ColdTrick\TagTools\Rules::applyRules', 1);
@@ -217,9 +214,9 @@ class TagToolsRule extends ElggObject {
 			'batch' => true,
 			'batch_inc_offset' => false,
 		]);
+		
 		/* @var $entity \ElggEntity */
 		foreach ($batch as $entity) {
-			
 			// check all tag fields
 			foreach ($tag_names as $tag_name) {
 				$value = $entity->$tag_name;
@@ -256,7 +253,7 @@ class TagToolsRule extends ElggObject {
 				if ($add) {
 					$value[] = $to_tag;
 					
-					if (($tag_name === 'tags') && tag_tools_is_notification_entity($entity)) {
+					if (($tag_name === 'tags') && tag_tools_is_notification_entity($entity->guid)) {
 						// set tag as notified
 						tag_tools_add_sent_tags($entity, [$to_tag]);
 					}

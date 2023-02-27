@@ -50,8 +50,7 @@ $select->select('e.owner_guid')
 	->andWhere($banned_where->prepare($select, $select->joinMetadataTable('eo')))
 	->groupBy('e.owner_guid')
 	->orderBy('total', 'desc')
-	->setMaxResults(3)
-;
+	->setMaxResults(3);
 
 if (!empty($access_part)) {
 	$select->andWhere($access_part);

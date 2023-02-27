@@ -2,6 +2,9 @@
 
 namespace ColdTrick\TagTools;
 
+/**
+ * Queue related callbacks
+ */
 class Enqueue {
 	
 	/** @var \ElggPlugin the Tag Tools plugin entity */

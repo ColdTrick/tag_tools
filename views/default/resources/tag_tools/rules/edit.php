@@ -9,20 +9,18 @@ elgg_entity_gatekeeper($guid, 'object', TagToolsRule::SUBTYPE);
 /* @var $entity TagToolsRule */
 $entity = get_entity($guid);
 
-// build page elements
 $title = elgg_echo('tag_tools:rules:edit', [$entity->getDisplayName()]);
 
-$body_vars = tag_tools_rules_prepare_form_vars($entity);
+$body = elgg_view_form('tag_tools/rules/edit', [
+	'prevent_double_submit' => false,
+	'sticky_enabled' => true,
+], ['entity' => $entity]);
 
-$body = elgg_view_form('tag_tools/rules/edit', ['prevent_double_submit' => false], $body_vars);
-
-// how to display content
 if (elgg_is_xhr()) {
 	echo elgg_view_module('inline', $title, $body);
 	return;
 }
 
-// draw page
 echo elgg_view_page($title, [
 	'content' => $body,
 ]);
