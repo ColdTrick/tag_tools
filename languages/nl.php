@@ -1,7 +1,7 @@
 <?php
 /**
- * This file was created by Translation Editor v9.0
- * On 2022-02-11 09:17
+ * This file was created by Translation Editor v11.1
+ * On 2023-05-17 15:16
  */
 
 return array (

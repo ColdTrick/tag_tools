@@ -1,7 +1,7 @@
 <?php
 /**
- * This file was created by Translation Editor v8.0
- * On 2021-07-05 14:17
+ * This file was created by Translation Editor v11.1
+ * On 2023-05-17 15:17
  */
 
 return array (
@@ -18,4 +18,6 @@ el icono al lado de ella.',
   'widgets:follow_tags:empty' => 'Este usuario no recibe notificaciones de etiquetas',
   'tag_tools:actions:follow_tag:success:follow' => 'A partir de ahora serás notificado cuando alguien etiquete un contenido con la etiqueta <b>\'%s\'</b>',
   'tag_tools:actions:follow_tag:success:unfollow' => 'Ya no serás notificado cuando alguien etiquete un contenido con la etiqueta <b>\'%s\'</b>',
+  'widgets:tagcloud:name' => 'Nube de etiquetas',
+  'widgets:tagcloud:description' => 'Nube de etiquetas',
 );
