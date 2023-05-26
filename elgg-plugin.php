@@ -1,11 +1,10 @@
 <?php
 
-namespace ColdTrick\TagTools;
-
+use ColdTrick\TagTools\Forms\PrepareFields;
+use ColdTrick\TagTools\Notifications\CreateNotificationRelationshipEventHandler;
 use Elgg\Router\Middleware\AdminGatekeeper;
 use Elgg\Router\Middleware\Gatekeeper;
 use Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper;
-use ColdTrick\TagTools\Forms\PrepareFields;
 
 require_once(dirname(__FILE__) . '/lib/functions.php');
 
@@ -42,23 +41,13 @@ return [
 		'whitelist' => 1,
 		'separate_notifications' => 1,
 	],
-	'view_extensions' => [
-		'elgg.css' => [
-			'tag_tools/site.css' => [],
-		],
-		'admin.css' => [
-			'tag_tools/site.css' => [],
-		],
-		'tag_tools/tag/content' => [
-			'tag_tools/tag/content/recent_content' => ['priority' => 100],
-			'tag_tools/tag/content/groups' => ['priority' => 200],
-			'tag_tools/tag/content/users' => ['priority' => 300],
-			'tag_tools/tag/content/related_tags' => ['priority' => 400],
-		],
-	],
-	'view_options' => [
-		'tag_tools/tag/view' => ['ajax' => true],
-		'tag_tools/tagcolors.css' => ['simplecache' => true],
+	'actions' => [
+		'tag_definition/edit' => ['access' => 'admin'],
+		'tag_tools/follow_tag' => [],
+		'tag_tools/followers/export' => ['access' => 'admin'],
+		'tag_tools/notifications/edit' => [],
+		'tag_tools/rules/edit' => ['access' => 'admin'],
+		'tag_tools/suggestions/ignore' => ['access' => 'admin'],
 	],
 	'routes' => [
 		'add:object:tag_tools_rule' => [
@@ -107,33 +96,16 @@ return [
 			'controller' => [\TagDefinition::class, 'forwarder'],
 		],
 	],
-	'actions' => [
-		'tag_definition/edit' => ['access' => 'admin'],
-		'tag_tools/follow_tag' => [],
-		'tag_tools/followers/export' => ['access' => 'admin'],
-		'tag_tools/notifications/edit' => [],
-		'tag_tools/rules/edit' => ['access' => 'admin'],
-		'tag_tools/suggestions/ignore' => ['access' => 'admin'],
-	],
-	'widgets' => [
-		'follow_tags' => [
-			'context' => ['profile', 'dashboard'],
-		],
-		'tagcloud' => [
-			'context' => ['profile', 'dashboard', 'index', 'groups'],
-			'required_plugin' => 'tagcloud',
-		],
-	],
 	'events' => [
 		'create' => [
 			'metadata' => [
-				__NAMESPACE__ . '\Rules::applyRules' => ['priority' => 1],
-				__NAMESPACE__ . '\Enqueue::createMetadata' => [],
+				'\ColdTrick\TagTools\Rules::applyRules' => ['priority' => 1],
+				'\ColdTrick\TagTools\Enqueue::createMetadata' => [],
 			],
 		],
 		'cron' => [
 			'daily' => [
-				__NAMESPACE__ . '\Views::resetTagsWhitelist' => [],
+				'\ColdTrick\TagTools\Views::resetTagsWhitelist' => [],
 			],
 		],
 		'form:prepare:fields' => [
@@ -143,56 +115,83 @@ return [
 		],
 		'get' => [
 			'subscriptions' => [
-				__NAMESPACE__ . '\Notifications\ExtendedContentNotification::getSubscribers' => [],
+				'\ColdTrick\TagTools\Notifications\ExtendedContentNotification::getSubscribers' => [],
 			],
 		],
 		'prepare' => [
 			'html' => [
-				__NAMESPACE__ . '\HtmlFormatter::replaceHashTags' => [],
+				'\ColdTrick\TagTools\HtmlFormatter::replaceHashTags' => [],
 			],
 			'notification' => [
-				__NAMESPACE__ . '\Notifications\ExtendedContentNotification::extendNotificationBody' => ['priority' => 999],
+				'\ColdTrick\TagTools\Notifications\ExtendedContentNotification::extendNotificationBody' => ['priority' => 999],
 			],
 		],
 		'register' => [
 			'menu:title' => [
-				__NAMESPACE__ . '\MenuItems::registerFollowTag' => [],
-				__NAMESPACE__ . '\MenuItems::registerTagDefinition' => [],
+				'\ColdTrick\TagTools\Menus\Title::registerFollowTag' => [],
+				'\ColdTrick\TagTools\Menus\Title::registerTagDefinition' => [],
 			],
 			'menu:admin_header' => [
-				__NAMESPACE__ . '\MenuItems::registerAdminItems' => [],
+				'\ColdTrick\TagTools\Menus\AdminHeader::register' => [],
 			],
 			'menu:filter:settings/notifications' => [
-				__NAMESPACE__ . '\MenuItems::registerSettingsMenuItem' => [],
+				'\ColdTrick\TagTools\Menus\Filter::registerNotificationSettings' => [],
 			],
 		],
 		'send:after' => [
 			'notifications' => [
-				__NAMESPACE__ . '\Notifications\CreateNotificationRelationshipEventHandler::afterCleanup' => [],
+				'\ColdTrick\TagTools\Notifications\CreateNotificationRelationshipEventHandler::afterCleanup' => [],
 			],
 		],
 		'update:after' => [
 			'all' => [
-				__NAMESPACE__ . '\Enqueue::afterEntityUpdate' => [],
+				'\ColdTrick\TagTools\Enqueue::afterEntityUpdate' => [],
 			],
 		],
 		'view_vars' => [
 			'input/tags' => [
-				__NAMESPACE__ . '\Views::setInputTagsWhitelist' => [],
+				'\ColdTrick\TagTools\Views::setInputTagsWhitelist' => [],
 			],
 			'output/tag' => [
-				__NAMESPACE__ . '\Views::setOutputTagVars' => [],
+				'\ColdTrick\TagTools\Views::setOutputTagVars' => [],
 			],
 			'output/tags' => [
-				__NAMESPACE__ . '\Views::setOutputTagsVars' => [],
+				'\ColdTrick\TagTools\Views::setOutputTagsVars' => [],
 			],
 		],
 	],
 	'notifications' => [
 		'relationship' => [
 			'tag_tools:notification' => [
-				'create' => \ColdTrick\TagTools\Notifications\CreateNotificationRelationshipEventHandler::class,
+				'create' => CreateNotificationRelationshipEventHandler::class,
 			],
+		],
+	],
+	'view_extensions' => [
+		'elgg.css' => [
+			'tag_tools/site.css' => [],
+		],
+		'admin.css' => [
+			'tag_tools/site.css' => [],
+		],
+		'tag_tools/tag/content' => [
+			'tag_tools/tag/content/recent_content' => ['priority' => 100],
+			'tag_tools/tag/content/groups' => ['priority' => 200],
+			'tag_tools/tag/content/users' => ['priority' => 300],
+			'tag_tools/tag/content/related_tags' => ['priority' => 400],
+		],
+	],
+	'view_options' => [
+		'tag_tools/tag/view' => ['ajax' => true],
+		'tag_tools/tagcolors.css' => ['simplecache' => true],
+	],
+	'widgets' => [
+		'follow_tags' => [
+			'context' => ['profile', 'dashboard'],
+		],
+		'tagcloud' => [
+			'context' => ['profile', 'dashboard', 'index', 'groups'],
+			'required_plugin' => 'tagcloud',
 		],
 	],
 ];
