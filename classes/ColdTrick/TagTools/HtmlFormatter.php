@@ -42,7 +42,7 @@ class HtmlFormatter {
 			if ($i % 2 === 0) { // even numbers are text
 				// Only process this chunk if there are no unclosed $ignoreTags
 				if ($openTag === null) {
-					$text = preg_replace_callback('/(^|[^\w])#(\w*[^\s\d!-\/:-@]+\w*)/', function($matches) {
+					$text = preg_replace_callback('/(^|[^\w])#(\w+[^\s\d[:punct:]\x{2018}-\x{201F}]+\w*)/u', function($matches) {
 						$match = trim($matches[0]);
 						$tag = $matches[2];
 						
@@ -53,7 +53,7 @@ class HtmlFormatter {
 							]),
 							'is_trusted' => true,
 						]);
-					}, $text);
+					}, $text) ?? $text;
 				}
 			} else { // odd numbers are tags
 				// Only process this tag if there are no unclosed $ignoreTags
