@@ -3,11 +3,12 @@
 /**
  * Tag correction rule
  *
- * @property string from_tag   the original value
- * @property string to_tag     the replacement value
- * @property string tag_action which action to take on the tags [delete, replace]
+ * @property string $from_tag    the original value
+ * @property bool   $notify_user show a system message to the user when this rule is applied
+ * @property string $to_tag      the replacement value
+ * @property string $tag_action  which action to take on the tags [delete, replace]
  */
-class TagToolsRule extends ElggObject {
+class TagToolsRule extends \ElggObject {
 	
 	const SUBTYPE = 'tag_tools_rule';
 	
@@ -25,7 +26,6 @@ class TagToolsRule extends ElggObject {
 	 * {@inheritdoc}
 	 */
 	protected function initializeAttributes() {
-		
 		parent::initializeAttributes();
 		
 		$site = elgg_get_site_entity();
@@ -40,7 +40,6 @@ class TagToolsRule extends ElggObject {
 	 * {@inheritdoc}
 	 */
 	public function __get($name) {
-		
 		$result = parent::__get($name);
 		
 		if ($name === 'from_tag') {
@@ -54,7 +53,6 @@ class TagToolsRule extends ElggObject {
 	 * {@inheritdoc}
 	 */
 	public function getDisplayName(): string {
-		
 		switch ($this->tag_action) {
 			case 'delete':
 				return elgg_echo('tag_tools:rule:title:delete', [$this->from_tag]);
@@ -73,7 +71,6 @@ class TagToolsRule extends ElggObject {
 	 * @return void
 	 */
 	public function apply(): void {
-		
 		// can we safely execute this?
 		$entity_types = $this->getRegisteredEntityTypes();
 		$tag_names = $this->getTagNames();
@@ -134,7 +131,6 @@ class TagToolsRule extends ElggObject {
 	 * @return void
 	 */
 	protected function preApply(): void {
-		
 		// this could take a bit
 		set_time_limit(0);
 		
@@ -149,8 +145,7 @@ class TagToolsRule extends ElggObject {
 	 * @return void
 	 */
 	protected function postApply(): void {
-		
-		// reregister events
+		// re-register events
 		elgg_register_event_handler('create', 'metadata', '\ColdTrick\TagTools\Rules::applyRules', 1);
 		elgg_register_event_handler('create', 'metadata', '\ColdTrick\TagTools\Enqueue::createMetadata');
 	}
@@ -161,10 +156,8 @@ class TagToolsRule extends ElggObject {
 	 * @return void|bool
 	 */
 	protected function applyDelete() {
-		
 		$entity_types = $this->getRegisteredEntityTypes();
 		$tag_names = $this->getTagNames();
-		
 		if (empty($entity_types) || empty($tag_names)) {
 			return;
 		}
@@ -195,8 +188,7 @@ class TagToolsRule extends ElggObject {
 	 *
 	 * @return void
 	 */
-	protected function applyReplace() {
-		
+	protected function applyReplace(): void {
 		$entity_types = $this->getRegisteredEntityTypes();
 		$tag_names = $this->getTagNames();
 		$to_tag = $this->to_tag;
@@ -274,7 +266,6 @@ class TagToolsRule extends ElggObject {
 	 * @return string[]
 	 */
 	protected function getTagNames() {
-		
 		if (isset($this->tag_names)) {
 			return $this->tag_names;
 		}
@@ -289,7 +280,6 @@ class TagToolsRule extends ElggObject {
 	 * @return array
 	 */
 	protected function getRegisteredEntityTypes() {
-		
 		if (isset($this->entity_types)) {
 			return $this->entity_types;
 		}

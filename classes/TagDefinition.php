@@ -1,11 +1,15 @@
 <?php
 
 use Elgg\Exceptions\Http\EntityNotFoundException;
+use Elgg\Http\RedirectResponse;
 
 /**
  * Tag definition
+ *
+ * @property string $bgcolor   tag background color
+ * @property string $textcolor tag text color
  */
-class TagDefinition extends ElggObject {
+class TagDefinition extends \ElggObject {
 	
 	/**
 	 * @var string the subtype of this entity
@@ -34,7 +38,6 @@ class TagDefinition extends ElggObject {
 	 * @return false|TagDefinition
 	 */
 	public static function find(string $tag) {
-		
 		if (elgg_is_empty($tag)) {
 			return false;
 		}
@@ -68,7 +71,6 @@ class TagDefinition extends ElggObject {
 	 * @return void|TagDefinition null on error, otherwise a TagDefinition
 	 */
 	public static function factory(array $options = []) {
-		
 		$tag = elgg_extract('title', $options);
 		if (elgg_is_empty($tag)) {
 			elgg_log('A "title" is required for a new Tag Definition', 'ERROR');
@@ -101,11 +103,10 @@ class TagDefinition extends ElggObject {
 	 *
 	 * @param \Elgg\Request $request the request
 	 *
+	 * @return RedirectResponse
 	 * @throws EntityNotFoundException
-	 * @return void
 	 */
 	public static function forwarder(\Elgg\Request $request) {
-		
 		$entity = $request->getEntityParam();
 		if (!$entity instanceof TagDefinition) {
 			throw new EntityNotFoundException();
