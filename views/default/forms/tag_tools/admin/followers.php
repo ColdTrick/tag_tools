@@ -36,7 +36,7 @@ $fields = [
 	],
 	[
 		'#type' => 'submit',
-		'value' => elgg_echo('search'),
+		'text' => elgg_echo('search'),
 	],
 ];
 
