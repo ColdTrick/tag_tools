@@ -73,7 +73,8 @@ $footer_fields = [
 	[
 		'#type' => 'submit',
 		'name' => 'save',
-		'value' => elgg_echo('tag_tools:rules:save_execute'),
+		'value' => 1,
+		'text' => elgg_echo('tag_tools:rules:save_execute'),
 	],
 ];
 
@@ -81,7 +82,8 @@ if (!$edit) {
 	$footer_fields[] = [
 		'#type' => 'submit',
 		'name' => 'save',
-		'value' => elgg_echo('tag_tools:rules:execute'),
+		'value' => 0,
+		'text' => elgg_echo('tag_tools:rules:execute'),
 	];
 }
 

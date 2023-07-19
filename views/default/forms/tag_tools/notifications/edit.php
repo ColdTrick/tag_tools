@@ -69,7 +69,7 @@ foreach ($tags as $tag) {
 echo elgg_format_element('ul', ['class' => 'elgg-list elgg-subscriptions'], implode($lis));
 
 $foot = elgg_view('input/submit', [
-	'value' => elgg_echo('save'),
+	'text' => elgg_echo('save'),
 	'class' => 'elgg-button-submit mtl',
 ]);
 
