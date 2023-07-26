@@ -1,6 +1,11 @@
 Version history
 ===============
 
+10.0.2 (2023-07-26):
+
+- fixed: buttons have a discernible text
+- fixed: correctly validate entity
+
 10.0.1 (2023-07-05):
 
 - fixed: hashtag matching regex
