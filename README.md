@@ -1,6 +1,6 @@
 # Tag Tools
 
-![Elgg 5.0](https://img.shields.io/badge/Elgg-5.0-green.svg)
+![Elgg 5.1](https://img.shields.io/badge/Elgg-5.1-green.svg)
 ![Lint Checks](https://github.com/ColdTrick/tag_tools/actions/workflows/lint.yml/badge.svg?event=push)
 [![Latest Stable Version](https://poser.pugx.org/coldtrick/tag_tools/v/stable.svg)](https://packagist.org/packages/coldtrick/tag_tools)
 [![License](https://poser.pugx.org/coldtrick/tag_tools/license.svg)](https://packagist.org/packages/coldtrick/tag_tools)
