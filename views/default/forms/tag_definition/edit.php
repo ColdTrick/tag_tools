@@ -1,7 +1,7 @@
 <?php
 
 $entity = elgg_extract('entity', $vars);
-if ($entity instanceof TagDefinition) {
+if ($entity instanceof \TagDefinition) {
 	echo elgg_view_field([
 		'#type' => 'hidden',
 		'name' => 'guid',
@@ -47,7 +47,6 @@ echo elgg_view_field([
 	],
 ]);
 
-// footer
 $footer = elgg_view_field([
 	'#type' => 'submit',
 	'text' => elgg_echo('save'),

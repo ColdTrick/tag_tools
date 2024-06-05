@@ -12,15 +12,15 @@ class Views {
 	 *
 	 * @param \Elgg\Event $event 'view_vars', 'output/tag'
 	 *
-	 * @return array
+	 * @return null|array
 	 */
-	public static function setOutputTagVars(\Elgg\Event $event) {
+	public static function setOutputTagVars(\Elgg\Event $event): ?array {
 
 		$vars = $event->getValue();
 		
 		$value = elgg_extract('value', $vars);
 		if (elgg_is_empty($value)) {
-			return;
+			return null;
 		}
 		
 		elgg_require_css('tag_tools/tagcolors');
@@ -42,7 +42,7 @@ class Views {
 	 *
 	 * @return array
 	 */
-	public static function setOutputTagsVars(\Elgg\Event $event) {
+	public static function setOutputTagsVars(\Elgg\Event $event): array {
 
 		$vars = $event->getValue();
 				
@@ -55,16 +55,16 @@ class Views {
 	 *
 	 * @param \Elgg\Event $event 'view_vars', 'input/tags'
 	 *
-	 * @return array
+	 * @return null|array
 	 */
-	public static function setInputTagsWhitelist(\Elgg\Event $event) {
+	public static function setInputTagsWhitelist(\Elgg\Event $event): ?array {
 		if (!(bool) elgg_get_plugin_setting('whitelist', 'tag_tools')) {
-			return;
+			return null;
 		}
 		
 		$whitelist = self::getTagsWhitelist();
 		if (empty($whitelist)) {
-			return;
+			return null;
 		}
 		
 		$vars = $event->getValue();
@@ -79,6 +79,7 @@ class Views {
 		];
 		
 		$vars['tagify_options'] = $options;
+		
 		return $vars;
 	}
 	
@@ -117,7 +118,7 @@ class Views {
 	 *
 	 * @param \Elgg\Event $event 'cron', 'daily'
 	 *
-	 * @return array
+	 * @return void
 	 */
 	public static function resetTagsWhitelist(\Elgg\Event $event) {
 		if (!(bool) elgg_get_plugin_setting('whitelist', 'tag_tools') !== 1) {

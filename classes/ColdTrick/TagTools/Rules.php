@@ -43,6 +43,7 @@ class Rules {
 			],
 			'count' => true,
 		]);
+		
 		if ($self_exists > 1) {
 			// a previous replace already added this tag
 			$object->delete();
@@ -55,7 +56,6 @@ class Rules {
 			return;
 		}
 		
-		// get rule
 		$rule = tag_tools_rules_get_rule($object->value);
 		if (empty($rule)) {
 			return;
@@ -83,6 +83,7 @@ class Rules {
 					],
 					'count' => true,
 				]);
+				
 				if (!empty($exists)) {
 					// new value already exists,
 					return false;
@@ -102,7 +103,7 @@ class Rules {
 	 *
 	 * @return bool
 	 */
-	protected static function validateEntity($entity) {
+	protected static function validateEntity($entity): bool {
 		
 		if (!$entity instanceof \ElggEntity) {
 			// not a valid entity

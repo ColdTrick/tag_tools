@@ -43,7 +43,7 @@ if (!$edit) {
 		],
 	]);
 	
-	echo elgg_format_element('script', [], 'require(["tag_tools/rules/edit"]);');
+	elgg_import_esm('forms/tag_tools/rules/edit');
 }
 
 // to tag
@@ -68,7 +68,6 @@ echo elgg_view_field([
 	'checked' => (bool) elgg_extract('notify_user', $vars),
 ]);
 
-// footer
 $footer_fields = [
 	[
 		'#type' => 'submit',

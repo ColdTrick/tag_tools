@@ -26,8 +26,8 @@ echo elgg_view_field([
 	'value' => $user->guid,
 ]);
 
-elgg_require_js('tag_tools/notifications');
-elgg_require_js('notifications/subscriptions/record');
+elgg_import_esm('forms/tag_tools/notifications/edit');
+elgg_import_esm('notifications/subscriptions/record');
 elgg_require_css('notifications/subscriptions/record');
 
 $method_options = [];

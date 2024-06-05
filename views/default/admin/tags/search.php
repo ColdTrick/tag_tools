@@ -23,7 +23,7 @@ if ($min_count > 0) {
 
 $query = get_input('q');
 if (!empty($query)) {
-	$select->andWhere($select->compare('md.value', 'LIKE', "%{$query}%"));
+	$select->andWhere($select->compare('md.value', 'LIKE', "%{$query}%", ELGG_VALUE_STRING));
 }
 
 $type_subtype = get_input('type_subtype');
@@ -47,10 +47,7 @@ $select->addOrderBy('md.value', 'ASC');
 
 $count_query = new Select(_elgg_services()->db->getConnection('read'));
 $count_query->select('count(*) as row_count');
-$count_query->add('from', [
-	'table' => "({$select->getSQL()})",
-	'alias' => 'c',
-], true);
+$count_query->subquery("({$select->getSQL()})", 'c');
 $count_query->setParameters($select->getParameters());
 
 $count_res = elgg()->db->getDataRow($count_query);
@@ -69,8 +66,7 @@ $select->setMaxResults($limit);
 
 $results = $select->execute()->fetchAllAssociative();
 
-// load js
-elgg_require_js('tag_tools/admin/search');
+elgg_import_esm('admin/tags/search');
 
 // build results
 $rows = [];

@@ -387,7 +387,7 @@ function tag_tools_add_sent_tags(ElggEntity $entity, $sending_tags = []): bool {
 /**
  * Get the metadata names for which to apply tag rules
  *
- * @todo support mulitple names
+ * @todo support multiple names
  *
  * @return string[]
  */
@@ -425,9 +425,7 @@ function tag_tools_rules_get_type_subtypes(): array {
 		}
 	}
 	
-	$result = elgg_trigger_event_results('rules_type_subtypes', 'tag_tools', $result, $result);
-	
-	return $result;
+	return (array) elgg_trigger_event_results('rules_type_subtypes', 'tag_tools', $result, $result);
 }
 
 /**
@@ -453,6 +451,7 @@ function tag_tools_rules_get_rule(string $from_tag) {
 			'case_sensitive' => false,
 		],
 	]);
+	
 	if (empty($rules)) {
 		return false;
 	}

@@ -13,7 +13,7 @@ $select->select('md.value')
 	->groupBy('md.value')
 	->having($select->compare('CHAR_LENGTH(md.value)', '>', 2));
 
-// limit small tag conut
+// limit small tag count
 $min_count = (int) get_input('min_count', 10);
 if ($min_count > 0) {
 	$select->having($select->compare('total', '>', $min_count, ELGG_VALUE_INTEGER));
@@ -114,7 +114,7 @@ foreach ($suggestions as $from_tag => $to_tags) {
 		]),
 	]);
 
-	$title = elgg_echo('tag_tools:admin:tags:suggest:item', [$from_tag]);
+	$title = elgg_echo('tag_tools:admin:tags:suggest:item', [elgg_format_element('i', [], $from_tag)]);
 	
 	$content = implode('<br />', $buttons);
 

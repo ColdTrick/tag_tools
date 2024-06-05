@@ -7,7 +7,7 @@ $entity = false;
 if (!empty($guid)) {
 	// edit
 	$entity = get_entity($guid);
-	if (!$entity instanceof TagDefinition || !$entity->canEdit()) {
+	if (!$entity instanceof \TagDefinition || !$entity->canEdit()) {
 		return elgg_error_response(elgg_echo('error:missing_data'));
 	}
 } else {
@@ -17,12 +17,12 @@ if (!empty($guid)) {
 		return elgg_error_response(elgg_echo('error:missing_data'));
 	}
 	
-	$entity = TagDefinition::factory([
+	$entity = \TagDefinition::factory([
 		'title' => $title,
 	]);
 }
 
-if (!$entity instanceof TagDefinition) {
+if (!$entity instanceof \TagDefinition) {
 	return elgg_error_response(elgg_echo('save:fail'));
 }
 

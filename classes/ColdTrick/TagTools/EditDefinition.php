@@ -7,22 +7,16 @@ namespace ColdTrick\TagTools;
  */
 class EditDefinition {
 	
-	/**
-	 * @var string
-	 */
-	protected $tag;
+	protected ?string $tag;
 	
-	/**
-	 * @var \TagDefinition
-	 */
-	protected $entity;
+	protected ?\TagDefinition $entity;
 	
 	/**
 	 * Create new edit form preparation
 	 *
 	 * @param string|\TagDefinition $tag starting point
 	 */
-	public function __construct($tag = null) {
+	public function __construct(string|\TagDefinition $tag = null) {
 		
 		if (is_string($tag)) {
 			$this->tag = strtolower($tag);
@@ -60,7 +54,6 @@ class EditDefinition {
 			$defaults['entity'] = $this->entity;
 		}
 		
-		// stick form
 		$sticky_vars = elgg_get_sticky_values('tag_definition/edit');
 		if (!empty($sticky_vars)) {
 			foreach ($sticky_vars as $name => $value) {

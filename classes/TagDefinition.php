@@ -56,6 +56,7 @@ class TagDefinition extends \ElggObject {
 				],
 			]);
 		});
+		
 		if (empty($entities)) {
 			return false;
 		}

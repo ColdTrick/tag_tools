@@ -15,12 +15,12 @@ class TagToolsRule extends \ElggObject {
 	/**
 	 * @var string[] registered tag names
 	 */
-	protected $tag_names;
+	protected array $tag_names;
 	
 	/**
 	 * @var array the registered entity types in Elgg
 	 */
-	protected $entity_types;
+	protected array $entity_types;
 	
 	/**
 	 * {@inheritdoc}
@@ -110,7 +110,7 @@ class TagToolsRule extends \ElggObject {
 	 *
 	 * @return void
 	 */
-	public function notify($type): void {
+	public function notify(string $type): void {
 		if (!$this->notify_user) {
 			return;
 		}
@@ -265,7 +265,7 @@ class TagToolsRule extends \ElggObject {
 	 *
 	 * @return string[]
 	 */
-	protected function getTagNames() {
+	protected function getTagNames(): array {
 		if (isset($this->tag_names)) {
 			return $this->tag_names;
 		}
@@ -279,7 +279,7 @@ class TagToolsRule extends \ElggObject {
 	 *
 	 * @return array
 	 */
-	protected function getRegisteredEntityTypes() {
+	protected function getRegisteredEntityTypes(): array {
 		if (isset($this->entity_types)) {
 			return $this->entity_types;
 		}
