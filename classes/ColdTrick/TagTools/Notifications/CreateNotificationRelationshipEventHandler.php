@@ -147,9 +147,13 @@ class CreateNotificationRelationshipEventHandler extends NotificationEventHandle
 			return $this->unsent_tags;
 		}
 		
-		$entity = $this->getNotificationEntity();
+		$this->unsent_tags = [];
 		
-		$this->unsent_tags = tag_tools_get_unsent_notification_tags($entity);
+		$entity = $this->getNotificationEntity();
+		if ($entity instanceof \ElggEntity) {
+			$this->unsent_tags = tag_tools_get_unsent_notification_tags($entity);
+		}
+		
 		return $this->unsent_tags;
 	}
 	
