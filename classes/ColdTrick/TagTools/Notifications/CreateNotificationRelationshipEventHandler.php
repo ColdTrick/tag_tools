@@ -43,6 +43,9 @@ class CreateNotificationRelationshipEventHandler extends NotificationEventHandle
 		}
 		
 		$entity = $handler->getNotificationEntity();
+		if (!$entity instanceof \ElggEntity) {
+			return;
+		}
 		
 		// cleanup the relationship
 		$entity->removeAllRelationships('tag_tools:notification', true);
@@ -61,6 +64,9 @@ class CreateNotificationRelationshipEventHandler extends NotificationEventHandle
 	 */
 	public function getSubscriptions(): array {
 		$entity = $this->getNotificationEntity();
+		if (!$entity instanceof \ElggEntity) {
+			return [];
+		}
 		
 		$sending_tags = $this->getUnsentTagsForEntity();
 		if (empty($sending_tags)) {
