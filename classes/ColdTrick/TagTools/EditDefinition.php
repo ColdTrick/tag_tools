@@ -9,12 +9,12 @@ class EditDefinition {
 	
 	protected ?string $tag;
 	
-	protected ?\TagDefinition $entity;
+	protected ?\TagDefinition $entity = null;
 	
 	/**
 	 * Create new edit form preparation
 	 *
-	 * @param string|\TagDefinition $tag starting point
+	 * @param string|\TagDefinition|null $tag starting point
 	 */
 	public function __construct(string|\TagDefinition $tag = null) {
 		
