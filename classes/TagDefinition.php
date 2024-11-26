@@ -74,7 +74,7 @@ class TagDefinition extends \ElggObject {
 	public static function factory(array $options = []) {
 		$tag = elgg_extract('title', $options);
 		if (elgg_is_empty($tag)) {
-			elgg_log('A "title" is required for a new Tag Definition', 'ERROR');
+			elgg_log('A "title" is required for a new Tag Definition', \Psr\Log\LogLevel::ERROR);
 			return;
 		}
 		

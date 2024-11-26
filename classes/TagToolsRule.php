@@ -95,7 +95,7 @@ class TagToolsRule extends \ElggObject {
 						break;
 				}
 			} catch (\Exception $e) {
-				elgg_log($e->getMessage(), 'ERROR');
+				elgg_log($e->getMessage(), \Psr\Log\LogLevel::ERROR);
 			}
 		});
 		
