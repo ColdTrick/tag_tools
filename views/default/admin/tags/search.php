@@ -101,7 +101,8 @@ foreach ($results as $result) {
 			'style' => 'width: 1%;',
 			'class' => 'center',
 		], elgg_view('output/url', [
-			'text' => elgg_view_icon('random'),
+			'icon' => 'random',
+			'text' => false,
 			'href' => elgg_http_add_url_query_elements('tag_tools/rules/add', [
 				'from_tag' => $result['value'],
 			]),
@@ -117,7 +118,8 @@ foreach ($results as $result) {
 			'style' => 'width: 1%;',
 			'class' => 'center',
 		], elgg_view('output/url', [
-			'text' => elgg_view_icon('delete'),
+			'icon' => 'delete',
+			'text' => false,
 			'href' => elgg_http_add_url_query_elements('tag_tools/rules/add', [
 				'from_tag' => $result['value'],
 				'tag_action' => 'delete',

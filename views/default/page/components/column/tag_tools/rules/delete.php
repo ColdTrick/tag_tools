@@ -17,7 +17,8 @@ if (!$entity instanceof TagToolsRule) {
 }
 
 $link = elgg_view('output/url', [
-	'text' => elgg_view_icon('delete'),
+	'icon' => 'delete',
+	'text' => false,
 	'href' => elgg_generate_action_url('entity/delete', [
 		'guid' => $entity->guid,
 	]),

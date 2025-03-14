@@ -18,10 +18,10 @@ if (!$entity instanceof TagToolsRule) {
 }
 
 $link = elgg_view('output/url', [
-	'text' => elgg_view_icon('edit'),
+	'icon' => 'edit',
+	'text' => false,
 	'href' => elgg_generate_entity_url($entity, 'edit'),
 	'title' => elgg_echo('edit'),
-	'is_trusted' => true,
 	'class' => 'elgg-lightbox',
 	'data-colorbox-opts' => json_encode([
 		'width' => '600px',
