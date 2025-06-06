@@ -10,15 +10,14 @@ if (empty($methods)) {
 	return;
 }
 
-echo elgg_view('output/longtext', ['value' => elgg_echo('tag_tools:notifications:description')]);
-
 $notification_methods = elgg_get_notification_methods();
 
 $tags = tag_tools_get_user_following_tags($user->guid);
 if (empty($tags)) {
-	echo elgg_view('output/longtext', ['value' => elgg_echo('tag_tools:notifications:empty')]);
 	return;
 }
+
+echo elgg_view('output/longtext', ['value' => elgg_echo('tag_tools:notifications:description')]);
 
 echo elgg_view_field([
 	'#type' => 'hidden',

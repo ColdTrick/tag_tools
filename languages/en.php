@@ -58,9 +58,14 @@ return [
 	'tag_tools:follow_tag:menu:on:text' => "Follow tag",
 	'tag_tools:follow_tag:menu:off' => "Stop tracking new content with this tag",
 	'tag_tools:follow_tag:menu:off:text' => "Unfollow tag",
+	
 	'tag_tools:notifications:menu' => "Tag notifications",
 	'tag_tools:notifications:description' => "Configure the tags you wish to monitor and if and how you will be notified when new content is created with one of these tags.",
-	'tag_tools:notifications:empty' => "You currently follow no tags. If you see a tag you would like to follow. Click the follow tag icon next to the tag.",
+	'tag_tools:notifications:empty' => "You are currently not following any tags",
+	'tag_tools:notifications:follow:search' => "Enter a new tag to follow",
+	'tag_tools:notifications:follow:search:help' => "When entering a new tag you will get suggestions for the tag to follow. You can select a tag from the list.",
+	'tag_tools:notifications:follow:search:placeholder' => "Search for a tag",
+	
 	'tag_tools:notification:follow:subject' => "New content with the tag(s): %s",
 	'tag_tools:notification:follow:summary' => "New content with the tag(s): %s",
 	'tag_tools:notification:follow:message' => "There is new content with the tag(s): %s.
@@ -108,4 +113,6 @@ You can see it here: %s",
 	'tag_tools:tag_definition:edit:field:bgcolor' => "Background color",
 	'tag_tools:tag_definition:edit:field:textcolor' => "Text color",
 	
+	// livesearch
+	'tag_tools:livesearch:tags:count' => " - %d items",
 ];

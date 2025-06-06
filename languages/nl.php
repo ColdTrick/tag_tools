@@ -1,10 +1,14 @@
 <?php
 /**
- * This file was created by Translation Editor v11.1
- * On 2023-05-17 15:16
+ * This file was created by Translation Editor v14.0.3
+ * On 2025-06-06 11:49
  */
 
 return array (
+  'tag_tools:notifications:follow:search' => 'Geef een nieuwe tag op om te volgen',
+  'tag_tools:notifications:follow:search:help' => 'Als je een nieuwe tag opgeeft krijg je suggesties voor een tag om te volgen. Je kunt een tag selecteren uit de lijst.',
+  'tag_tools:notifications:follow:search:placeholder' => 'Zoek naar een tag',
+  'tag_tools:livesearch:tags:count' => '- %d items',
   'tag_tools:settings:separate_notifications' => 'Hoe moeten tag notificaties worden verzonden',
   'tag_tools:settings:separate_notifications:enabled' => 'Verstuur een aparte notificatie voor de tag notificaties',
   'tag_tools:settings:separate_notifications:disabled' => 'Breidt de content creatie notificaties uit met de tag abonnees',
@@ -79,7 +83,7 @@ Bekijk het hier: %s',
   'tag_tools:follow_tag:menu:off' => 'Stop met volgen van nieuwe content met deze tag',
   'tag_tools:notifications:menu' => 'Tag notificaties',
   'tag_tools:notifications:description' => 'Beheer de tags die je in de gaten houd en stel in of en hoe je van nieuwe content met deze tag op de hoogte wilt worden gehouden.',
-  'tag_tools:notifications:empty' => 'Op dit moment volg je geen tags. Indien je een tag ziet, kun je deze volgen middels het icoon naast de tag.',
+  'tag_tools:notifications:empty' => 'Op dit moment volg je geen tags.',
   'tag_tools:notification:follow:subject' => 'Nieuwe content met de tag(s): %s',
   'tag_tools:notification:follow:message' => 'Er is nieuwe content met de tag(s): %s.
 

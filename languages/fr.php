@@ -34,7 +34,6 @@ return array (
   'tag_tools:notifications:menu' => 'Notification de mes centres d’intérêt',
   'tag_tools:actions:follow_tag:success:follow' => 'Vous suivez maintenant le tag : %s',
   'tag_tools:actions:follow_tag:success:unfollow' => 'Vous ne suivez plus le tag : %s',
-  'tag_tools:notifications:empty' => 'Vous ne suivez aucun centre d’intérêt. Si vous voyez un centre d’intérêt que vous voulez suivre, cliquez sur le picto à coté de celui-ci.',
   'widgets:follow_tags:name' => 'Tags suivis',
   'widgets:follow_tags:description' => 'Indique les tags que vous suivez',
   'tag_tools:notification:follow:update:message' => 'Une nouvelle publication à été publiée contenant le tag : %s.
