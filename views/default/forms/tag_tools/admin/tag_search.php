@@ -19,6 +19,7 @@ echo elgg_view('input/fieldset', [
 	'fields' => [
 		[
 			'#type' => 'text',
+			'#class' => 'elgg-field-stretch',
 			'name' => 'q',
 			'value' => get_input('q'),
 			'placeholder' => elgg_echo('search'),
@@ -45,8 +46,10 @@ echo elgg_view('input/fieldset', [
 			'name' => 'order',
 			'value' => get_input('order'),
 			'options_values' => [
-				'count' => elgg_echo('sort:popular'),
-				'alpha' => elgg_echo('sort:alpha'),
+				'count_9_0' => elgg_echo('sort:popular') . ' (9-0)',
+				'count_0_9' => elgg_echo('sort:popular') . ' (0-9)',
+				'alpha_a_z' => elgg_echo('sort:alpha') . ' (a-z)',
+				'alpha_z_a' => elgg_echo('sort:alpha') . ' (z-a)',
 			],
 			'title' => elgg_echo('tag_tools:search:order'),
 		],

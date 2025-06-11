@@ -1,5 +1,6 @@
 <?php
 
+use Elgg\Database\MetadataTable;
 use Elgg\Database\Select;
 
 $tag_names = tag_tools_rules_get_tag_names();
@@ -10,11 +11,11 @@ echo elgg_view_form('tag_tools/admin/tag_search', [
 	'disable_security' => true,
 ]);
 
-$select = Select::fromTable('metadata', 'md');
-$select->select('md.value')
-	->addSelect('count(md.id) AS total')
-	->where($select->compare('md.name', 'in', $tag_names, ELGG_VALUE_STRING))
-	->groupBy('md.value');
+$select = Select::fromTable(MetadataTable::TABLE_NAME, 'md');
+$select->select("{$select->getTableAlias()}.value")
+	->addSelect("count({$select->getTableAlias()}.id) AS total")
+	->where($select->compare("{$select->getTableAlias()}.name", 'in', $tag_names, ELGG_VALUE_STRING))
+	->groupBy("{$select->getTableAlias()}.value");
 
 $min_count = (int) get_input('min_count', 10);
 if ($min_count > 0) {
@@ -23,14 +24,14 @@ if ($min_count > 0) {
 
 $query = get_input('q');
 if (!empty($query)) {
-	$select->andWhere($select->compare('md.value', 'LIKE', "%{$query}%", ELGG_VALUE_STRING));
+	$select->andWhere($select->compare("{$select->getTableAlias()}.value", 'LIKE', "%{$query}%", ELGG_VALUE_STRING));
 }
 
 $type_subtype = get_input('type_subtype');
 if (!empty($type_subtype)) {
 	list($type, $subtype) = explode(':', $type_subtype);
 	
-	$alias = $select->joinEntitiesTable('md', 'entity_guid');
+	$alias = $select->joinEntitiesTable($select->getTableAlias(), 'entity_guid');
 	
 	$select->andWhere($select->compare("{$alias}.type", '=', $type, ELGG_VALUE_STRING));
 	if (!elgg_is_empty($subtype)) {
@@ -38,38 +39,42 @@ if (!empty($type_subtype)) {
 	}
 }
 
-$order = get_input('order', 'count');
-if ($order === 'count') {
-	$select->orderBy('total', 'DESC');
+$order = get_input('order');
+switch ($order) {
+	case 'alpha_a_z':
+		$select->orderBy("{$select->getTableAlias()}.value", 'ASC');
+		break;
+	case 'alpha_z_a':
+		$select->orderBy("{$select->getTableAlias()}.value", 'DESC');
+		break;
+	case 'count_0_9':
+		$select->orderBy('total', 'ASC');
+		$select->addOrderBy("{$select->getTableAlias()}.value", 'ASC');
+		
+		break;
+	case 'count_9_0':
+	default:
+		$select->orderBy('total', 'DESC');
+		$select->addOrderBy("{$select->getTableAlias()}.value", 'ASC');
+		
+		break;
 }
 
-$select->addOrderBy('md.value', 'ASC');
+$offset = (int) get_input('offset', 0);
+$select->setFirstResult($offset);
 
-$count_query = new Select(_elgg_services()->db->getConnection('read'));
-$count_query->select('count(*) as row_count');
-$count_query->subquery("({$select->getSQL()})", 'c');
-$count_query->setParameters($select->getParameters());
-
-$count_res = elgg()->db->getDataRow($count_query);
-if (empty($count_res) || empty($count_res->row_count)) {
+$count = $select->execute()->rowCount();
+if (empty($count)) {
 	echo elgg_echo('notfound');
 	return;
 }
 
-$count = (int) $count_res->row_count;
-
-$offset = (int) get_input('offset', 0);
 $limit = max((int) get_input('limit'), 50, elgg_get_config('default_limit'));
-
-$select->setFirstResult($offset);
 $select->setMaxResults($limit);
 
 $results = $select->execute()->fetchAllAssociative();
 
 elgg_import_esm('admin/tags/search');
-
-// build results
-$rows = [];
 
 // header
 $row = [
@@ -77,7 +82,10 @@ $row = [
 	elgg_format_element('th', ['style' => 'width: 1%;', 'class' => 'center'], elgg_echo('tag_tools:search:count')),
 	elgg_format_element('th', ['colspan' => 2, 'class' => 'center'], elgg_echo('tag_tools:search:rules')),
 ];
-$rows[] = elgg_format_element('thead', [], elgg_format_element('tr', [], implode(PHP_EOL, $row)));
+$header = elgg_format_element('thead', [], elgg_format_element('tr', [], implode(PHP_EOL, $row)));
+
+// build results
+$rows = [];
 
 // list tags
 foreach ($results as $result) {
@@ -149,11 +157,13 @@ foreach ($results as $result) {
 	$rows[] = elgg_format_element('tr', [], implode(PHP_EOL, $row));
 }
 
+$body = elgg_format_element('tbody', [], elgg_format_element('tr', [], implode(PHP_EOL, $rows)));
+
 // show result
 echo elgg_format_element('table', [
 	'class' => 'elgg-table',
 	'id' => 'tag-tools-search-results',
-], implode(PHP_EOL, $rows));
+], $header . $body);
 
 // show pagination
 echo elgg_view('navigation/pagination', [
