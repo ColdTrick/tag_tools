@@ -16,7 +16,9 @@ $select->select("{$select->getTableAlias()}.value")
 	->where($select->compare("{$select->getTableAlias()}.name", '=', 'tags', ELGG_VALUE_STRING))
 	->andWhere($select->compare("{$select->getTableAlias()}.value", 'like', "%{$term}%", ELGG_VALUE_STRING))
 	->groupBy("{$select->getTableAlias()}.value")
-	->orderBy("{$select->getTableAlias()}.value", 'ASC')
+	->orderBy('total', 'DESC')
+	->addOrderBy("{$select->getTableAlias()}.value", 'ASC')
+	->having($select->compare('total', '>', 10, ELGG_VALUE_INTEGER))
 	->setMaxResults($limit);
 
 $followed_tags = tag_tools_get_user_following_tags($user_guid);
