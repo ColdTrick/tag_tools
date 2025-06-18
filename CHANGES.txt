@@ -1,6 +1,11 @@
 Version history
 ===============
 
+12.1 (2025-06-18):
+
+- added: more sorting options on admin tag search page
+- added: option to follow a tag from the notification settings page
+
 12.0.3 (2025-03-27):
 
 - fixed: use correct styling of icon only URLs
