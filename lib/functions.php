@@ -3,9 +3,9 @@
  * All plugin functions are bundled here
  */
 
-use Elgg\Database\Select;
 use Elgg\Database\Clauses\EntityWhereClause;
 use Elgg\Database\QueryOptions;
+use Elgg\Database\Select;
 
 /**
  * Get all the tags a user is following
@@ -84,14 +84,13 @@ function tag_tools_is_user_following_tag(string $tag, int $user_guid = 0): bool 
 /**
  * Add or remove a tag from the follow list of a user
  *
- * @param string $tag       the tag to (un)follow
- * @param int    $user_guid the user to save the setting for
- * @param bool   $track     add/remove the tag
+ * @param string    $tag       the tag to (un)follow
+ * @param int       $user_guid the user to save the setting for
+ * @param bool|null $track     add/remove the tag
  *
  * @return void
  */
-function tag_tools_toggle_following_tag(string $tag, int $user_guid = 0, bool $track = null): void {
-	
+function tag_tools_toggle_following_tag(string $tag, int $user_guid = 0, ?bool $track = null): void {
 	if (empty($tag)) {
 		return;
 	}
