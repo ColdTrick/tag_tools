@@ -163,7 +163,7 @@ return [
 	'notifications' => [
 		'relationship' => [
 			'tag_tools:notification' => [
-				'create' => CreateNotificationRelationshipEventHandler::class,
+				'create:after' => CreateNotificationRelationshipEventHandler::class,
 			],
 		],
 	],

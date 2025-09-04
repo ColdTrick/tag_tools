@@ -9,13 +9,18 @@
 $user = elgg_extract('entity', $vars);
 
 echo elgg_view_field([
+	'#type' => 'hidden',
+	'name' => 'user_guid',
+	'value' => $user->guid,
+]);
+
+echo elgg_view_field([
 	'#type' => 'fieldset',
 	'fields' => [
 		[
 			'#type' => 'autocomplete',
 			'#label' => elgg_echo('tag_tools:notifications:follow:search'),
 			'#help' => elgg_echo('tag_tools:notifications:follow:search:help'),
-			'#class' => 'elgg-field-stretch elgg-field-horizontal',
 			'placeholder' => elgg_echo('tag_tools:notifications:follow:search:placeholder'),
 			'name' => 'tag',
 			'required' => true,

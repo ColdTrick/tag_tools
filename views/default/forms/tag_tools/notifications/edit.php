@@ -55,6 +55,7 @@ foreach ($tags as $tag) {
 	$container .= elgg_view('output/url', [
 		'href' => elgg_generate_action_url('tag_tools/follow_tag', [
 			'tag' => $tag,
+			'user_guid' => $user->guid,
 		]),
 		'text' => false,
 		'title' => elgg_echo('tag_tools:follow_tag:menu:off'),

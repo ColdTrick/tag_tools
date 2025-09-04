@@ -1,7 +1,5 @@
 <?php
 
-elgg_make_sticky_form('tag_definition/edit');
-
 $guid = (int) get_input('guid');
 $entity = false;
 if (!empty($guid)) {
@@ -56,7 +54,5 @@ if (!$entity->save()) {
 if (($entity->bgcolor !== $old_bgcolor) || ($entity->textcolor !== $old_textcolor)) {
 	elgg_invalidate_caches();
 }
-
-elgg_clear_sticky_form('tag_definition/edit');
 
 return elgg_ok_response('', elgg_echo('save:success'), $entity->getURL());

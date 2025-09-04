@@ -1,6 +1,6 @@
 # Tag Tools
 
-![Elgg 6.0](https://img.shields.io/badge/Elgg-6.0-green.svg)
+![Elgg 6.3](https://img.shields.io/badge/Elgg-6.3-green.svg)
 ![Lint Checks](https://github.com/ColdTrick/tag_tools/actions/workflows/lint.yml/badge.svg?event=push)
 [![Latest Stable Version](https://poser.pugx.org/coldtrick/tag_tools/v/stable.svg)](https://packagist.org/packages/coldtrick/tag_tools)
 [![License](https://poser.pugx.org/coldtrick/tag_tools/license.svg)](https://packagist.org/packages/coldtrick/tag_tools)
@@ -10,8 +10,8 @@ Offers enhancements/tools for tags
 ## Features
 
 - adds option to follow tags
- - content created with the tag sends notification to follower
- - tag follow configuration can be found at the notifications settings page
+  - content created with the tag sends notification to follower
+  - tag follow configuration can be found at the notifications settings page
 - adds an improved version of the tagcloud widget
 
 ## Notifications

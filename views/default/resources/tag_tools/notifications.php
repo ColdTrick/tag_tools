@@ -6,6 +6,7 @@ elgg_set_context('settings');
 
 $content = elgg_view_form('tag_tools/notifications/follow', [
 	'action' => elgg_generate_action_url('tag_tools/follow_tag', [], false),
+	'class' => 'mbl',
 ], ['entity' => $user]);
 
 $notifications = elgg_view_form('tag_tools/notifications/edit', [], ['entity' => $user]);

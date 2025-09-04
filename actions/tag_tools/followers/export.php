@@ -41,13 +41,13 @@ $fh = $file->open('write');
 fputcsv($fh, [
 	elgg_echo('tags'),
 	elgg_echo('tag_tools:search:count'),
-], ';');
+], ';', '"', '\\');
 
 foreach ($tags as $tag) {
 	fputcsv($fh, [
 		$tag->value,
 		$tag->total,
-	], ';');
+	], ';', '"', '\\');
 }
 
 $file->close();

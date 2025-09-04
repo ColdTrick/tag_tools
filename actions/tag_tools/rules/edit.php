@@ -1,9 +1,5 @@
 <?php
 
-// make sticky form
-elgg_make_sticky_form('tag_tools/rules/edit');
-
-// get input
 $guid = (int) get_input('guid');
 $from_tag = get_input('from_tag');
 $tag_action = get_input('tag_action');
@@ -41,8 +37,4 @@ $entity->notify_user = (bool) get_input('notify_user');
 
 $entity->apply();
 
-// clear sticky form
-elgg_clear_sticky_form('tag_tools/rules/edit');
-
-// response
 return elgg_ok_response('', elgg_echo('save:success'));

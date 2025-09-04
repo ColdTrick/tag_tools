@@ -20,7 +20,7 @@ $title = elgg_echo('tag_tools:tag_definition:add:title', [$tag]);
 
 $edit_form = new EditDefinition($tag);
 
-$content = elgg_view_form('tag_definition/edit', [], $edit_form());
+$content = elgg_view_form('tag_definition/edit', ['sticky_enabled' => true], $edit_form());
 
 // lightbox create
 if (elgg_is_xhr()) {

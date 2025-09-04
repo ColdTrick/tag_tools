@@ -1,6 +1,6 @@
 <?php
 
-/* @var $widget ElggWidget */
+/* @var $widget \ElggWidget */
 $widget = elgg_extract('entity', $vars);
 
 $annotations = elgg_get_annotations([

@@ -16,7 +16,7 @@ class EditDefinition {
 	 *
 	 * @param string|\TagDefinition|null $tag starting point
 	 */
-	public function __construct(string|\TagDefinition $tag = null) {
+	public function __construct(string|\TagDefinition|null $tag = null) {
 		
 		if (is_string($tag)) {
 			$this->tag = strtolower($tag);
@@ -52,15 +52,6 @@ class EditDefinition {
 			}
 			
 			$defaults['entity'] = $this->entity;
-		}
-		
-		$sticky_vars = elgg_get_sticky_values('tag_definition/edit');
-		if (!empty($sticky_vars)) {
-			foreach ($sticky_vars as $name => $value) {
-				$defaults[$name] = $value;
-			}
-			
-			elgg_clear_sticky_form('tag_definition/edit');
 		}
 		
 		return $defaults;

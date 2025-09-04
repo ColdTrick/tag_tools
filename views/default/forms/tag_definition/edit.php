@@ -31,16 +31,16 @@ echo elgg_view_field([
 	'align' => 'horizontal',
 	'fields' => [
 		[
-			'#type' => 'text',
+			'#type' => 'color',
+			'#class' => 'elgg-field-stretch',
 			'#label' => elgg_echo('tag_tools:tag_definition:edit:field:bgcolor'),
-			'type' => 'color',
 			'name' => 'bgcolor',
 			'value' => elgg_extract('bgcolor', $vars),
 		],
 		[
-			'#type' => 'text',
+			'#type' => 'color',
+			'#class' => 'elgg-field-stretch',
 			'#label' => elgg_echo('tag_tools:tag_definition:edit:field:textcolor'),
-			'type' => 'color',
 			'name' => 'textcolor',
 			'value' => elgg_extract('textcolor', $vars),
 		],

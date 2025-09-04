@@ -12,7 +12,7 @@ $title = elgg_echo('tag_tools:tag_definition:edit:title', [$entity->getDisplayNa
 
 $edit_form = new EditDefinition($entity);
 
-$content = elgg_view_form('tag_definition/edit', [], $edit_form());
+$content = elgg_view_form('tag_definition/edit', ['sticky_enabled' => true], $edit_form());
 
 // lightbox edit
 if (elgg_is_xhr()) {

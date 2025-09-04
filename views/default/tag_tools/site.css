@@ -1,25 +1,11 @@
-.elgg-form-tag-definition-edit {
-	input[type='color'] {
-		min-height: 2rem;
-	}
-	
-	.elgg-fieldset-horizontal {
-		display: flex;
-		
-		> div {
-			flex-basis: 50%;
-		}
-	}
-}
-
 .elgg-tags {
 	margin-top: 0;
-		
+
 	.elgg-tag {
 		margin-right: 0.25rem;
 		display: inline-block;
 		line-height: 2rem;
-		
+
 		> a {
 			border: 1px solid $(border-color-mild);
 			padding: 0.25rem .5rem;

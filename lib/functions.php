@@ -15,7 +15,7 @@ use Elgg\Database\Select;
  *
  * @return bool|array
  */
-function tag_tools_get_user_following_tags(int $user_guid = 0, bool $reset_cache = false) {
+function tag_tools_get_user_following_tags(int $user_guid = 0, bool $reset_cache = false): bool|array {
 	static $cache;
 	
 	if (!isset($cache)) {
@@ -60,25 +60,12 @@ function tag_tools_get_user_following_tags(int $user_guid = 0, bool $reset_cache
  * @return bool
  */
 function tag_tools_is_user_following_tag(string $tag, int $user_guid = 0): bool {
-	
 	if (empty($tag)) {
 		return false;
 	}
 
-	if ($user_guid < 1) {
-		$user_guid = elgg_get_logged_in_user_guid();
-	}
-
-	if (empty($user_guid)) {
-		return false;
-	}
-	
 	$user_tags = tag_tools_get_user_following_tags($user_guid);
-	if (empty($user_tags)) {
-		return false;
-	}
-	
-	return in_array(strtolower($tag), $user_tags);
+	return $user_tags ? in_array(strtolower($tag), $user_tags) : false;
 }
 
 /**
@@ -143,7 +130,6 @@ function tag_tools_toggle_following_tag(string $tag, int $user_guid = 0, ?bool $
  * @return bool
  */
 function tag_tools_remove_tag_from_notification_settings(string $tag, int $user_guid = 0): bool {
-	
 	if (empty($tag)) {
 		return false;
 	}
@@ -229,7 +215,6 @@ function tag_tools_get_user_notification_settings(int $user_guid = 0, bool $rese
  * @return false|array
  */
 function tag_tools_get_user_tag_notification_settings(string $tag, int $user_guid = 0) {
-	
 	if (empty($tag)) {
 		return false;
 	}
@@ -269,29 +254,13 @@ function tag_tools_get_user_tag_notification_settings(string $tag, int $user_gui
  * @return bool
  */
 function tag_tools_check_user_tag_notification_method(string $tag, string $method, int $user_guid = 0): bool {
-	
 	if (empty($tag) || empty($method)) {
 		return false;
 	}
-	
-	$tag = strtolower($tag);
-	
-	if ($user_guid < 1) {
-		$user_guid = elgg_get_logged_in_user_guid();
-	}
-	
-	if (empty($user_guid)) {
-		return false;
-	}
-	
-	$tag_settings = tag_tools_get_user_tag_notification_settings($tag, $user_guid);
-	if (empty($tag_settings)) {
-		// user has disabled notifications for this tag
-		return false;
-	}
-	
+
+	$tag_settings = tag_tools_get_user_tag_notification_settings(strtolower($tag), $user_guid);
 	// check if the user has selected the notification method
-	return in_array($method, $tag_settings);
+	return $tag_settings ? in_array($method, $tag_settings) : false;
 }
 
 /**
@@ -329,9 +298,9 @@ function tag_tools_is_notification_entity(int $entity_guid): bool {
 /**
  * Get the type/subtypes for which tag_tools notifications are allowed
  *
- * @return false|array
+ * @return array
  */
-function tag_tools_get_notification_type_subtypes() {
+function tag_tools_get_notification_type_subtypes(): array {
 	static $result;
 	
 	if (!isset($result)) {
@@ -342,7 +311,7 @@ function tag_tools_get_notification_type_subtypes() {
 		unset($result['user']);
 		
 		// allow others to change the type/subtypes
-		$result = elgg_trigger_event_results('notification_type_subtype', 'tag_tools', $result, $result);
+		$result = (array) elgg_trigger_event_results('notification_type_subtype', 'tag_tools', $result, $result);
 	}
 	
 	return $result;
@@ -368,11 +337,7 @@ function tag_tools_add_sent_tags(ElggEntity $entity, $sending_tags = []): bool {
 	}
 	
 	$sent_tags = $entity->{'tag_tools:sent_tags'};
-	if (!empty($sent_tags)) {
-		$sent_tags = json_decode($sent_tags, true);
-	} else {
-		$sent_tags = [];
-	}
+	$sent_tags = $sent_tags ? json_decode($sent_tags, true) : [];
 	
 	// store all processed tags
 	$processed_tags = array_merge($sent_tags, $sending_tags);
@@ -409,22 +374,11 @@ function tag_tools_rules_get_type_subtypes(): array {
 	if (isset($result)) {
 		return $result;
 	}
-	
-	$result = [];
-	
-	$entity_types = elgg_entity_types_with_capability('searchable');
-	if (!empty($entity_types)) {
-		foreach ($entity_types as $type => $subtypes) {
-			if (empty($subtypes) || !is_array($subtypes)) {
-				$result[$type] = ELGG_ENTITIES_ANY_VALUE;
-				continue;
-			}
-			
-			$result[$type] = $subtypes;
-		}
-	}
-	
-	return (array) elgg_trigger_event_results('rules_type_subtypes', 'tag_tools', $result, $result);
+
+	$result = elgg_entity_types_with_capability('searchable');
+	$result = (array) elgg_trigger_event_results('rules_type_subtypes', 'tag_tools', $result, $result);
+
+	return $result;
 }
 
 /**
@@ -432,14 +386,13 @@ function tag_tools_rules_get_type_subtypes(): array {
  *
  * @param string $from_tag the string to fetch the rule for
  *
- * @return false|TagToolsRule
+ * @return false|\TagToolsRule
  */
-function tag_tools_rules_get_rule(string $from_tag) {
+function tag_tools_rules_get_rule(string $from_tag): \TagToolsRule|bool {
 	if (trim($from_tag) === '') {
 		return false;
 	}
-	
-	// base options
+
 	$rules = elgg_get_entities([
 		'type' => 'object',
 		'subtype' => TagToolsRule::SUBTYPE,
@@ -450,12 +403,8 @@ function tag_tools_rules_get_rule(string $from_tag) {
 			'case_sensitive' => false,
 		],
 	]);
-	
-	if (empty($rules)) {
-		return false;
-	}
-	
-	return elgg_extract(0, $rules);
+
+	return elgg_extract(0, $rules, false);
 }
 
 /**
@@ -531,12 +480,8 @@ function tag_tools_get_unsent_notification_tags(\ElggEntity $entity): array {
 	}
 	
 	$sent_tags = $entity->{'tag_tools:sent_tags'};
-	if (!empty($sent_tags)) {
-		$sent_tags = json_decode($sent_tags, true);
-	} else {
-		$sent_tags = [];
-	}
-	
+	$sent_tags = $sent_tags ? json_decode($sent_tags, true) : [];
+
 	return array_diff($entity_tags, $sent_tags);
 }
 
