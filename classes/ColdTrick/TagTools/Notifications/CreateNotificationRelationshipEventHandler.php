@@ -173,10 +173,10 @@ class CreateNotificationRelationshipEventHandler extends NotificationEventHandle
 		// is this a new entity of an update on an existing
 		$time_diff = (int) $entity->time_updated - (int) $entity->time_created;
 		if ($time_diff < 60) {
-			return elgg_echo('tag_tools:notification:follow:subject', [$tag], $recipient->getLanguage());
+			return elgg_echo('tag_tools:notification:follow:subject', [$tag]);
 		}
 		
-		return elgg_echo('tag_tools:notification:follow:update:subject', [$tag], $recipient->getLanguage());
+		return elgg_echo('tag_tools:notification:follow:update:subject', [$tag]);
 	}
 	
 	/**
@@ -189,10 +189,10 @@ class CreateNotificationRelationshipEventHandler extends NotificationEventHandle
 		// is this a new entity of an update on an existing
 		$time_diff = (int) $entity->time_updated - (int) $entity->time_created;
 		if ($time_diff < 60) {
-			return elgg_echo('tag_tools:notification:follow:summary', [$tag], $recipient->getLanguage());
+			return elgg_echo('tag_tools:notification:follow:summary', [$tag]);
 		}
 		
-		return elgg_echo('tag_tools:notification:follow:update:summary', [$tag], $recipient->getLanguage());
+		return elgg_echo('tag_tools:notification:follow:update:summary', [$tag]);
 	}
 	
 	/**
@@ -205,10 +205,10 @@ class CreateNotificationRelationshipEventHandler extends NotificationEventHandle
 		// is this a new entity of an update on an existing
 		$time_diff = (int) $entity->time_updated - (int) $entity->time_created;
 		if ($time_diff < 60) {
-			return elgg_echo('tag_tools:notification:follow:message', [$tag, $entity->getURL()], $recipient->getLanguage());
+			return elgg_echo('tag_tools:notification:follow:message', [$tag, $entity->getURL()]);
 		}
 		
-		return elgg_echo('tag_tools:notification:follow:update:message', [$tag, $entity->getURL()], $recipient->getLanguage());
+		return elgg_echo('tag_tools:notification:follow:update:message', [$tag, $entity->getURL()]);
 	}
 	
 	/**
