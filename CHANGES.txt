@@ -1,6 +1,11 @@
 Version history
 ===============
 
+13.0 (2025-11-13):
+
+- changed: updated for Elgg 6.3
+- fixed: PHP implicit null declaration
+
 12.1 (2025-06-18):
 
 - added: more sorting options on admin tag search page
