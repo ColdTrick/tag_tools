@@ -5,9 +5,6 @@ use Elgg\Http\RedirectResponse;
 
 /**
  * Tag definition
- *
- * @property string $bgcolor   tag background color
- * @property string $textcolor tag text color
  */
 class TagDefinition extends \ElggObject {
 	

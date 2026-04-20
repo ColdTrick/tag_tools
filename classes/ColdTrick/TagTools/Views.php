@@ -23,33 +23,13 @@ class Views {
 			return null;
 		}
 		
-		elgg_require_css('tag_tools/tagcolors');
-		
 		$vars['href'] = elgg_generate_url('collection:tag', [
 			'tag' => strtolower($value),
 		]);
 		
-		// set name for colors
-		$vars['class'] = elgg_extract_class($vars, [elgg_get_friendly_title("tag-color-{$value}")]);
+		return $vars;
+	}
 		
-		return $vars;
-	}
-	
-	/**
-	 * Changes view vars for output/tags
-	 *
-	 * @param \Elgg\Event $event 'view_vars', 'output/tags'
-	 *
-	 * @return array
-	 */
-	public static function setOutputTagsVars(\Elgg\Event $event): array {
-
-		$vars = $event->getValue();
-				
-		$vars['separator'] = '';
-		return $vars;
-	}
-	
 	/**
 	 * Adds tagify whitelist to tags input
 	 *

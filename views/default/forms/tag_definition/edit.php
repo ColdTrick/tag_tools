@@ -25,28 +25,6 @@ echo elgg_view_field([
 	'value' => elgg_extract('description', $vars),
 ]);
 
-echo elgg_view_field([
-	'#type' => 'fieldset',
-	'#help' => elgg_echo('tag_tools:tag_definition:edit:colors:help'),
-	'align' => 'horizontal',
-	'fields' => [
-		[
-			'#type' => 'color',
-			'#class' => 'elgg-field-stretch',
-			'#label' => elgg_echo('tag_tools:tag_definition:edit:field:bgcolor'),
-			'name' => 'bgcolor',
-			'value' => elgg_extract('bgcolor', $vars),
-		],
-		[
-			'#type' => 'color',
-			'#class' => 'elgg-field-stretch',
-			'#label' => elgg_echo('tag_tools:tag_definition:edit:field:textcolor'),
-			'name' => 'textcolor',
-			'value' => elgg_extract('textcolor', $vars),
-		],
-	],
-]);
-
 $footer = elgg_view_field([
 	'#type' => 'submit',
 	'text' => elgg_echo('save'),

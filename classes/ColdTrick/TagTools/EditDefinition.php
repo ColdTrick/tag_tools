@@ -37,8 +37,6 @@ class EditDefinition {
 		$defaults = [
 			'title' => '',
 			'description' => '',
-			'bgcolor' => null,
-			'textcolor' => null,
 		];
 		
 		if (isset($this->tag)) {

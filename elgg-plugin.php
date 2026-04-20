@@ -152,9 +152,6 @@ return [
 			'output/tag' => [
 				'\ColdTrick\TagTools\Views::setOutputTagVars' => [],
 			],
-			'output/tags' => [
-				'\ColdTrick\TagTools\Views::setOutputTagsVars' => [],
-			],
 		],
 	],
 	'notifications' => [
@@ -170,9 +167,6 @@ return [
 		'elgg.css' => [
 			'tag_tools/site.css' => [],
 		],
-		'admin.css' => [
-			'tag_tools/site.css' => [],
-		],
 		'tag_tools/tag/content' => [
 			'tag_tools/tag/content/recent_content' => ['priority' => 100],
 			'tag_tools/tag/content/groups' => ['priority' => 200],
@@ -182,7 +176,6 @@ return [
 	],
 	'view_options' => [
 		'tag_tools/tag/view' => ['ajax' => true],
-		'tag_tools/tagcolors.css' => ['simplecache' => true],
 	],
 	'widgets' => [
 		'follow_tags' => [
