@@ -4,23 +4,19 @@
 $plugin = elgg_extract('entity', $vars);
 
 echo elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('tag_tools:settings:transform_hashtag'),
 	'#help' => elgg_echo('tag_tools:settings:transform_hashtag:help'),
 	'name' => 'params[transform_hashtag]',
-	'value' => 1,
-	'checked' => (bool) $plugin->transform_hashtag,
-	'switch' => true,
+	'value' => $plugin->transform_hashtag,
 ]);
 
 echo elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('tag_tools:settings:whitelist'),
 	'#help' => elgg_echo('tag_tools:settings:whitelist:help'),
 	'name' => 'params[whitelist]',
-	'value' => 1,
-	'checked' => (bool) $plugin->whitelist,
-	'switch' => true,
+	'value' => $plugin->whitelist,
 ]);
 
 echo elgg_view_field([

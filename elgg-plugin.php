@@ -23,28 +23,25 @@ return [
 			'type' => 'object',
 			'subtype' => 'tag_tools_rule',
 			'class' => \TagToolsRule::class,
-			'capabilities' => [
-				'commentable' => false,
-			],
 		],
 		[
 			'type' => 'object',
 			'subtype' => 'tag_definition',
 			'class' => \TagDefinition::class,
-			'capabilities' => [
-				'commentable' => false,
-			],
 		],
 	],
 	'settings' => [
-		'transform_hashtag' => 1,
-		'whitelist' => 1,
+		'transform_hashtag' => true,
+		'whitelist' => true,
 		'separate_notifications' => 1,
 	],
 	'actions' => [
 		'tag_definition/edit' => ['access' => 'admin'],
 		'tag_tools/follow_tag' => [],
-		'tag_tools/followers/export' => ['access' => 'admin'],
+		'tag_tools/followers/export' => [
+			'access' => 'admin',
+			'controller' => \ColdTrick\TagTools\ExportFollowersController::class,
+		],
 		'tag_tools/notifications/edit' => [],
 		'tag_tools/rules/edit' => ['access' => 'admin'],
 		'tag_tools/suggestions/ignore' => ['access' => 'admin'],
@@ -163,7 +160,9 @@ return [
 	'notifications' => [
 		'relationship' => [
 			'tag_tools:notification' => [
-				'create:after' => CreateNotificationRelationshipEventHandler::class,
+				'create:after' => [
+					CreateNotificationRelationshipEventHandler::class => [],
+				],
 			],
 		],
 	],

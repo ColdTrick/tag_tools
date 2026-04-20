@@ -58,7 +58,7 @@ class Views {
 	 * @return null|array
 	 */
 	public static function setInputTagsWhitelist(\Elgg\Event $event): ?array {
-		if (!(bool) elgg_get_plugin_setting('whitelist', 'tag_tools')) {
+		if (!elgg_get_plugin_setting('whitelist', 'tag_tools')) {
 			return null;
 		}
 		
@@ -121,7 +121,7 @@ class Views {
 	 * @return void
 	 */
 	public static function resetTagsWhitelist(\Elgg\Event $event) {
-		if (!(bool) elgg_get_plugin_setting('whitelist', 'tag_tools') !== 1) {
+		if (!elgg_get_plugin_setting('whitelist', 'tag_tools')) {
 			return;
 		}
 		
