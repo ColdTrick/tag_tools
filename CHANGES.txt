@@ -1,6 +1,11 @@
 Version history
 ===============
 
+14.0 (2026-05-29):
+
+- changed: updated for Elgg 7
+- removed: custom tag colors are no longer supported
+
 13.0 (2025-11-13):
 
 - changed: updated for Elgg 6.3
