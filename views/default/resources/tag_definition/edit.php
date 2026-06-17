@@ -3,10 +3,9 @@
 use ColdTrick\TagTools\EditDefinition;
 
 $guid = (int) elgg_extract('guid', $vars);
-elgg_entity_gatekeeper($guid, 'object', TagDefinition::SUBTYPE, true);
 
 /* @var $entity TagDefinition */
-$entity = get_entity($guid);
+$entity = elgg_entity_gatekeeper($guid, 'object', TagDefinition::SUBTYPE, true);
 
 $title = elgg_echo('tag_tools:tag_definition:edit:title', [$entity->getDisplayName()]);
 
