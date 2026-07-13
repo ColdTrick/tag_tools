@@ -150,7 +150,7 @@ return [
 				'\ColdTrick\TagTools\Views::setInputTagsWhitelist' => [],
 			],
 			'output/tag' => [
-				'\ColdTrick\TagTools\Views::setOutputTagVars' => [],
+				'\ColdTrick\TagTools\Views::setOutputTagVars' => ['priority' => 450],
 			],
 		],
 	],

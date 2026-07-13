@@ -15,8 +15,11 @@ class Views {
 	 * @return null|array
 	 */
 	public static function setOutputTagVars(\Elgg\Event $event): ?array {
-
 		$vars = $event->getValue();
+		if (isset($vars['href'])) {
+			// leave unaltered
+			return null;
+		}
 		
 		$value = elgg_extract('value', $vars);
 		if (elgg_is_empty($value)) {
