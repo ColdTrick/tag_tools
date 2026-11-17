@@ -113,7 +113,7 @@ foreach ($results as $result) {
 		], elgg_view('output/url', [
 			'icon' => 'random',
 			'text' => false,
-			'href' => elgg_http_add_url_query_elements('tag_tools/rules/add', [
+			'href' => elgg_generate_url('add:object:tag_tools_rule', [
 				'from_tag' => $result['value'],
 			]),
 			'title' => elgg_echo('tag_tools:search:replace'),
@@ -130,7 +130,7 @@ foreach ($results as $result) {
 		], elgg_view('output/url', [
 			'icon' => 'delete',
 			'text' => false,
-			'href' => elgg_http_add_url_query_elements('tag_tools/rules/add', [
+			'href' => elgg_generate_url('add:object:tag_tools_rule', [
 				'from_tag' => $result['value'],
 				'tag_action' => 'delete',
 			]),
