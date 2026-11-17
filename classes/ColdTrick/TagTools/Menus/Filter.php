@@ -26,7 +26,7 @@ class Filter {
 			$user = elgg_get_logged_in_user_entity();
 		}
 		
-		/* @var $return_value MenuItems */
+		/** @var MenuItems $return_value */
 		$return_value = $event->getValue();
 		
 		$return_value[] = \ElggMenuItem::factory([

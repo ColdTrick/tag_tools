@@ -54,7 +54,7 @@ class ExtendedContentNotification {
 			'batch' => true,
 		]);
 		
-		/* @var $user \ElggUser */
+		/** @var \ElggUser $user */
 		foreach ($users_batch as $user) {
 			if ($entity->owner_guid === $user->guid) {
 				continue;
@@ -119,7 +119,7 @@ class ExtendedContentNotification {
 			return null;
 		}
 		
-		/* @var $notification Notification */
+		/** @var Notification $notification */
 		$notification = $event->getValue();
 		$recipient = $event->getParam('recipient');
 		$language = $event->getParam('language');

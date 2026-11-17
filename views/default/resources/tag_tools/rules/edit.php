@@ -5,7 +5,7 @@
 
 $guid = (int) elgg_extract('guid', $vars);
 
-/* @var $entity TagToolsRule */
+/** @var TagToolsRule $entity */
 $entity = elgg_entity_gatekeeper($guid, 'object', TagToolsRule::SUBTYPE);
 
 $title = elgg_echo('tag_tools:rules:edit', [$entity->getDisplayName()]);

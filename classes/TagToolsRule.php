@@ -207,7 +207,7 @@ class TagToolsRule extends \ElggObject {
 			'batch_inc_offset' => false,
 		]);
 		
-		/* @var $entity \ElggEntity */
+		/** @var \ElggEntity $entity */
 		foreach ($batch as $entity) {
 			// check all tag fields
 			foreach ($tag_names as $tag_name) {

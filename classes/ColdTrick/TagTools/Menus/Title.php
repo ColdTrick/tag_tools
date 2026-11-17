@@ -26,7 +26,7 @@ class Title {
 			return null;
 		}
 		
-		/* @var $result MenuItems */
+		/** @var MenuItems $result */
 		$result = $event->getValue();
 		
 		$following = tag_tools_is_user_following_tag($tag);
@@ -76,7 +76,7 @@ class Title {
 			return null;
 		}
 		
-		/* @var $result MenuItems */
+		/** @var MenuItems $result */
 		$result = $event->getValue();
 		
 		$colorbox_options = json_encode([

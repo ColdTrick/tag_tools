@@ -34,7 +34,7 @@ class CreateNotificationRelationshipEventHandler extends NotificationEventHandle
 	 * @return void
 	 */
 	public static function afterCleanup(\Elgg\Event $event): void {
-		/* @var $handler CreateNotificationRelationshipEventHandler */
+		/** @var CreateNotificationRelationshipEventHandler $handler */
 		$handler = $event->getParam('handler');
 		$class_name = self::class;
 		if (!$handler instanceof $class_name) {
@@ -87,7 +87,7 @@ class CreateNotificationRelationshipEventHandler extends NotificationEventHandle
 			'batch' => true,
 		]);
 		
-		/* @var $user \ElggUser */
+		/** @var \ElggUser $user */
 		foreach ($users_batch as $user) {
 			if ($entity->owner_guid === $user->guid) {
 				continue;
@@ -134,7 +134,7 @@ class CreateNotificationRelationshipEventHandler extends NotificationEventHandle
 			return ($this->entity instanceof \ElggEntity) ? $this->entity : null;
 		}
 		
-		/* @var $relationship \ElggRelationship */
+		/** @var \ElggRelationship $relationship */
 		$relationship = $this->event->getObject();
 		
 		$this->entity = get_entity($relationship->guid_two);

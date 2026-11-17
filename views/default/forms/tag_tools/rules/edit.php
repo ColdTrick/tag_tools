@@ -1,6 +1,6 @@
 <?php
 
-/* @var $entity \TagToolsRule */
+/** @var \TagToolsRule $entity */
 $entity = elgg_extract('entity', $vars);
 $edit = false;
 if ($entity instanceof TagToolsRule) {

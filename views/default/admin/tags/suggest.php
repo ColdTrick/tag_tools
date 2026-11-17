@@ -46,7 +46,7 @@ $metadata_tags = elgg_get_metadata([
 
 $configured_rule_tags = [];
 if (!empty($metadata_tags)) {
-	/* @var $configured_tag \ElggMetadata */
+	/** @var \ElggMetadata $configured_tag */
 	foreach ($metadata_tags as $configured_tag) {
 		$configured_rule_tags[] = $configured_tag->value;
 	}

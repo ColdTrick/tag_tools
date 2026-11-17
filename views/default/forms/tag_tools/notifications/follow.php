@@ -5,7 +5,7 @@
  * @uses $vars['entity'] the user to manage
  */
 
-/* @var $entity \ElggUser */
+/** @var \ElggUser $entity */
 $user = elgg_extract('entity', $vars);
 
 echo elgg_view_field([
