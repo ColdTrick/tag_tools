@@ -34,28 +34,36 @@ class AdminHeader {
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'tags:search',
 			'text' => elgg_echo('admin:tags:search'),
-			'href' => 'admin/tags/search',
+			'href' => elgg_generate_url('admin', [
+				'segments' => 'tags/search',
+			]),
 			'parent_name' => 'tags',
 		]);
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'tags:suggest',
 			'text' => elgg_echo('admin:tags:suggest'),
-			'href' => 'admin/tags/suggest',
+			'href' => elgg_generate_url('admin', [
+				'segments' => 'tags/suggest',
+			]),
 			'parent_name' => 'tags',
 		]);
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'tags:rules',
 			'text' => elgg_echo('admin:tags:rules'),
-			'href' => 'admin/tags/rules',
+			'href' => elgg_generate_url('admin', [
+				'segments' => 'tags/rules',
+			]),
 			'parent_name' => 'tags',
 		]);
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'tags:followers',
 			'text' => elgg_echo('admin:tags:followers'),
-			'href' => 'admin/tags/followers',
+			'href' => elgg_generate_url('admin', [
+				'segments' => 'tags/followers',
+			]),
 			'parent_name' => 'tags',
 		]);
 		

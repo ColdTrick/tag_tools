@@ -5,7 +5,9 @@ use Elgg\Database\Select;
 echo elgg_view_form('tag_tools/admin/followers', [
 	'method' => 'GET',
 	'disable_security' => true,
-	'action' => 'admin/tags/followers',
+	'action' => elgg_generate_url('admin', [
+		'segments' => 'tags/followers',
+	]),
 ]);
 
 $offset = (int) get_input('offset');
